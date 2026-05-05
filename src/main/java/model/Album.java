@@ -21,6 +21,7 @@ public class Album {
         this.titolo = titolo;
         this.dataPubblicazione = dataPubblicazione;
         this.artista = artista;
+        artista.aggiungiAlbum(this);;
         generi.add(genere);
 
         String titoloCanzone;
