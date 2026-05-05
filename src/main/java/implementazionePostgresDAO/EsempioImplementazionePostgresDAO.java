@@ -1,5 +1,5 @@
-package implementazioniPostgresDAO;
-
+package implementazionePostgresDAO;
+import dao.EsempioDAO;
 import Database.ConnessioneDatabase;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,9 +19,6 @@ public class EsempioImplementazionePostgresDAO implements EsempioDAO {
 		}
 	}
 	
-	@Override
-	public void esempioQuery() {
 
-	}
 
 }
