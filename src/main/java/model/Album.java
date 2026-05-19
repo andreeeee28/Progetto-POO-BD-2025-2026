@@ -22,7 +22,7 @@ public class Album {
         this.dataPubblicazione = dataPubblicazione;
         this.artista = artista;
         artista.aggiungiAlbum(this);;
-        generi.add(genere);
+        //generi.add(genere);
 
         String titoloCanzone;
         int durataCanzone;
