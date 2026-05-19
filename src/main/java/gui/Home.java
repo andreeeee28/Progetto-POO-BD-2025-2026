@@ -1,29 +1,18 @@
 package gui;
 
-import controller.Controller;
-
 import javax.swing.*;
 
 public class Home {
     private JPanel mainPanel;
-    private static JFrame frameHome;
-    private Controller controller;
+    private JButton creaPropostaButton;
+    private JButton esploraArtistiButton;
+    private JButton esploraGeneriButton;
 
     public static void main(String[] args) {
-        frameHome = new JFrame("Home");
-        frameHome.setContentPane(new Home().mainPanel);
-        frameHome.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frameHome.pack();
-        frameHome.setVisible(true);
-
-
+        JFrame frame = new JFrame("Home");
+        frame.setContentPane(new Home().mainPanel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
     }
-
-    public Home() {
-        controller = new Controller();
-        // Add action listeners or other initialization code here
-
-    }
-
-
 }

@@ -2,6 +2,7 @@ package model;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Album {
 
@@ -14,46 +15,26 @@ public class Album {
     private ArrayList<Recensione> recensioni;
 
     //Costruttore
-    public Album(String titolo, Date dataPubblicazione, Artista artista, Genere genere, ArrayList<Canzone> tracklist){
-
+    public Album(String titolo, Date dataPubblicazione, Artista artista, Genere genere, int noCanzoni){
+        Scanner kbdInput = new Scanner(System.in);
 
         this.titolo = titolo;
         this.dataPubblicazione = dataPubblicazione;
         this.artista = artista;
-        artista.aggiungiAlbum(this);
+        artista.aggiungiAlbum(this);;
         generi.add(genere);
-        this.tracklist = tracklist;
+
+        String titoloCanzone;
+        int durataCanzone;
+        for(int i = 0; i<noCanzoni; i++){
+            System.out.println("Digitare il titolo della traccia: ");
+            titoloCanzone = kbdInput.nextLine();
+            System.out.println("Digitare la durata della traccia: ");
+            durataCanzone = kbdInput.nextInt();
+            tracklist.add(new Canzone(titoloCanzone, durataCanzone));
+        }
     }
 
-    public String getTitolo() {
-        return titolo;
-    }
 
-    public void setTitolo(String titolo) {
-        this.titolo = titolo;
-    }
 
-    public Date getDataPubblicazione() {
-        return dataPubblicazione;
-    }
-
-    public void setDataPubblicazione(Date dataPubblicazione) {
-        this.dataPubblicazione = dataPubblicazione;
-    }
-
-    public float getVoto() {
-        return voto;
-    }
-
-    public void setVoto(float voto) {
-        this.voto = voto;
-    }
-
-    public Artista getArtista() {
-        return artista;
-    }
-
-    public void setArtista(Artista artista) {
-        this.artista = artista;
-    }
 }
