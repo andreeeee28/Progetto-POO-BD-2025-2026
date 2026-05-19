@@ -11,11 +11,11 @@ public class Album {
     private float voto;
     private Artista artista;
     private ArrayList<Canzone> tracklist;
-    private ArrayList<Genere> generi;
-    private ArrayList<Recensione> recensioni;
+    //private ArrayList<Genere> generi;
+    //private ArrayList<Recensione> recensioni;
 
     //Costruttore
-    public Album(String titolo, Date dataPubblicazione, Artista artista, Genere genere, int noCanzoni){
+    public Album(String titolo, Date dataPubblicazione, Artista artista/*, Genere genere*/, int noCanzoni){
         Scanner kbdInput = new Scanner(System.in);
 
         this.titolo = titolo;
