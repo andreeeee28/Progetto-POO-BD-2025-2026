@@ -7,7 +7,7 @@ public class Proposta {
     private String titoloElemento;
     private String descrizione;
     private Date dataRichiesta;
-    private String statoProposta;
+    private StatoProposta statoProposta;
 
     public Proposta(String tipoElemento, Date dataRichiesta, String descrizione, String titoloElemento) {
         this.tipoElemento = tipoElemento;
@@ -27,15 +27,15 @@ public class Proposta {
         this.tipoElemento = tipoElemento;
     }
 
-    public String getStatoProposta() {
+    public StatoProposta getStatoProposta() {
         return statoProposta;
     }
 
     public void setStatoPropostaDefault() {
-        this.statoProposta = "Valutazione in corso";
+        this.statoProposta = StatoProposta.VALUTAZIONE_IN_CORSO;
     }
 
-    public void setStatoProposta(String giudizio) {
+    public void setStatoProposta(StatoProposta giudizio) {
         this.statoProposta = giudizio;
     }
 

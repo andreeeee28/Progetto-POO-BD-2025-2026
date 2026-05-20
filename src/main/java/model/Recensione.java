@@ -19,6 +19,7 @@ public class Recensione {
     public Album getAlbum() {
         return album;
     }
+
     public void setAlbum(Album album) {
         this.album = album;
     }
@@ -26,6 +27,7 @@ public class Recensione {
     public Utente getUtente() {
         return utente;
     }
+
     public void setUtente(Utente utente) {
         this.utente = utente;
     }
@@ -33,6 +35,7 @@ public class Recensione {
     public float getVoto() {
         return voto;
     }
+
     public void setVoto(float voto) {
         this.voto = voto;
     }
@@ -40,7 +43,10 @@ public class Recensione {
     public LocalDate getData() {
         return data;
     }
+
     public void setData(LocalDate data) {
         this.data = data;
     }
+
+
 }
