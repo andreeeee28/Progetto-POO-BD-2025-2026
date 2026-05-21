@@ -4,9 +4,9 @@ public class Canzone {
     private String titolo;
     private int durataSecondi;
 
-    public Canzone (String titolo, int durataSecondi) {
-        this.titolo = titolo;
-        this.durataSecondi = durataSecondi;
+    public Canzone (String titolo, int durataSecondi) throws CampoNonValido{
+        setTitolo(titolo);
+        setDurataSecondi(durataSecondi);
     }
 
     public String getDurataMinutiSecondi() {
@@ -21,7 +21,10 @@ public class Canzone {
         return durataSecondi;
     }
 
-    public void setDurataSecondi(int durataSecondi) {
+    public void setDurataSecondi(int durataSecondi) throws CampoNonValido{
+        if(durataSecondi<1){
+            throw new CampoNonValido("Durata della traccia non valida");
+        }
         this.durataSecondi = durataSecondi;
     }
 
@@ -29,7 +32,10 @@ public class Canzone {
         return titolo;
     }
 
-    public void setTitolo(String titolo) {
+    public void setTitolo(String titolo) throws CampoNonValido {
+        if(titolo == null ||  titolo.trim().length()<1 || titolo.trim().length()>30){
+            throw new CampoNonValido("Il titolo deve avere minimo 1 carattere e massimo 30!");
+        }
         this.titolo = titolo;
     }
 }
