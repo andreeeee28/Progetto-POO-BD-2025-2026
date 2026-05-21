@@ -10,11 +10,11 @@ public class CatalogoArtisti {
     private JButton visualizzaButton;
 
 
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
         JFrame frame = new JFrame("CatalogoArtisti");
         frame.setContentPane(new CatalogoArtisti().mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-    }
+    } */
 }
