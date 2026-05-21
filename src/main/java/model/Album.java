@@ -28,7 +28,7 @@ public class Album {
         // 3. Associo l'album all'artista (con controllo di sicurezza)
         setArtista(artista);
         if (this.artista != null) {
-            this.artista.aggiungiAlbum(this);
+            this.artista.addAlbum(this);
         }
       }
 

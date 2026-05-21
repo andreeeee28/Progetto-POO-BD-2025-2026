@@ -12,9 +12,9 @@ public class Genere {
     public Genere(String nome, String descrizione) {
         this.nome = nome;
         this.descrizione = descrizione;
-        this.generiPadre = new ArrayList<Genere>();
-        this.sottogeneri = new ArrayList<Genere>();
-        this.listaAlbum = new ArrayList<Album>();
+        this.generiPadre = new ArrayList<>();
+        this.sottogeneri = new ArrayList<>();
+        this.listaAlbum = new ArrayList<>();
     }
 
     public String getNome() {

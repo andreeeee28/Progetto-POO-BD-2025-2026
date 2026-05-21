@@ -1,6 +1,5 @@
 package model;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 public class Recensione {
@@ -36,7 +35,10 @@ public class Recensione {
         return voto;
     }
 
-    public void setVoto(float voto) {
+    public void setVoto(float voto) throws CampoNonValido{
+        if( voto<1 || voto>10){
+            throw new CampoNonValido("Il voto deve essere compreso tra 1 e 10.");
+        }
         this.voto = voto;
     }
 
@@ -44,9 +46,17 @@ public class Recensione {
         return data;
     }
 
-    public void setData(LocalDate data) {
+    public void setData(LocalDate data) throws CampoNonValido {
+        if (data == null){
+            throw new CampoNonValido("La data di pubblicazione non può essere vuota.");
+        }
+        if (data.isAfter(LocalDate.now())){
+            throw new CampoNonValido("La data di pubblicazione non può superare la data attuale.");
+        }
+        if (data.isBefore(LocalDate.of(1900,1,1))){
+            throw new CampoNonValido("La data di pubblicazione inserita non è valida.");
+        }
         this.data = data;
     }
-
 
 }
