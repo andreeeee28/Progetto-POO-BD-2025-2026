@@ -8,7 +8,7 @@ public class Utente {
     protected String nazione;
     protected ArrayList <Proposta> proposteInviate;
 
-    public Utente(String username, String password, String nazione) {
+    public Utente(String username, String password, String nazione) throws CampoNonValido {
         setUsername(username);
         setPassword(password);
         this.nazione = nazione;
@@ -19,9 +19,9 @@ public class Utente {
         return username;
     }
 
-    public void setUsername(String username) throws IllegalArgumentException {
-        if(username == null ||  username.trim().length()<5 || username.trim().length()>10){
-            throw new IllegalArgumentException("L'username deve avere minimo 5 caratteri e massimo 10!");
+    public void setUsername(String username) throws CampoNonValido {
+        if(username == null ||  username.trim().length()<5 || username.trim().length()>15){
+            throw new CampoNonValido("L'username deve avere minimo 5 caratteri e massimo 15!");
         }
         this.username = username;
         }
@@ -31,22 +31,22 @@ public class Utente {
         return password;
     }
 
-    public void setPassword(String password) throws  IllegalArgumentException{
+    public void setPassword(String password) throws  CampoNonValido{
         if (password == null  || password.length() < 10 || password.length() > 20) {
-            throw new IllegalArgumentException("La password deve avere minimo 10 caratteri e massimo 20!");
+            throw new CampoNonValido("La password deve avere minimo 10 caratteri e massimo 20!");
         }
         this.password = password;
     }
 
 
-    public String getNazione() throws  IllegalArgumentException{
+    public String getNazione() throws  CampoNonValido{
         return nazione;
     }
 
-    public void setNazione(String nazione) throws IllegalArgumentException {
+    public void setNazione(String nazione) throws CampoNonValido {
         // La Repubblica Democratica del Congo è la nazione col nome più lungo in italiano
         if(nazione == null || nazione.length()<4 || nazione.length()>32){
-            throw new IllegalArgumentException("Non esistono nazioni in italiano col nome di questa lunghezza");
+            throw new CampoNonValido("Non esistono nazioni in italiano col nome di questa lunghezza");
         }
         this.nazione = nazione;
     }

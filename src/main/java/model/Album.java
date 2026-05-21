@@ -1,13 +1,13 @@
 package model;
 
-import java.sql.Date;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Album {
 
     private String titolo;
-    private Date dataPubblicazione;
+    private LocalDate dataPubblicazione;
     private float voto;
     private Artista artista;
     private ArrayList<Canzone> tracklist;
@@ -15,36 +15,49 @@ public class Album {
     private ArrayList<Recensione> recensioni;
 
     //Costruttore
-    public Album(String titolo, Date dataPubblicazione, Artista artista, Genere genere, ArrayList<Canzone> tracklist) {
-        this.titolo = titolo;
-        this.dataPubblicazione = dataPubblicazione;
-        this.artista = artista;
-        this.tracklist = tracklist; // Prendo la lista già creata dal Controller/GUI
-        this.generi = new ArrayList<>();
+    public Album(String titolo, LocalDate dataPubblicazione, Artista artista, Genere genere, ArrayList<Canzone> tracklist) throws CampoNonValido {
+        setTitolo(titolo);
+        setDataPubblicazione(dataPubblicazione);
+        setTracklist(tracklist); // Prendo la lista già creata dal Controller/GUI
         this.recensioni = new ArrayList<>();
 
         // 2. Associo il genere base
-        this.generi.add(genere);
+        this.generi = new ArrayList<>();
+        addGeneri(genere);
 
         // 3. Associo l'album all'artista (con controllo di sicurezza)
+        setArtista(artista);
         if (this.artista != null) {
             this.artista.aggiungiAlbum(this);
         }
       }
 
+    //Get & Setter
     public String getTitolo() {
         return titolo;
     }
 
-    public void setTitolo(String titolo) {
+    public void setTitolo(String titolo) throws CampoNonValido {
+        if(titolo == null ||  titolo.trim().length()<1 || titolo.trim().length()>30){
+            throw new CampoNonValido("Il titolo deve avere minimo 1 carattere e massimo 30!");
+        }
         this.titolo = titolo;
     }
 
-    public Date getDataPubblicazione() {
+    public LocalDate getDataPubblicazione() {
         return dataPubblicazione;
     }
 
-    public void setDataPubblicazione(Date dataPubblicazione) {
+    public void setDataPubblicazione(LocalDate dataPubblicazione) throws CampoNonValido {
+        if (dataPubblicazione == null){
+            throw new CampoNonValido("La data di pubblicazione non può essere vuota.");
+        }
+        if (dataPubblicazione.isAfter(LocalDate.now())){
+            throw new CampoNonValido("La data di pubblicazione non può superare la data attuale.");
+        }
+        if (dataPubblicazione.isBefore(LocalDate.of(1900,1,1))){
+            throw new CampoNonValido("La data di pubblicazione inserita non è valida.");
+        }
         this.dataPubblicazione = dataPubblicazione;
     }
 
@@ -52,7 +65,10 @@ public class Album {
         return voto;
     }
 
-    public void setVoto(float voto) {
+    public void setVoto(float voto) throws CampoNonValido{
+        if( voto<1 || voto>10){
+            throw new CampoNonValido("Il voto deve essere compreso tra 1 e 10.");
+        }
         this.voto = voto;
     }
 
@@ -60,7 +76,10 @@ public class Album {
         return artista;
     }
 
-    public void setArtista(Artista artista) {
+    public void setArtista(Artista artista) throws CampoNonValido{
+        if(artista == null){
+            throw new CampoNonValido("Artista non valido.");
+        }
         this.artista = artista;
     }
 
@@ -68,7 +87,10 @@ public class Album {
         return tracklist;
     }
 
-    public void setTracklist(ArrayList<Canzone> tracklist) {
+    public void setTracklist(ArrayList<Canzone> tracklist) throws CampoNonValido {
+        if(tracklist == null){
+            throw new CampoNonValido("Tracklist non valida.");
+        }
         this.tracklist = tracklist;
     }
 
@@ -76,16 +98,33 @@ public class Album {
         return generi;
     }
 
-    public void setGeneri(ArrayList<Genere> generi) {
+    public void setGeneri(ArrayList<Genere> generi) throws CampoNonValido{
         this.generi = generi;
+    }
+
+    public void addGeneri(Genere genere) throws CampoNonValido{
+        if(genere == null){
+            throw new CampoNonValido("Genere inserito non valido.");
+        }
+            this.generi.add(genere);
     }
 
     public ArrayList<Recensione> getRecensioni() {
         return recensioni;
     }
 
-    public void setRecensioni(ArrayList<Recensione> recensioni) {
+    public void setRecensioni(ArrayList<Recensione> recensioni) throws CampoNonValido{
+        if(recensioni == null){
+            throw new CampoNonValido("Lista recensioni inserita non valida.");
+        }
         this.recensioni = recensioni;
+    }
+
+    public void addRecensioni(Recensione recensione) throws CampoNonValido{
+        if(recensione == null){
+            throw new CampoNonValido("Recensione inserita non valida.");
+        }
+        this.recensioni.add(recensione);
     }
 }
 
