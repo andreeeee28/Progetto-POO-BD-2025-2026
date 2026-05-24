@@ -7,8 +7,8 @@ public class Band extends Artista {
     private int annoScioglimento;
     private ArrayList<MembroBand> membriBand;
 
-    public Band(String nomeArte, int annoInizioAttività, String idArtista, int numeroMembri, int annoScioglimento) throws CampoNonValido {
-        super(nomeArte, annoInizioAttività, idArtista);
+    public Band(String nomeArte, int annoInizioAttivita, String idArtista, int numeroMembri, int annoScioglimento) throws CampoNonValido {
+        super(nomeArte, annoInizioAttivita, idArtista);
         this.numeroMembri = numeroMembri;
         this.annoScioglimento = annoScioglimento;
         this.membriBand = new ArrayList<MembroBand>();
