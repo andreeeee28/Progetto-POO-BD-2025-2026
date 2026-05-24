@@ -18,13 +18,12 @@ public class Album {
     public Album(String titolo, LocalDate dataPubblicazione, Artista artista, Genere genere, ArrayList<Canzone> tracklist) throws CampoNonValido {
         setTitolo(titolo);
         setDataPubblicazione(dataPubblicazione);
-        setTracklist(tracklist); // Prendo la lista già creata dal Controller/GUI
+        setTracklist(tracklist);
+        // Prendo la lista già creata dal Controller/GUI
         this.recensioni = new ArrayList<>();
-
         // 2. Associo il genere base
         this.generi = new ArrayList<>();
         addGeneri(genere);
-
         // 3. Associo l'album all'artista (con controllo di sicurezza)
         setArtista(artista);
         if (this.artista != null) {
