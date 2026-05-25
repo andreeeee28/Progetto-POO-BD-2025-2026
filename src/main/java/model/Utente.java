@@ -11,7 +11,7 @@ public class Utente {
     public Utente(String username, String password, String nazione) throws CampoNonValido {
         setUsername(username);
         setPassword(password);
-        this.nazione = nazione;
+        setNazione(nazione);
         this.proposteInviate = new ArrayList<>();
     }
 

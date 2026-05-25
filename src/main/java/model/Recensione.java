@@ -8,18 +8,21 @@ public class Recensione {
     private float voto;
     private LocalDate data;
 
-    public Recensione(Album album, Utente utente, float voto, LocalDate data) {
-        this.album = album;
-        this.utente = utente;
-        this.voto = voto;
-        this.data = data;
+    public Recensione(Album album, Utente utente, float voto, LocalDate data) throws CampoNonValido{
+        setAlbum(album);
+        setUtente(utente);
+        setVoto(voto);
+        setData(data);
     }
 
     public Album getAlbum() {
         return album;
     }
 
-    public void setAlbum(Album album) {
+    public void setAlbum(Album album) throws CampoNonValido{
+        if(album == null){
+            throw new CampoNonValido("Album non valido.");
+        }
         this.album = album;
     }
 
@@ -27,7 +30,10 @@ public class Recensione {
         return utente;
     }
 
-    public void setUtente(Utente utente) {
+    public void setUtente(Utente utente) throws CampoNonValido{
+        if(utente == null){
+            throw new CampoNonValido("Utente non valido.");
+        }
         this.utente = utente;
     }
 

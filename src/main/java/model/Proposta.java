@@ -3,14 +3,14 @@ package model;
 import java.time.LocalDate;
 
 public class Proposta {
-    private String tipoElemento;
+    private TipoProposta tipoElemento;
     private String titoloElemento;
     private String descrizione;
     private LocalDate dataRichiesta;
     private StatoProposta statoProposta;
 
     //Costruttore
-    public Proposta(String tipoElemento, LocalDate dataRichiesta, String descrizione, String titoloElemento) throws CampoNonValido{
+    public Proposta(TipoProposta tipoElemento, LocalDate dataRichiesta, String descrizione, String titoloElemento) throws CampoNonValido{
         setTipoElemento(tipoElemento);
         setDataRichiestaDefault();
         setDescrizione(descrizione);
@@ -20,13 +20,13 @@ public class Proposta {
 
 
     //Getter & Setter
-    public String getTipoElemento() {
+    public TipoProposta getTipoElemento() {
         return tipoElemento;
     }
 
-    public void setTipoElemento(String tipoElemento) throws CampoNonValido{
-        if(tipoElemento == null ||  tipoElemento.trim().length()<1 || tipoElemento.trim().length()>30){
-            throw new CampoNonValido("Il Tipo Elemento deve avere minimo 1 carattere e massimo 30!");
+    public void setTipoElemento(TipoProposta tipoElemento) throws CampoNonValido{
+        if(tipoElemento == null){
+            throw new CampoNonValido("Il Tipo Elemento non è valido.");
         }
         this.tipoElemento = tipoElemento;
     }
