@@ -1,5 +1,7 @@
 package gui;
 
+import controller.Controller;
+
 import javax.swing.*;
 
 public class Home {
@@ -8,11 +10,13 @@ public class Home {
     private JButton esploraArtistiButton;
     private JButton esploraGeneriButton;
 
-    public static void main(String[] args) {
+    public Home(Controller controller,JFrame frameChiamante){
         JFrame frame = new JFrame("Home");
-        frame.setContentPane(new Home().mainPanel);
+        frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-    }
+
+
+    };
 }

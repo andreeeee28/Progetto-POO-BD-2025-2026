@@ -5,10 +5,10 @@ import java.util.ArrayList;
 public class Utente {
     protected String username;
     protected String password;
-    protected String nazione;
+    protected Nazione nazione;
     protected ArrayList <Proposta> proposteInviate;
 
-    public Utente(String username, String password, String nazione) throws CampoNonValido {
+    public Utente(String username, String password, Nazione nazione) throws CampoNonValido {
         setUsername(username);
         setPassword(password);
         setNazione(nazione);
@@ -39,16 +39,13 @@ public class Utente {
     }
 
 
-    public String getNazione() throws  CampoNonValido{
+    public Nazione getNazione() throws  CampoNonValido{
         return nazione;
     }
 
-    public void setNazione(String nazione) throws CampoNonValido {
-        // La Repubblica Democratica del Congo è la nazione col nome più lungo in italiano
-        if(nazione == null || nazione.length()<4 || nazione.length()>32){
-            throw new CampoNonValido("Non esistono nazioni in italiano col nome di questa lunghezza");
-        }
+    public void setNazione(Nazione nazione) throws CampoNonValido {
         this.nazione = nazione;
+
     }
     public void addProposta(Proposta propostaInviata){
         this.proposteInviate.add(propostaInviata);

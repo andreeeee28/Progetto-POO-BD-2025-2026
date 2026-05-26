@@ -3,7 +3,7 @@ package model;
 public class Admin extends Utente {
     private String idAdmin;
 
-    public Admin(String username, String password, String nazione, String idAdmin) throws CampoNonValido {
+    public Admin(String username, String password, Nazione nazione, String idAdmin) throws CampoNonValido {
         super(username, password, nazione);
         this.idAdmin = idAdmin;
 
