@@ -1,12 +1,15 @@
 package model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 
 public class Musicista extends Artista {
     private String nomeVero;
     private String cognonomeVero;
     private LocalDate dataDiNascita;
+    private ArrayList<MembroBand> partecipazioniBand;
+
 
 
     public Musicista(String nomeArte, int annoInizioAttivita, String idArtista, String nomeVero, String cognomeVero, LocalDate dataDiNascita) throws CampoNonValido {
@@ -50,5 +53,17 @@ public class Musicista extends Artista {
             throw new CampoNonValido("L'anno di nascita inserito non è valido.");
         }
         this.dataDiNascita = dataDiNascita;
+    }
+
+    public ArrayList<MembroBand> getPartecipazioniBand() {
+        return partecipazioniBand;
+    }
+
+    // partecipazioni Band può essere vuota perché esistono musicisti che non hanno nessuna band
+    public void setPartecipazioniBand(ArrayList<MembroBand> partecipazioniBand) throws CampoNonValido {
+        if(partecipazioniBand == null){
+            throw new CampoNonValido("Partecipazioni alle band non possono essere null");
+        }
+        this.partecipazioniBand = partecipazioniBand;
     }
 }

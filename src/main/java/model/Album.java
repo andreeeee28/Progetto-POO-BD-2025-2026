@@ -8,7 +8,6 @@ public class Album {
 
     private String titolo;
     private LocalDate dataPubblicazione;
-    private float voto;
     private Artista artista;
     private ArrayList<Canzone> tracklist;
     private ArrayList<Genere> generi;
@@ -60,16 +59,18 @@ public class Album {
         this.dataPubblicazione = dataPubblicazione;
     }
 
-    public float getVoto() {
-        return voto;
+    public float getRating() {
+        if (recensioni == null || recensioni.isEmpty()) {
+            return 0.0f;
+        }
+        float sommaTot = 0;
+        for (Recensione recensione : recensioni){
+             sommaTot += recensione.getVoto();
+        }
+        float numeroRecensioni = (float) recensioni.size();
+        return (sommaTot/numeroRecensioni);
     }
 
-    public void setVoto(float voto) throws CampoNonValido{
-        if( voto<1 || voto>10){
-            throw new CampoNonValido("Il voto deve essere compreso tra 1 e 10.");
-        }
-        this.voto = voto;
-    }
 
     public Artista getArtista() {
         return artista;
@@ -80,6 +81,7 @@ public class Album {
             throw new CampoNonValido("Artista non valido.");
         }
         this.artista = artista;
+        artista.addAlbum(this);
     }
 
     public ArrayList<Canzone> getTracklist() {
@@ -87,10 +89,13 @@ public class Album {
     }
 
     public void setTracklist(ArrayList<Canzone> tracklist) throws CampoNonValido {
-        if(tracklist == null){
+        if(tracklist == null || tracklist.isEmpty()){
             throw new CampoNonValido("Tracklist non valida.");
         }
         this.tracklist = tracklist;
+        for(Canzone canzone : this.tracklist){
+            canzone.setAlbumDiAppartenenza(this);
+        }
     }
 
     public ArrayList<Genere> getGeneri() {
@@ -101,11 +106,16 @@ public class Album {
         this.generi = generi;
     }
 
-    public void addGeneri(Genere genere) throws CampoNonValido{
+    public void addGeneri(Genere genere) throws CampoNonValido {
         if(genere == null){
             throw new CampoNonValido("Genere inserito non valido.");
         }
-            this.generi.add(genere);
+
+        // Se l'album NON ha già questo genere nella sua lista...
+        if (!this.generi.contains(genere)) {
+            this.generi.add(genere);       // 1. Lo aggiunge a se stesso
+            genere.addListaAlbum(this);    // 2. Avvisa il genere di fare lo stesso
+        }
     }
 
     public ArrayList<Recensione> getRecensioni() {

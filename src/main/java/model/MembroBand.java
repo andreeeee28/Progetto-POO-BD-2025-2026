@@ -5,12 +5,14 @@ import java.time.LocalDate;
 public class MembroBand {
     private Strumento strumentoPrincipale;
     private int annoIngresso;
-    private int annoUscita;
+    private Integer annoUscita;
+    private Musicista musicista;
+    private Band band;
 
-    public MembroBand(Strumento strumentoPrincipale, int annoIngresso, int annoUscita) throws CampoNonValido{
+    public MembroBand(Strumento strumentoPrincipale, int annoIngresso, int annoUscita, Musicista musicista, Band band) throws CampoNonValido{
         setStrumentoPrincipale(strumentoPrincipale);
-        this.annoIngresso = annoIngresso;
-        this.annoUscita = annoUscita;
+        setAnnoIngresso(annoIngresso);
+        setAnnoUscita(annoUscita);
     }
 
     public Strumento getStrumentoPrincipale() {
@@ -42,13 +44,37 @@ public class MembroBand {
         return annoUscita;
     }
 
-    public void setAnnoUscita(int annoUscita) throws CampoNonValido {
-        if (annoUscita > LocalDate.now().getYear()){
-            throw new CampoNonValido("L'anno di inizio attività non può superare l'anno in corso.");
-        }
-        if (annoUscita < 1900){
-            throw new CampoNonValido("L'anno di inizio attività inserito non è valido.");
-        }
+    public void setAnnoUscita(Integer annoUscita) throws CampoNonValido {
+      if(annoUscita!=null) {
+          if (annoUscita > LocalDate.now().getYear()) {
+              throw new CampoNonValido("L'anno di inizio attività non può superare l'anno in corso.");
+          }
+          if (annoUscita < 1900) {
+              throw new CampoNonValido("L'anno di inizio attività inserito non è valido.");
+          }
+      }
         this.annoUscita = annoUscita;
+    }
+
+    public Musicista getMusicista() {
+        return musicista;
+    }
+
+    public void setMusicista(Musicista musicista) throws CampoNonValido {
+        if(musicista == null){
+            throw new CampoNonValido("Il musicista non può essere Null");
+        }
+        this.musicista = musicista;
+    }
+
+    public Band getBand() {
+        return band;
+    }
+
+    public void setBand(Band band) throws CampoNonValido {
+        if (band == null) {
+            throw new CampoNonValido("La band non può essere nulla.");
+        }
+        this.band = band;
     }
 }

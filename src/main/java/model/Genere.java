@@ -65,10 +65,15 @@ public class Genere {
         return listaAlbum;
     }
 
-    public void addListaAlbum(Album newAlbum) throws CampoNonValido{
+    public void addListaAlbum(Album newAlbum) throws CampoNonValido {
         if (newAlbum == null){
             throw new CampoNonValido("Album non valido.");
         }
-        this.listaAlbum.add(newAlbum);
+
+        // Se il genere NON ha già questo album nella sua lista...
+        if (!this.listaAlbum.contains(newAlbum)) {
+            this.listaAlbum.add(newAlbum); // 1. Lo aggiunge a se stesso
+            newAlbum.addGeneri(this);      // 2. Avvisa l'album di fare lo stesso
+        }
     }
 }

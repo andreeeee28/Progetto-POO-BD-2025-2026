@@ -3,6 +3,7 @@ package model;
 public class Canzone {
     private String titolo;
     private int durataSecondi;
+    private Album albumDiAppartenenza;
 
     public Canzone (String titolo, int durataSecondi) throws CampoNonValido{
         setTitolo(titolo);
@@ -37,5 +38,17 @@ public class Canzone {
             throw new CampoNonValido("Il titolo deve avere minimo 1 carattere e massimo 30!");
         }
         this.titolo = titolo;
+    }
+
+    public void setAlbumDiAppartenenza(Album albumDiAppartenenza) throws CampoNonValido {
+        if(albumDiAppartenenza == null ){
+            throw new CampoNonValido("l' album di appartenenza della canzone non può essere null");
+
+        }
+        this.albumDiAppartenenza = albumDiAppartenenza;
+    }
+
+    public Album getAlbumDiAppartenenza() {
+        return albumDiAppartenenza;
     }
 }
