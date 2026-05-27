@@ -9,11 +9,11 @@ public class Admin extends Utente {
 
     }
 
-    public void setStatoPropostaAccettata(Proposta propostaInviata) {
+    public void setStatoPropostaAccettata(Proposta propostaInviata) throws CampoNonValido{
         propostaInviata.setStatoProposta(StatoProposta.ACCETTATA);
     }
 
-    public void setStatoPropostaRifiutata(Proposta propostaInviata) {
+    public void setStatoPropostaRifiutata(Proposta propostaInviata) throws CampoNonValido {
         propostaInviata.setStatoProposta(StatoProposta.RIFIUTATA);
     }
 }

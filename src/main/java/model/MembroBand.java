@@ -9,6 +9,30 @@ public class MembroBand {
     private Musicista musicista;
     private Band band;
 
+    //Getter
+
+    public Strumento getStrumentoPrincipale() {
+        return strumentoPrincipale;
+    }
+
+    public int getAnnoIngresso() {
+        return annoIngresso;
+    }
+
+    public Integer getAnnoUscita() {
+        return annoUscita;
+    }
+
+    public Musicista getMusicista() {
+        return musicista;
+    }
+
+    public Band getBand() {
+        return band;
+    }
+
+    //Setter
+
     public MembroBand(Strumento strumentoPrincipale, int annoIngresso, int annoUscita, Musicista musicista, Band band) throws CampoNonValido{
         setStrumentoPrincipale(strumentoPrincipale);
         setAnnoIngresso(annoIngresso);
@@ -17,19 +41,11 @@ public class MembroBand {
         setBand(band);
     }
 
-    public Strumento getStrumentoPrincipale() {
-        return strumentoPrincipale;
-    }
-
     public void setStrumentoPrincipale(Strumento strumentoPrincipale) throws  CampoNonValido{
         if(strumentoPrincipale == null){
             throw new CampoNonValido("Strumento non valido.");
         }
         this.strumentoPrincipale = strumentoPrincipale;
-    }
-
-    public int getAnnoIngresso() {
-        return annoIngresso;
     }
 
     public void setAnnoIngresso(int annoIngresso) throws CampoNonValido {
@@ -42,10 +58,6 @@ public class MembroBand {
         this.annoIngresso = annoIngresso;
     }
 
-    public int getAnnoUscita() {
-        return annoUscita;
-    }
-
     public void setAnnoUscita(Integer annoUscita) throws CampoNonValido {
       if(annoUscita!=null) {
           if (annoUscita > LocalDate.now().getYear()) {
@@ -54,12 +66,11 @@ public class MembroBand {
           if (annoUscita < 1900) {
               throw new CampoNonValido("L'anno di inizio attività inserito non è valido.");
           }
+          if(annoUscita< this.annoIngresso){
+              throw new CampoNonValido("L'anno di uscita non può essere minore dell anno di entrata");
+          }
       }
         this.annoUscita = annoUscita;
-    }
-
-    public Musicista getMusicista() {
-        return musicista;
     }
 
     public void setMusicista(Musicista musicista) throws CampoNonValido {
@@ -69,9 +80,6 @@ public class MembroBand {
         this.musicista = musicista;
     }
 
-    public Band getBand() {
-        return band;
-    }
 
     public void setBand(Band band) throws CampoNonValido {
         if (band == null) {

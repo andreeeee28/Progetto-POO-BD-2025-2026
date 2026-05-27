@@ -17,9 +17,29 @@ public class Genere {
         this.listaAlbum = new ArrayList<>();
     }
 
+    //Getter
+
     public String getNome() {
         return nome;
     }
+
+    public String getDescrizione() {
+        return descrizione;
+    }
+
+    public ArrayList<Genere> getGeneriPadre() {
+        return generiPadre;
+    }
+
+    public ArrayList<Album> getListaAlbum() {
+        return listaAlbum;
+    }
+
+    public ArrayList<Genere> getSottogeneri() {
+        return sottogeneri;
+    }
+
+    //Setter
 
     public void setNome(String nome) throws CampoNonValido {
         if(nome == null ||  nome.trim().length()<1 || nome.trim().length()>30){
@@ -28,20 +48,13 @@ public class Genere {
         this.nome = nome;
     }
 
-    public String getDescrizione() {
-        return descrizione;
-    }
-
     public void setDescrizione(String descrizione) throws CampoNonValido {
         if(descrizione == null ||  descrizione.trim().length()<1 || descrizione.trim().length()>150){
             throw new CampoNonValido("La descrizione deve avere minimo 1 carattere e massimo 150!");
         }
         this.descrizione = descrizione;
     }
-
-    public ArrayList<Genere> getGeneriPadre() {
-        return generiPadre;
-    }
+    // Altri metodi
 
     public void addGeneriPadre(Genere newGenere) throws CampoNonValido{
         if (newGenere == null){
@@ -54,10 +67,6 @@ public class Genere {
         }
     }
 
-    public ArrayList<Genere> getSottogeneri() {
-        return sottogeneri;
-    }
-
     public void addSottogeneri(Genere newGenere) throws CampoNonValido{
         if (newGenere == null){
             throw new CampoNonValido("Genere non valido.");
@@ -67,10 +76,6 @@ public class Genere {
         } else {
             throw new CampoNonValido("Sottogenere già presente nella lista dei sottogeneri del genere");
         }
-    }
-
-    public ArrayList<Album> getListaAlbum() {
-        return listaAlbum;
     }
 
     public void addListaAlbum(Album newAlbum) throws CampoNonValido {

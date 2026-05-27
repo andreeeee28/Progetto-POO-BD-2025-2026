@@ -7,7 +7,6 @@ public class Recensione {
     private Utente utente;
     private float voto;
     private LocalDate data;
-    private String testoRecensione;
 
     public Recensione(Album album, Utente utente, float voto, LocalDate data) throws CampoNonValido{
         setAlbum(album);
@@ -55,13 +54,13 @@ public class Recensione {
 
     public void setData(LocalDate data) throws CampoNonValido {
         if (data == null){
-            throw new CampoNonValido("La data di pubblicazione non può essere vuota.");
+            throw new CampoNonValido("La data di recensione non può essere vuota.");
         }
         if (data.isAfter(LocalDate.now())){
-            throw new CampoNonValido("La data di pubblicazione non può superare la data attuale.");
+            throw new CampoNonValido("La data di recensione non può superare la data attuale.");
         }
         if (data.isBefore(LocalDate.of(1900,1,1))){
-            throw new CampoNonValido("La data di pubblicazione inserita non è valida.");
+            throw new CampoNonValido("La data di recensione inserita non è valida.");
         }
         this.data = data;
     }

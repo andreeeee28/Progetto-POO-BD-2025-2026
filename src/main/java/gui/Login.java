@@ -66,7 +66,7 @@ public class Login {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String StringaCampoUtente = campoNomeUtente.getText();
-                String StringaCampoPassword = Arrays.toString(campoPassword.getPassword());
+                String StringaCampoPassword = new String(campoPassword.getPassword());
                 try {
                     Utente utenteAttuale = controller.cliccatoAccedi(StringaCampoUtente, StringaCampoPassword);
                     new Home(controller, frame, utenteAttuale);

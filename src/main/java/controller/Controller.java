@@ -18,6 +18,13 @@ public class Controller {
         this.albumPresenti = new ArrayList<>();
         this.artistiPresenti = new ArrayList<>();
         this.generiPresenti = new ArrayList<>();
+        try {
+            creaUtentiRegistrati();
+            creaGeneri();
+        } catch (CampoNonValido e) {
+            System.out.println("Errore nella creazione dei dati fittizzi");
+        }
+
     }
     // con questi metodi vogliamo riempire il database fittizio iniziale che poi potrà essere
     // ulteriermente ingrandito dall Admin
@@ -79,10 +86,10 @@ public class Controller {
        acousticBlues.addGeneriPadre(blues);
        boogieWoogie.addGeneriPadre(blues);
    }
-   public void creaArtisti() throws CampoNonValido {
+   /*public void creaArtisti() throws CampoNonValido {
        // --- ROCK ---
-       Artista beatles = new Artista("The Beatles", 1960, "ART-R01");
-       Artista stones = new Artista("The Rolling Stones", 1962, "ART-R02");
+       Artista beatles = new Band("The Beatles", 1960, "ART-R01");
+       Artista stones = new Band("The Rolling Stones", 1962, "ART-R02");
        Artista floyd = new Artista("Pink Floyd", 1965, "ART-R03");
 
        // --- POP ---
@@ -182,7 +189,7 @@ public class Controller {
        this.artistiPresenti.add(future); this.artistiPresenti.add(drake);
        this.artistiPresenti.add(sonHouse); this.artistiPresenti.add(albertAmmons);
 
-   }
+   } */
    public void creaUtentiRegistrati() throws CampoNonValido {
        // 1. Utente dall'Italia
        Utente u1 = new Utente("mario99", "PassMario123", Nazione.ITALIA);
