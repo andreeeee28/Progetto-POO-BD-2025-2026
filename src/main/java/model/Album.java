@@ -8,23 +8,18 @@ public class Album {
 
     private String titolo;
     private LocalDate dataPubblicazione;
-    private float voto;
     private Artista artista;
     private ArrayList<Canzone> tracklist;
     private ArrayList<Genere> generi;
     private ArrayList<Recensione> recensioni;
 
     //Costruttore
-    public Album(String titolo, LocalDate dataPubblicazione, Artista artista, Genere genere, ArrayList<Canzone> tracklist) throws CampoNonValido {
+    public Album(String titolo, LocalDate dataPubblicazione, Artista artista, ArrayList <Genere> generi, ArrayList<Canzone> tracklist) throws CampoNonValido {
         setTitolo(titolo);
         setDataPubblicazione(dataPubblicazione);
         setTracklist(tracklist);
-        // Prendo la lista già creata dal Controller/GUI
         this.recensioni = new ArrayList<>();
-        // 2. Associo il genere base
-        this.generi = new ArrayList<>();
-        addGeneri(genere);
-        // 3. Associo l'album all'artista (con controllo di sicurezza)
+        setGeneri(generi);
         setArtista(artista);
         if (this.artista != null) {
             this.artista.addAlbum(this);
@@ -60,16 +55,18 @@ public class Album {
         this.dataPubblicazione = dataPubblicazione;
     }
 
-    public float getVoto() {
-        return voto;
+    public float getRating() {
+        if (recensioni == null || recensioni.isEmpty()) {
+            return 0.0f;
+        }
+        float sommaTot = 0;
+        for (Recensione recensione : recensioni){
+             sommaTot += recensione.getVoto();
+        }
+        float numeroRecensioni = (float) recensioni.size();
+        return (sommaTot/numeroRecensioni);
     }
 
-    public void setVoto(float voto) throws CampoNonValido{
-        if( voto<1 || voto>10){
-            throw new CampoNonValido("Il voto deve essere compreso tra 1 e 10.");
-        }
-        this.voto = voto;
-    }
 
     public Artista getArtista() {
         return artista;
@@ -87,25 +84,35 @@ public class Album {
     }
 
     public void setTracklist(ArrayList<Canzone> tracklist) throws CampoNonValido {
-        if(tracklist == null){
+        if(tracklist == null || tracklist.isEmpty()){
             throw new CampoNonValido("Tracklist non valida.");
         }
         this.tracklist = tracklist;
+        for(Canzone canzone : this.tracklist){
+            canzone.setAlbumDiAppartenenza(this);
+        }
     }
 
     public ArrayList<Genere> getGeneri() {
         return generi;
     }
 
-    public void setGeneri(ArrayList<Genere> generi) throws CampoNonValido{
+    public void setGeneri(ArrayList<Genere> generi) throws CampoNonValido {
+        if(generi == null|| generi.isEmpty()){
+            throw new CampoNonValido("la lista dei generi non può essere null e non può essere vuota ");
+        }
         this.generi = generi;
     }
 
-    public void addGeneri(Genere genere) throws CampoNonValido{
+    public void addGeneri(Genere genere) throws CampoNonValido {
         if(genere == null){
             throw new CampoNonValido("Genere inserito non valido.");
         }
+        if (!this.generi.contains(genere)) {
             this.generi.add(genere);
+        } else {
+            throw new CampoNonValido("Genere già presente nella lista dei generi dell' album!");
+        }
     }
 
     public ArrayList<Recensione> getRecensioni() {

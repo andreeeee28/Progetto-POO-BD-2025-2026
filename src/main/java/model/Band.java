@@ -1,17 +1,18 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Band extends Artista {
     private int numeroMembri;
-    private int annoScioglimento;
+    private Integer annoScioglimento;
     private ArrayList<MembroBand> membriBand;
 
-    public Band(String nomeArte, int annoInizioAttivita, String idArtista, int numeroMembri, int annoScioglimento) throws CampoNonValido {
+    public Band(String nomeArte, int annoInizioAttivita, String idArtista, int numeroMembri, Integer annoScioglimento,ArrayList<MembroBand> membriband) throws CampoNonValido {
         super(nomeArte, annoInizioAttivita, idArtista);
-        this.numeroMembri = numeroMembri;
-        this.annoScioglimento = annoScioglimento;
-        this.membriBand = new ArrayList<MembroBand>();
+        setNumeroMembri(numeroMembri);
+        setAnnoScioglimento(annoScioglimento);
+        setMembriBand(membriband);
 
     }
 
@@ -19,19 +20,55 @@ public class Band extends Artista {
         return numeroMembri;
     }
 
-    public void setNumeroMembri(int numeroMembri) {
+    public void setNumeroMembri(int numeroMembri) throws CampoNonValido {
+        // Logicamente, una band deve avere più di un membro
+        if (numeroMembri < 2) {
+            throw new CampoNonValido("Una band deve avere almeno 2 membri (altrimenti è un solista!).");
+        }
         this.numeroMembri = numeroMembri;
     }
 
-    public int getAnnoScioglimento() {
+    public Integer getAnnoScioglimento() {
         return annoScioglimento;
     }
 
-    public void setAnnoScioglimento(int annoScioglimento) {
+    public void setAnnoScioglimento(Integer annoScioglimento) throws CampoNonValido {
+        // Se è null, la band è ancora in attività, quindi saltiamo i controlli
+        if (annoScioglimento != null) {
+            if (annoScioglimento > LocalDate.now().getYear()) {
+                throw new CampoNonValido("L'anno di scioglimento non può superare l'anno in corso.");
+            }
+            // Uso getAnnoInizioAttivita() ereditato dalla classe padre Artista
+            if (annoScioglimento < getAnnoInizioAttivita()) {
+                throw new CampoNonValido("L'anno di scioglimento non può essere precedente all'anno di inizio attività.");
+            }
+        }
         this.annoScioglimento = annoScioglimento;
     }
 
-    public void addMembroBand(MembroBand membroBand){
+    public ArrayList<MembroBand> getMembriBand() {
+        return membriBand;
+    }
+
+    public  void setMembriBand(ArrayList<MembroBand> membriBand) throws CampoNonValido{
+        if (membriBand == null) {
+            throw new CampoNonValido("la lista dei membi della band non può essere nulla.");
+        }
+        if(membriBand.size()<2){
+
+            throw new CampoNonValido("la band deve avere almeno 2 membri iniziali.");
+        }
+        this.membriBand = membriBand;
+    }
+
+
+
+
+    public void addMembroBand(MembroBand membroBand) throws CampoNonValido {
+        // Aggiunto il controllo di sicurezza anche qui
+        if (membroBand == null) {
+            throw new CampoNonValido("Il membro della band da aggiungere non può essere nullo.");
+        }
         this.membriBand.add(membroBand);
     }
 }

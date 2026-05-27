@@ -7,6 +7,7 @@ public class Recensione {
     private Utente utente;
     private float voto;
     private LocalDate data;
+    private String testoRecensione;
 
     public Recensione(Album album, Utente utente, float voto, LocalDate data) throws CampoNonValido{
         setAlbum(album);

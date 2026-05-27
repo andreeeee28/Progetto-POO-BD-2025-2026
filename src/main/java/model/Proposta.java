@@ -8,14 +8,16 @@ public class Proposta {
     private String descrizione;
     private LocalDate dataRichiesta;
     private StatoProposta statoProposta;
+    private Utente autoreProposta;
 
     //Costruttore
-    public Proposta(TipoProposta tipoElemento, LocalDate dataRichiesta, String descrizione, String titoloElemento) throws CampoNonValido{
+    public Proposta(TipoProposta tipoElemento, LocalDate dataRichiesta, String descrizione, String titoloElemento, Utente autoreProposta) throws CampoNonValido{
         setTipoElemento(tipoElemento);
         setDataRichiestaDefault();
         setDescrizione(descrizione);
         setTitoloElemento(titoloElemento);
         setStatoPropostaDefault();
+        setAutoreProposta(autoreProposta);
     }
 
 
@@ -85,5 +87,16 @@ public class Proposta {
             throw new CampoNonValido("Il Titolo dell'Elemento deve avere minimo 1 carattere e massimo 30!");
         }
         this.titoloElemento = titoloElemento;
+    }
+
+    public Utente getAutoreProposta() {
+        return autoreProposta;
+    }
+
+    public void setAutoreProposta(Utente autoreProposta) throws CampoNonValido {
+        if(autoreProposta == null){
+            throw  new CampoNonValido("L'autore della proposta non può essere null");
+        }
+        this.autoreProposta = autoreProposta;
     }
 }
