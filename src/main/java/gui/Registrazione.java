@@ -16,6 +16,7 @@ public class Registrazione {
     private JFrame frame;
     private JTextField campoPassword;
     private JComboBox <Nazione> campoNazione;
+    private JButton tornaAlLoginButton;
 
 
     public Registrazione(Controller controller, JFrame frameChiamante){
@@ -27,7 +28,16 @@ public class Registrazione {
         frame.setVisible(true);
         campoNazione.setModel(new DefaultComboBoxModel<>(Nazione.values()));
 
+        //Tasto torna al Login
+        tornaAlLoginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frameChiamante.setVisible(true);
+                frame.dispose();
+            }
+        });
 
+        //Tasto registrati
         registratiButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

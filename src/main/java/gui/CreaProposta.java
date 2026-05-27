@@ -2,7 +2,6 @@ package gui;
 
 import controller.Controller;
 import model.CampoNonValido;
-import model.Proposta;
 import model.TipoProposta;
 import model.Utente;
 
@@ -16,6 +15,7 @@ public class CreaProposta {
     private JComboBox<TipoProposta> tipoPropostaComboBox;
     private JButton inviaPropostaButton;
     private JPanel mainPanel;
+    private JButton tornaAllaHomeButton;
     private JFrame frame;
 
     public CreaProposta(Controller controller, JFrame frameChiamante, Utente utenteAttuale) {
@@ -46,6 +46,15 @@ public class CreaProposta {
                     javax.swing.JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
 
+            }
+        });
+
+        //Tasto torna alla home
+        tornaAllaHomeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frameChiamante.setVisible(true);
+                frame.dispose();
             }
         });
     }

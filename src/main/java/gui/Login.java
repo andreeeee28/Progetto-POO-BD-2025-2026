@@ -15,6 +15,10 @@ public class Login {
     private JTextField campoNomeUtente;
     private JButton accediButton;
     private JButton registrazioneButton;
+    private JRadioButton standardRadioButton;
+    private JRadioButton adminRadioButton;
+    private JLabel inserireIdLabel;
+    private JTextField campoID;
     private static JFrame frameHome;
     private Controller controller;
     private static JFrame frame;
@@ -30,6 +34,31 @@ public class Login {
 
     public Login() {
         controller = new Controller();
+
+        //Inizializzazione button group ad utente standard
+        standardRadioButton.setSelected(true);
+        inserireIdLabel.setVisible(false);
+        campoID.setVisible(false);
+
+        //Radio button Admin
+        adminRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                inserireIdLabel.setVisible(true);
+                campoID.setVisible(true);
+                frame.pack();
+            }
+        });
+
+        //Radio button Standard
+        standardRadioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                inserireIdLabel.setVisible(false);
+                campoID.setVisible(false);
+                frame.pack();
+            }
+        });
 
         //Pulsante Accedi
 
@@ -55,13 +84,11 @@ public class Login {
         registrazioneButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 new Registrazione(controller,frame);
                 frame.setVisible(false);
-
-
             }
         });
+
     }
 
 

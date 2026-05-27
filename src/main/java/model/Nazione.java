@@ -2,6 +2,7 @@ package model;
 
 public enum Nazione {
     PALESTINA,
+    TAIWAN,
     GERMANIA,
     ITALIA,
     CINA,
