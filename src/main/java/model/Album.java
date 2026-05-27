@@ -21,25 +21,50 @@ public class Album {
         this.recensioni = new ArrayList<>();
         setGeneri(generi);
         setArtista(artista);
-        if (this.artista != null) {
-            this.artista.addAlbum(this);
-        }
       }
 
-    //Get & Setter
+    //Getter
     public String getTitolo() {
         return titolo;
     }
+
+    public LocalDate getDataPubblicazione() {
+        return dataPubblicazione;
+    }
+
+    public float getRating() {
+        if (recensioni == null || recensioni.isEmpty()) {
+            return 0.0f;
+        }
+        float sommaTot = 0;
+        for (Recensione recensione : recensioni){
+            sommaTot += recensione.getVoto();
+        }
+        float numeroRecensioni = (float) recensioni.size();
+        return (sommaTot/numeroRecensioni);
+    }
+
+    public ArrayList<Canzone> getTracklist() {
+        return tracklist;
+    }
+
+    public Artista getArtista() {
+        return artista;
+    }
+
+    public ArrayList<Genere> getGeneri() {
+        return generi;
+    }
+
+    public ArrayList<Recensione> getRecensioni() {return recensioni;}
+
+    //Setter
 
     public void setTitolo(String titolo) throws CampoNonValido {
         if(titolo == null ||  titolo.trim().length()<1 || titolo.trim().length()>30){
             throw new CampoNonValido("Il titolo deve avere minimo 1 carattere e massimo 30!");
         }
         this.titolo = titolo;
-    }
-
-    public LocalDate getDataPubblicazione() {
-        return dataPubblicazione;
     }
 
     public void setDataPubblicazione(LocalDate dataPubblicazione) throws CampoNonValido {
@@ -55,32 +80,11 @@ public class Album {
         this.dataPubblicazione = dataPubblicazione;
     }
 
-    public float getRating() {
-        if (recensioni == null || recensioni.isEmpty()) {
-            return 0.0f;
-        }
-        float sommaTot = 0;
-        for (Recensione recensione : recensioni){
-             sommaTot += recensione.getVoto();
-        }
-        float numeroRecensioni = (float) recensioni.size();
-        return (sommaTot/numeroRecensioni);
-    }
-
-
-    public Artista getArtista() {
-        return artista;
-    }
-
     public void setArtista(Artista artista) throws CampoNonValido{
         if(artista == null){
             throw new CampoNonValido("Artista non valido.");
         }
         this.artista = artista;
-    }
-
-    public ArrayList<Canzone> getTracklist() {
-        return tracklist;
     }
 
     public void setTracklist(ArrayList<Canzone> tracklist) throws CampoNonValido {
@@ -93,16 +97,21 @@ public class Album {
         }
     }
 
-    public ArrayList<Genere> getGeneri() {
-        return generi;
-    }
-
     public void setGeneri(ArrayList<Genere> generi) throws CampoNonValido {
         if(generi == null|| generi.isEmpty()){
             throw new CampoNonValido("la lista dei generi non può essere null e non può essere vuota ");
         }
         this.generi = generi;
     }
+
+    public void setRecensioni(ArrayList<Recensione> recensioni) throws CampoNonValido{
+        if(recensioni == null){
+            throw new CampoNonValido("Lista recensioni inserita non valida.");
+        }
+        this.recensioni = recensioni;
+    }
+
+    // Altri metodi
 
     public void addGeneri(Genere genere) throws CampoNonValido {
         if(genere == null){
@@ -115,23 +124,18 @@ public class Album {
         }
     }
 
-    public ArrayList<Recensione> getRecensioni() {
-        return recensioni;
-    }
-
-    public void setRecensioni(ArrayList<Recensione> recensioni) throws CampoNonValido{
-        if(recensioni == null){
-            throw new CampoNonValido("Lista recensioni inserita non valida.");
-        }
-        this.recensioni = recensioni;
-    }
-
     public void addRecensioni(Recensione recensione) throws CampoNonValido{
         if(recensione == null){
             throw new CampoNonValido("Recensione inserita non valida.");
         }
-        this.recensioni.add(recensione);
+        if(!recensioni.contains(recensione)){
+            this.recensioni.add(recensione);
+        } else{
+            throw new CampoNonValido("Recensione gia presente nella lista delle recensioni");
+        }
+
     }
+
 }
 
 

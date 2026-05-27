@@ -19,10 +19,25 @@ public class Musicista extends Artista {
         setDataDiNascita(dataDiNascita);
         partecipazioniBand = new ArrayList<>();
     }
+    //Getter
 
     public String getNomeVero() {
         return nomeVero;
     }
+
+    public String getCognonomeVero() {
+        return cognonomeVero;
+    }
+
+    public LocalDate getDataDiNascita() {
+        return dataDiNascita;
+    }
+
+    public ArrayList<MembroBand> getPartecipazioniBand() {
+        return partecipazioniBand;
+    }
+
+    // Setter
 
     public void setNomeVero(String nomeVero) throws CampoNonValido {
         if(nomeVero == null ||  nomeVero.trim().length()<1 || nomeVero.trim().length()>15){
@@ -31,9 +46,6 @@ public class Musicista extends Artista {
         this.nomeVero = nomeVero;
     }
 
-    public String getCognonomeVero() {
-        return cognonomeVero;
-    }
 
     public void setCognonomeVero(String cognonomeVero) throws CampoNonValido {
         if(cognonomeVero == null ||  cognonomeVero.trim().length()<1 || cognonomeVero.trim().length()>30){
@@ -42,9 +54,7 @@ public class Musicista extends Artista {
         this.cognonomeVero = cognonomeVero;
     }
 
-    public LocalDate getDataDiNascita() {
-        return dataDiNascita;
-    }
+
 
     public void setDataDiNascita(LocalDate dataDiNascita) throws CampoNonValido {
         if (dataDiNascita.getYear() > LocalDate.now().getYear()){
@@ -56,16 +66,23 @@ public class Musicista extends Artista {
         this.dataDiNascita = dataDiNascita;
     }
 
-    public ArrayList<MembroBand> getPartecipazioniBand() {
-        return partecipazioniBand;
-    }
-
-    // partecipazioni Band può essere vuota perché esistono musicisti che non hanno nessuna band ma non può essere null
-
     public void setPartecipazioniBand(ArrayList<MembroBand> partecipazioniBand) throws CampoNonValido {
         if(partecipazioniBand == null){
             throw new CampoNonValido("Partecipazioni alle band non possono essere null");
         }
         this.partecipazioniBand = partecipazioniBand;
+    }
+
+    // Altri Metodi
+
+    public void addPartecipazioneBand(MembroBand partecipazioneBand) throws CampoNonValido{
+        if(partecipazioneBand == null){
+            throw new CampoNonValido ("La partecipazione alla Band da aggiungere non può essere null");
+        }
+        if(!partecipazioniBand.contains(partecipazioneBand)){
+            partecipazioniBand.add(partecipazioneBand);
+        } else {
+            throw new CampoNonValido("Partecipazione alla band già presente nella lista di partecipazioni");
+        }
     }
 }

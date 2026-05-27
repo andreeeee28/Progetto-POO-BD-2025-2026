@@ -3,10 +3,10 @@ package model;
 import java.util.ArrayList;
 
 public class Utente {
-    protected String username;
-    protected String password;
-    protected Nazione nazione;
-    protected ArrayList <Proposta> proposteInviate;
+    private String username;
+    private String password;
+    private Nazione nazione;
+    private ArrayList <Proposta> proposteInviate;
 
     public Utente(String username, String password, Nazione nazione) throws CampoNonValido {
         setUsername(username);
@@ -55,7 +55,11 @@ public class Utente {
         if(propostaInviata == null){
             throw new CampoNonValido("La proposta non può essere null");
         }
+        if(!proposteInviate.contains(propostaInviata)){
+            this.proposteInviate.add(propostaInviata);
+        } else {
+            throw new CampoNonValido("Questa proposta è gia presente nella lista delle proposte inviate");
+        }
 
-        this.proposteInviate.add(propostaInviata);
     }
 }

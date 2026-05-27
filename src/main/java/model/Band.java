@@ -16,9 +16,21 @@ public class Band extends Artista {
 
     }
 
+    // Getter
+
     public int getNumeroMembri() {
         return numeroMembri;
     }
+
+    public Integer getAnnoScioglimento() {
+        return annoScioglimento;
+    }
+
+    public ArrayList<MembroBand> getMembriBand() {
+        return membriBand;
+    }
+
+    // Setter
 
     public void setNumeroMembri(int numeroMembri) throws CampoNonValido {
         // Logicamente, una band deve avere più di un membro
@@ -26,10 +38,6 @@ public class Band extends Artista {
             throw new CampoNonValido("Una band deve avere almeno 2 membri (altrimenti è un solista!).");
         }
         this.numeroMembri = numeroMembri;
-    }
-
-    public Integer getAnnoScioglimento() {
-        return annoScioglimento;
     }
 
     public void setAnnoScioglimento(Integer annoScioglimento) throws CampoNonValido {
@@ -46,9 +54,6 @@ public class Band extends Artista {
         this.annoScioglimento = annoScioglimento;
     }
 
-    public ArrayList<MembroBand> getMembriBand() {
-        return membriBand;
-    }
 
     public  void setMembriBand(ArrayList<MembroBand> membriBand) throws CampoNonValido{
         if (membriBand == null) {
@@ -61,14 +66,19 @@ public class Band extends Artista {
         this.membriBand = membriBand;
     }
 
-
-
+    //Altri metodi
 
     public void addMembroBand(MembroBand membroBand) throws CampoNonValido {
         // Aggiunto il controllo di sicurezza anche qui
         if (membroBand == null) {
             throw new CampoNonValido("Il membro della band da aggiungere non può essere nullo.");
         }
-        this.membriBand.add(membroBand);
+        if(!membriBand.contains(membroBand)) {
+            this.membriBand.add(membroBand);
+        } else{
+            throw new CampoNonValido("Membro della band già presente nella lista dei membri");
+        }
     }
-}
+
+    }
+

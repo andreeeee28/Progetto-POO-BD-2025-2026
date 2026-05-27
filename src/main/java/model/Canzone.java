@@ -9,10 +9,9 @@ public class Canzone {
         setTitolo(titolo);
         setDurataSecondi(durataSecondi);
     }
+    // Getter
 
     public String getDurataMinutiSecondi() {
-        /* Seppure l ' attributo è la durata in secondi voglio che ci sia la
-        possibilità di visualizzare la durata in minuti e secondi */
         int minuti =   durataSecondi / 60;
         int secondi =  durataSecondi % 60;
         return String.format("%d:%02d", minuti, secondi);
@@ -22,15 +21,19 @@ public class Canzone {
         return durataSecondi;
     }
 
+    public String getTitolo() {
+        return titolo;
+    }
+
+    public Album getAlbumDiAppartenenza() {return albumDiAppartenenza;}
+
+    // Setter
+
     public void setDurataSecondi(int durataSecondi) throws CampoNonValido{
         if(durataSecondi<1){
             throw new CampoNonValido("Durata della traccia non valida");
         }
         this.durataSecondi = durataSecondi;
-    }
-
-    public String getTitolo() {
-        return titolo;
     }
 
     public void setTitolo(String titolo) throws CampoNonValido {
@@ -48,7 +51,4 @@ public class Canzone {
         this.albumDiAppartenenza = albumDiAppartenenza;
     }
 
-    public Album getAlbumDiAppartenenza() {
-        return albumDiAppartenenza;
-    }
 }
