@@ -5,14 +5,15 @@ import java.util.ArrayList;
 
 public class Band extends Artista {
     private int numeroMembri;
-    private Integer annoScioglimento; // Modificato in Integer per permettere il valore null
+    private Integer annoScioglimento;
     private ArrayList<MembroBand> membriBand;
 
-    public Band(String nomeArte, int annoInizioAttivita, String idArtista, int numeroMembri, Integer annoScioglimento) throws CampoNonValido {
+    public Band(String nomeArte, int annoInizioAttivita, String idArtista, int numeroMembri, Integer annoScioglimento,ArrayList<MembroBand> membriband) throws CampoNonValido {
         super(nomeArte, annoInizioAttivita, idArtista);
         setNumeroMembri(numeroMembri);
         setAnnoScioglimento(annoScioglimento);
-        this.membriBand = new ArrayList<>();
+        setMembriBand(membriband);
+
     }
 
     public int getNumeroMembri() {
@@ -49,10 +50,24 @@ public class Band extends Artista {
         return membriBand;
     }
 
+    public  void setMembriBand(ArrayList<MembroBand> membriBand) throws CampoNonValido{
+        if (membriBand == null) {
+            throw new CampoNonValido("la lista dei membi della band non può essere nulla.");
+        }
+        if(membriBand.size()<2){
+
+            throw new CampoNonValido("la band deve avere almeno 2 membri iniziali.");
+        }
+        this.membriBand = membriBand;
+    }
+
+
+
+
     public void addMembroBand(MembroBand membroBand) throws CampoNonValido {
         // Aggiunto il controllo di sicurezza anche qui
         if (membroBand == null) {
-            throw new CampoNonValido("Il membro della band non può essere nullo.");
+            throw new CampoNonValido("Il membro della band da aggiungere non può essere nullo.");
         }
         this.membriBand.add(membroBand);
     }

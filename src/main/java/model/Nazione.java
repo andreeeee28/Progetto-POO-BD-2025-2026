@@ -19,6 +19,6 @@ public enum Nazione {
     SCOZIA,
     IRLANDA,
     IRLANDA_DEL_NORD,
-    ALTRO
+    ALTRO_NO_ISRAELE
 
 }

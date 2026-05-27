@@ -13,6 +13,8 @@ public class MembroBand {
         setStrumentoPrincipale(strumentoPrincipale);
         setAnnoIngresso(annoIngresso);
         setAnnoUscita(annoUscita);
+        setMusicista(musicista);
+        setBand(band);
     }
 
     public Strumento getStrumentoPrincipale() {

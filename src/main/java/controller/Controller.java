@@ -270,18 +270,23 @@ public class Controller {
         Genere gen = trovaGenere(nomeGenere);
 
         if (art != null && gen != null) {
-            Album nuovoAlbum = new Album(titolo, data, art, gen, tracce);
+
+            ArrayList<Genere> listaGeneri = new ArrayList<>();
+            listaGeneri.add(gen);
+            Album nuovoAlbum = new Album(titolo, data, art, listaGeneri, tracce); // iniziamo a creare l'album con un solo genere nell'array list, eventuali altri generi saranno inseriti successivamente con un altro metodo
             this.albumPresenti.add(nuovoAlbum);
+            art.addAlbum(nuovoAlbum);
+            gen.addListaAlbum(nuovoAlbum);
+
         } else {
             System.out.println(" Attenzione: Artista o Genere non trovato per l'album: " + titolo);
         }
     }
 
 
-
     public void creaAlbum() throws CampoNonValido {
 
-        // --- 🎸 ROCK ---
+        // ---  ROCK ---
         ArrayList<Canzone> trcAbbey = new ArrayList<>();
         trcAbbey.add(new Canzone("Come Together", 259)); trcAbbey.add(new Canzone("Something", 182));
         aggiungiAlbumFinto("Abbey Road", LocalDate.of(1969, 9, 26), "The Beatles", "Rock", trcAbbey);
@@ -307,7 +312,7 @@ public class Controller {
         aggiungiAlbumFinto("The Wall", LocalDate.of(1979, 11, 30), "Pink Floyd", "Rock", trcWall);
 
 
-        // --- 👑 POP ---
+        // ---  POP ---
         ArrayList<Canzone> trcThriller = new ArrayList<>();
         trcThriller.add(new Canzone("Thriller", 357)); trcThriller.add(new Canzone("Billie Jean", 294));
         aggiungiAlbumFinto("Thriller", LocalDate.of(1982, 11, 29), "Michael Jackson", "Pop", trcThriller);
@@ -333,7 +338,7 @@ public class Controller {
         aggiungiAlbumFinto("After Hours", LocalDate.of(2020, 3, 20), "The Weeknd", "Pop", trcAfterH);
 
 
-        // --- 🧷 PUNK ---
+        // --- PUNK ---
         ArrayList<Canzone> trcRamones = new ArrayList<>();
         trcRamones.add(new Canzone("Blitzkrieg Bop", 134)); trcRamones.add(new Canzone("Judy Is a Punk", 92));
         aggiungiAlbumFinto("Ramones", LocalDate.of(1976, 4, 23), "Ramones", "Punk", trcRamones);
@@ -359,7 +364,7 @@ public class Controller {
         aggiungiAlbumFinto("Spunk", LocalDate.of(1977, 9, 1), "Sex Pistols", "Punk", trcSpunk);
 
 
-        // --- 🎷 BLUES ---
+        // ---  BLUES ---
         ArrayList<Canzone> trcRegal = new ArrayList<>();
         trcRegal.add(new Canzone("Every Day I Have the Blues", 158)); trcRegal.add(new Canzone("Sweet Little Angel", 250));
         aggiungiAlbumFinto("Live at the Regal", LocalDate.of(1965, 11, 21), "B.B. King", "Blues", trcRegal);
@@ -385,7 +390,7 @@ public class Controller {
         aggiungiAlbumFinto("Hellhound on My Trail", LocalDate.of(1937, 6, 20), "Robert Johnson", "Blues", trcHellhound);
 
 
-        // --- 🤘 METAL ---
+        // --- METAL ---
         ArrayList<Canzone> trcParanoid = new ArrayList<>();
         trcParanoid.add(new Canzone("War Pigs", 474)); trcParanoid.add(new Canzone("Paranoid", 168));
         aggiungiAlbumFinto("Paranoid", LocalDate.of(1970, 9, 18), "Black Sabbath", "Metal", trcParanoid);
@@ -489,9 +494,8 @@ public class Controller {
         aggiungiAlbumFinto("Watermusic", LocalDate.of(2001, 1, 1), "William Basinski", "Ambient", trcWater);
 
 
-        // ==========================================
-        // 🎧 ALBUM SOTTOGENERI
-        // ==========================================
+
+        // Album sottogeneri
 
         ArrayList<Canzone> trcOk = new ArrayList<>();
         trcOk.add(new Canzone("Paranoid Android", 383)); trcOk.add(new Canzone("Karma Police", 261));

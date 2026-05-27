@@ -17,6 +17,7 @@ public class Musicista extends Artista {
         setNomeVero(nomeVero);
         setCognonomeVero(cognomeVero);
         setDataDiNascita(dataDiNascita);
+        partecipazioniBand = new ArrayList<>();
     }
 
     public String getNomeVero() {
@@ -59,7 +60,8 @@ public class Musicista extends Artista {
         return partecipazioniBand;
     }
 
-    // partecipazioni Band può essere vuota perché esistono musicisti che non hanno nessuna band
+    // partecipazioni Band può essere vuota perché esistono musicisti che non hanno nessuna band ma non può essere null
+
     public void setPartecipazioniBand(ArrayList<MembroBand> partecipazioniBand) throws CampoNonValido {
         if(partecipazioniBand == null){
             throw new CampoNonValido("Partecipazioni alle band non possono essere null");

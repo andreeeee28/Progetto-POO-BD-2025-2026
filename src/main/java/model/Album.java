@@ -14,16 +14,12 @@ public class Album {
     private ArrayList<Recensione> recensioni;
 
     //Costruttore
-    public Album(String titolo, LocalDate dataPubblicazione, Artista artista, Genere genere, ArrayList<Canzone> tracklist) throws CampoNonValido {
+    public Album(String titolo, LocalDate dataPubblicazione, Artista artista, ArrayList <Genere> generi, ArrayList<Canzone> tracklist) throws CampoNonValido {
         setTitolo(titolo);
         setDataPubblicazione(dataPubblicazione);
         setTracklist(tracklist);
-        // Prendo la lista già creata dal Controller/GUI
         this.recensioni = new ArrayList<>();
-        // 2. Associo il genere base
-        this.generi = new ArrayList<>();
-        addGeneri(genere);
-        // 3. Associo l'album all'artista (con controllo di sicurezza)
+        setGeneri(generi);
         setArtista(artista);
         if (this.artista != null) {
             this.artista.addAlbum(this);
@@ -81,7 +77,6 @@ public class Album {
             throw new CampoNonValido("Artista non valido.");
         }
         this.artista = artista;
-        artista.addAlbum(this);
     }
 
     public ArrayList<Canzone> getTracklist() {
@@ -102,7 +97,10 @@ public class Album {
         return generi;
     }
 
-    public void setGeneri(ArrayList<Genere> generi) throws CampoNonValido{
+    public void setGeneri(ArrayList<Genere> generi) throws CampoNonValido {
+        if(generi == null|| generi.isEmpty()){
+            throw new CampoNonValido("la lista dei generi non può essere null e non può essere vuota ");
+        }
         this.generi = generi;
     }
 
@@ -110,11 +108,10 @@ public class Album {
         if(genere == null){
             throw new CampoNonValido("Genere inserito non valido.");
         }
-
-        // Se l'album NON ha già questo genere nella sua lista...
         if (!this.generi.contains(genere)) {
-            this.generi.add(genere);       // 1. Lo aggiunge a se stesso
-            genere.addListaAlbum(this);    // 2. Avvisa il genere di fare lo stesso
+            this.generi.add(genere);
+        } else {
+            throw new CampoNonValido("Genere già presente nella lista dei generi dell' album!");
         }
     }
 

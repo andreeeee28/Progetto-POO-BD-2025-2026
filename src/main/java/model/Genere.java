@@ -47,7 +47,11 @@ public class Genere {
         if (newGenere == null){
             throw new CampoNonValido("Genere non valido.");
         }
-        this.generiPadre.add(newGenere);
+        if (!this.generiPadre.contains(newGenere)) {
+            this.generiPadre.add(newGenere);
+        } else {
+            throw new CampoNonValido("Genere padre già presente nella lista dei generi padre di questo genere");
+        }
     }
 
     public ArrayList<Genere> getSottogeneri() {
@@ -58,7 +62,11 @@ public class Genere {
         if (newGenere == null){
             throw new CampoNonValido("Genere non valido.");
         }
-        this.sottogeneri.add(newGenere);
+        if (!this.sottogeneri.contains(newGenere)) {
+            this.sottogeneri.add(newGenere);
+        } else {
+            throw new CampoNonValido("Sottogenere già presente nella lista dei sottogeneri del genere");
+        }
     }
 
     public ArrayList<Album> getListaAlbum() {
@@ -73,7 +81,9 @@ public class Genere {
         // Se il genere NON ha già questo album nella sua lista...
         if (!this.listaAlbum.contains(newAlbum)) {
             this.listaAlbum.add(newAlbum); // 1. Lo aggiunge a se stesso
-            newAlbum.addGeneri(this);      // 2. Avvisa l'album di fare lo stesso
+        } else{
+            throw new CampoNonValido("Questo album è gia presente nella lista degli album per genere");
+
         }
     }
 }

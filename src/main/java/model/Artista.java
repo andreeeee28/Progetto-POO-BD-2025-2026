@@ -4,10 +4,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Artista {
-    protected String nomeArte;
-    protected int annoInizioAttivita;
-    protected String idArtista;
-    protected ArrayList<Album> albumPubblicati;
+    private String nomeArte;
+    private int annoInizioAttivita;
+    private String idArtista;
+    private ArrayList<Album> albumPubblicati;
 
     public Artista(String nomeArte, int annoInizioAttivita, String idArtista) throws CampoNonValido{
         setNomeArte(nomeArte);

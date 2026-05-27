@@ -44,10 +44,18 @@ public class Utente {
     }
 
     public void setNazione(Nazione nazione) throws CampoNonValido {
+        if(nazione == null){
+
+            throw new CampoNonValido ("La nazione nn può essere null");
+        }
         this.nazione = nazione;
 
     }
-    public void addProposta(Proposta propostaInviata){
+    public void addProposta(Proposta propostaInviata) throws  CampoNonValido{
+        if(propostaInviata == null){
+            throw new CampoNonValido("La proposta non può essere null");
+        }
+
         this.proposteInviate.add(propostaInviata);
     }
 }
