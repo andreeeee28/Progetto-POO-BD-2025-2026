@@ -247,6 +247,11 @@ public class Controller {
         new Utente(campoNomeUtente,campoPassword,nazione);
     }
 
+    //Metodi CreaProposta
+    public void CreaProposta(TipoProposta tipoSelezionato, String titoloInserito, String descrizioneInserita){
+        if(tipoSelezionato != )
+    }
+
     public Artista trovaArtista(String nomeArt){
         for(Artista artista : artistiPresenti){
             if(artista.getNomeArte().equals(nomeArt)){
