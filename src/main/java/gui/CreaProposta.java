@@ -1,7 +1,10 @@
 package gui;
 
 import controller.Controller;
+import model.CampoNonValido;
+import model.Proposta;
 import model.TipoProposta;
+import model.Utente;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -15,11 +18,12 @@ public class CreaProposta {
     private JPanel mainPanel;
     private JFrame frame;
 
-    public CreaProposta(Controller controller, JFrame frameChiamante) {
+    public CreaProposta(Controller controller, JFrame frameChiamante, Utente utenteAttuale) {
         frame = new JFrame("Crea proposta");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
         tipoPropostaComboBox.setModel(new DefaultComboBoxModel<>(TipoProposta.values()));
@@ -32,6 +36,15 @@ public class CreaProposta {
                 TipoProposta tipoSelezionato = (TipoProposta) tipoPropostaComboBox.getSelectedItem();
                 String titoloInserito = titoloTextField.getText();
                 String descrizioneInserita = descrzioneTextField.getText();
+
+                try {
+                    controller.CreaProposta(tipoSelezionato, descrizioneInserita, titoloInserito, utenteAttuale);
+                    javax.swing.JOptionPane.showMessageDialog(null, "Proposta inviata con successo!");
+                    frameChiamante.setVisible(true);
+                    frame.dispose();
+                } catch (CampoNonValido ex) {
+                    javax.swing.JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
 
             }
         });

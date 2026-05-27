@@ -1,5 +1,6 @@
 package controller;
 
+import gui.CreaProposta;
 import model.*;
 
 import java.time.LocalDate;
@@ -228,13 +229,13 @@ public class Controller {
    }
 
    // Metodi Class Login
-   public void cliccatoAccedi(String campoNomeUtente, String campoPassword) throws CampoNonValido{
+   public Utente cliccatoAccedi(String campoNomeUtente, String campoPassword) throws CampoNonValido{
         for(Utente utente : utentiRegistrati ){
             String passwordUtente = utente.getPassword();
             String nomeUtente = utente.getUsername();
             if(passwordUtente.equals(campoPassword) && nomeUtente.equals(campoNomeUtente)) {
 
-                return;
+                return utente;
             }
 
         }
@@ -243,13 +244,15 @@ public class Controller {
    }
    // Metodi Class Registrazione
 
-    public void cliccatoRegistrati(String campoNomeUtente, String campoPassword,Nazione nazione) throws CampoNonValido {
-        new Utente(campoNomeUtente,campoPassword,nazione);
+    public Utente cliccatoRegistrati(String campoNomeUtente, String campoPassword,Nazione nazione) throws CampoNonValido {
+        Utente utenteAttuale = new Utente(campoNomeUtente,campoPassword,nazione);
+        return utenteAttuale;
     }
 
-    //Metodi CreaProposta
-    public void CreaProposta(TipoProposta tipoSelezionato, String titoloInserito, String descrizioneInserita){
-        if(tipoSelezionato != )
+    // Metodi Class CreaProposta
+    public void CreaProposta(TipoProposta tipoElemento, String descrizione, String titoloElemento, Utente utenteAttuale) throws CampoNonValido{
+        Proposta newProposta = new Proposta(tipoElemento, descrizione, titoloElemento, utenteAttuale);
+        return;
     }
 
     public Artista trovaArtista(String nomeArt){

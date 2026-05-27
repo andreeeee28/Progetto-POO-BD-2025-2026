@@ -11,7 +11,7 @@ public class Proposta {
     private Utente autoreProposta;
 
     //Costruttore
-    public Proposta(TipoProposta tipoElemento, LocalDate dataRichiesta, String descrizione, String titoloElemento, Utente autoreProposta) throws CampoNonValido{
+    public Proposta(TipoProposta tipoElemento, String descrizione, String titoloElemento, Utente autoreProposta) throws CampoNonValido{
         setTipoElemento(tipoElemento);
         setDataRichiestaDefault();
         setDescrizione(descrizione);

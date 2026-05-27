@@ -3,6 +3,7 @@ package gui;
 import controller.Controller;
 import model.CampoNonValido;
 import model.Nazione;
+import model.Utente;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -22,6 +23,7 @@ public class Registrazione {
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         campoNazione.setModel(new DefaultComboBoxModel<>(Nazione.values()));
 
@@ -33,15 +35,13 @@ public class Registrazione {
                 String stringaCampoPassword = campoPassword.getText();
                 Nazione enumCampoNazione = (Nazione) campoNazione.getSelectedItem();
                 try {
-                    controller.cliccatoRegistrati(stringaCampoUtente,stringaCampoPassword,enumCampoNazione);
-                    new Home(controller,frame);
+                    Utente utenteAttuale = controller.cliccatoRegistrati(stringaCampoUtente,stringaCampoPassword,enumCampoNazione);
+                    new Home(controller,frame, utenteAttuale);
                     frame.setVisible(false);
                     javax.swing.JOptionPane.showMessageDialog(null,"Registrazione avvenuta con successo");
                 } catch (CampoNonValido ex) {
                     javax.swing.JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
-
-
             }
         });
     }

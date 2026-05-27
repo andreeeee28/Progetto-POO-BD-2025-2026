@@ -2,6 +2,7 @@ package gui;
 
 import controller.Controller;
 import model.CampoNonValido;
+import model.Utente;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -23,6 +24,7 @@ public class Login {
         frame.setContentPane(new Login().mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
@@ -37,8 +39,8 @@ public class Login {
                 String StringaCampoUtente = campoNomeUtente.getText();
                 String StringaCampoPassword = Arrays.toString(campoPassword.getPassword());
                 try {
-                    controller.cliccatoAccedi(StringaCampoUtente, StringaCampoPassword);
-                    new Home(controller,frame);
+                    Utente utenteAttuale = controller.cliccatoAccedi(StringaCampoUtente, StringaCampoPassword);
+                    new Home(controller, frame, utenteAttuale);
                     frame.setVisible(false);
 
                 } catch (CampoNonValido ex) {

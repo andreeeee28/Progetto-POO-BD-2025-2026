@@ -13,15 +13,13 @@ public class CatalogoArtisti {
     private JFrame frame;
 
 
-   public CatalogoArtisti(Controller controller,JFrame frameChiamante) {
-       frame = new JFrame("CatalogoArtisti");
+   public CatalogoArtisti(Controller controller, JFrame frameChiamante) {
+       frame = new JFrame("Catalogo Artisti");
        frame.setContentPane(mainPanel);
        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        frame.pack();
+       frame.setLocationRelativeTo(null);
        frame.setVisible(true);
-
-       
-
     }
 
 
