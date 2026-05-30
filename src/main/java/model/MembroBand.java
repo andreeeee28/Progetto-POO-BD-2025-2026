@@ -32,13 +32,12 @@ public class MembroBand {
     }
 
     //Setter
-
-    public MembroBand(Strumento strumentoPrincipale, int annoIngresso, int annoUscita, Musicista musicista, Band band) throws CampoNonValido{
+    // MODIFICA RISPETTO ALLA CONSEGNA DEL SECONDO HOMEWORK RIMOZIONE DAL COSTRUTTORE DEL PARAMETRO BAND PER EVITARE LOOP INFINITO NELLA CREAZIONE DEI DATABASES FITTIZZI
+    public MembroBand(Strumento strumentoPrincipale, int annoIngresso, Integer annoUscita, Musicista musicista) throws CampoNonValido{
         setStrumentoPrincipale(strumentoPrincipale);
         setAnnoIngresso(annoIngresso);
         setAnnoUscita(annoUscita);
         setMusicista(musicista);
-        setBand(band);
     }
 
     public void setStrumentoPrincipale(Strumento strumentoPrincipale) throws  CampoNonValido{
