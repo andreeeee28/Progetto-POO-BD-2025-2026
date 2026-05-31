@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="bpmstudio-bpm-inspector-state">
+    <option name="statesByFile">
+      <map>
+        <entry key="$PROJECT_DIR$/src/main/java/gui/CatalogoArtisti.form">
+          <value>
+            <FileInspectorState>
+              <option name="statesByElementId">
+                <map>
+                  <entry key="Field_0hfqn3j">
+                    <value>
+                      <ExpandedItems>
+                        <option name="items">
+                          <option value="Static options" />
+                          <option value="Static options|Value" />
+                        </option>
+                      </ExpandedItems>
+                    </value>
+                  </entry>
+                  <entry key="Form_13jurjb">
+                    <value>
+                      <ExpandedItems />
+                    </value>
+                  </entry>
+                  <entry key="Form_1nsx9ob">
+                    <value>
+                      <ExpandedItems />
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </FileInspectorState>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/gui/Home.form">
+          <value>
+            <FileInspectorState>
+              <option name="statesByElementId">
+                <map>
+                  <entry key="Field_18ruxqp">
+                    <value>
+                      <ExpandedItems />
+                    </value>
+                  </entry>
+                  <entry key="Form_04s7n3w">
+                    <value>
+                      <ExpandedItems />
+                    </value>
+                  </entry>
+                  <entry key="Form_0dcsmk2">
+                    <value>
+                      <ExpandedItems />
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </FileInspectorState>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

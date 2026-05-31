@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 
 public class CreaProposta {
     private JTextField titoloTextField;
-    private JTextField descrzioneTextField;
+    private JTextArea descrzioneTextArea;
     private JComboBox<TipoProposta> tipoPropostaComboBox;
     private JButton inviaPropostaButton;
     private JPanel mainPanel;
@@ -35,7 +35,7 @@ public class CreaProposta {
             public void actionPerformed(ActionEvent e) {
                 TipoProposta tipoSelezionato = (TipoProposta) tipoPropostaComboBox.getSelectedItem();
                 String titoloInserito = titoloTextField.getText();
-                String descrizioneInserita = descrzioneTextField.getText();
+                String descrizioneInserita = descrzioneTextArea.getText();
 
                 try {
                     controller.CreaProposta(tipoSelezionato, descrizioneInserita, titoloInserito, utenteAttuale);
