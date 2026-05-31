@@ -1,10 +1,12 @@
 package gui;
 
 import controller.Controller;
+import model.Artista;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class CatalogoArtisti {
     private JPanel mainPanel;
@@ -23,6 +25,16 @@ public class CatalogoArtisti {
        frame.pack();
        frame.setLocationRelativeTo(null);
        frame.setVisible(true);
+
+       DefaultListModel<String> modelloLista = new DefaultListModel<>();
+
+       ArrayList<Artista> artistiNelDataBase = controller.getArtistiPresenti();
+
+       for(Artista artistaNelDataBase : artistiNelDataBase){
+           modelloLista.addElement(artistaNelDataBase.getNomeArte());
+       }
+
+       listaArtisti.setModel(modelloLista);
 
        tornaAllaHomeButton.addActionListener(new ActionListener() {
            @Override

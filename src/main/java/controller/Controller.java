@@ -20,12 +20,42 @@ public class Controller {
         this.generiPresenti = new ArrayList<>();
         try {
             creaUtentiRegistrati();
-            creaGeneri();
+            //creaGeneri();
+            creaArtisti();
         } catch (CampoNonValido e) {
             System.out.println("Errore nella creazione dei dati fittizzi");
         }
 
     }
+
+    // Metodi Class Login
+    public Utente cliccatoAccedi(String campoNomeUtente, String campoPassword) throws CampoNonValido{
+        for(Utente utente : utentiRegistrati ){
+            String passwordUtente = utente.getPassword();
+            String nomeUtente = utente.getUsername();
+            if(passwordUtente.equals(campoPassword) && nomeUtente.equals(campoNomeUtente)) {
+
+                return utente;
+            }
+
+        }
+        throw new CampoNonValido("ERRORE! Credenziali non valide");
+
+    }
+
+    // Metodi Class Registrazione
+
+    public Utente cliccatoRegistrati(String campoNomeUtente, String campoPassword,Nazione nazione) throws CampoNonValido {
+        Utente utenteAttuale = new Utente(campoNomeUtente,campoPassword,nazione);
+        return utenteAttuale;
+    }
+
+    // Metodi Class CreaProposta
+    public void CreaProposta(TipoProposta tipoElemento, String descrizione, String titoloElemento, Utente utenteAttuale) throws CampoNonValido{
+        Proposta newProposta = new Proposta(tipoElemento, descrizione, titoloElemento, utenteAttuale);
+        return;
+    }
+
     // con questi metodi vogliamo riempire il database fittizio iniziale che poi potrà essere
     // ulteriermente ingrandito dall Admin
    public void creaGeneri() throws CampoNonValido{
@@ -86,110 +116,209 @@ public class Controller {
        acousticBlues.addGeneriPadre(blues);
        boogieWoogie.addGeneriPadre(blues);
    }
-   /*public void creaArtisti() throws CampoNonValido {
-       // --- ROCK ---
-       Artista beatles = new Band("The Beatles", 1960, "ART-R01");
-       Artista stones = new Band("The Rolling Stones", 1962, "ART-R02");
-       Artista floyd = new Artista("Pink Floyd", 1965, "ART-R03");
-
-       // --- POP ---
-       Artista mj = new Artista("Michael Jackson", 1964, "ART-P01");
-       Artista prince = new Artista("Prince", 1975, "ART-P02"); // Sostituita Madonna
-       Artista weeknd = new Artista("The Weeknd", 2009, "ART-P03");
-
-       // --- PUNK ---
-       Artista ramones = new Artista("Ramones", 1974, "ART-PK1");
-       Artista clash = new Artista("The Clash", 1976, "ART-PK2");
-       Artista sexPistols = new Artista("Sex Pistols", 1975, "ART-PK3");
-
-       // --- BLUES ---
-       Artista bbKing = new Artista("B.B. King", 1948, "ART-B01");
-       Artista muddyWaters = new Artista("Muddy Waters", 1941, "ART-B02");
-       Artista robertJohnson = new Artista("Robert Johnson", 1929, "ART-B03");
-
-       // --- METAL ---
-       Artista blackSabbath = new Artista("Black Sabbath", 1968, "ART-M01");
-       Artista ironMaiden = new Artista("Iron Maiden", 1975, "ART-M02");
-       Artista metallica = new Artista("Metallica", 1981, "ART-M03");
-
-       // --- HIP HOP ---
-       Artista tupac = new Artista("Tupac Shakur", 1989, "ART-H01");
-       Artista biggie = new Artista("The Notorious B.I.G.", 1992, "ART-H02");
-       Artista eminem = new Artista("Eminem", 1988, "ART-H03");
-
-       // --- JAZZ ---
-       Artista milesDavis = new Artista("Miles Davis", 1944, "ART-J01");
-       Artista coltrane = new Artista("John Coltrane", 1945, "ART-J02");
-       Artista armstrong = new Artista("Louis Armstrong", 1919, "ART-J03");
-
-       // --- AMBIENT ---
-       Artista brianEno = new Artista("Brian Eno", 1970, "ART-A01");
-       Artista aphexTwin = new Artista("Aphex Twin", 1985, "ART-A02");
-       Artista basinski = new Artista("William Basinski", 1998, "ART-A03");
+    public void creaArtisti() throws CampoNonValido {
 
 
-       // ==========================================
-       // 🎧 ARTISTI DEI SOTTOGENERI
-       // ==========================================
+        // CREAZIONE ARTISTI SOLISTI (MUSICISTI)
 
-       // Rock Sottogeneri
-       Artista radiohead = new Artista("Radiohead", 1985, "ART-SUB-R1"); // Alternative Rock
-       Artista nirvana = new Artista("Nirvana", 1987, "ART-SUB-R2"); // Grunge
+        // --- POP ---
+        Musicista mj = new Musicista("Michael Jackson", 1964, "ART-P01", "Michael", "Jackson", LocalDate.of(1958, 8, 29));
+        Musicista prince = new Musicista("Prince", 1975, "ART-P02", "Prince Rogers", "Nelson", LocalDate.of(1958, 6, 7));
+        Musicista weeknd = new Musicista("The Weeknd", 2009, "ART-P03", "Abel", "Tesfaye", LocalDate.of(1990, 2, 16));
 
-       // Punk Sottogeneri
-       Artista television = new Artista("Television", 1973, "ART-SUB-PK1"); // Art Punk
-       Artista blackFlag = new Artista("Black Flag", 1976, "ART-SUB-PK2"); // Hardcore Punk
+        // --- BLUES ---
+        Musicista bbKing = new Musicista("B.B. King", 1948, "ART-B01", "Riley B.", "King", LocalDate.of(1925, 9, 16));
+        Musicista muddyWaters = new Musicista("Muddy Waters", 1941, "ART-B02", "McKinley", "Morganfield", LocalDate.of(1913, 4, 4));
+        Musicista robertJohnson = new Musicista("Robert Johnson", 1929, "ART-B03", "Robert", "Johnson", LocalDate.of(1911, 5, 8));
 
-       // Pop Sottogeneri
-       Artista yamashita = new Artista("Tatsuro Yamashita", 1973, "ART-SUB-P1"); // City Pop
-       Artista lorde = new Artista("Lorde", 2012, "ART-SUB-P2"); // Alt-Pop
+        // --- HIP HOP ---
+        Musicista tupac = new Musicista("Tupac Shakur", 1989, "ART-H01", "Tupac", "Shakur", LocalDate.of(1971, 6, 16));
+        Musicista biggie = new Musicista("The Notorious B.I.G.", 1992, "ART-H02", "Christopher", "Wallace", LocalDate.of(1972, 5, 21));
+        Musicista eminem = new Musicista("Eminem", 1988, "ART-H03", "Marshall", "Mathers", LocalDate.of(1972, 10, 17));
 
-       // Jazz Sottogeneri
-       Artista felaKuti = new Artista("Fela Kuti", 1958, "ART-SUB-J1"); // Afro-Jazz
-       Artista charlieParker = new Artista("Charlie Parker", 1937, "ART-SUB-J2"); // Bebop
+        // --- JAZZ ---
+        Musicista milesDavis = new Musicista("Miles Davis", 1944, "ART-J01", "Miles", "Davis", LocalDate.of(1926, 5, 26));
+        Musicista coltrane = new Musicista("John Coltrane", 1945, "ART-J02", "John", "Coltrane", LocalDate.of(1926, 9, 23));
+        Musicista armstrong = new Musicista("Louis Armstrong", 1919, "ART-J03", "Louis", "Armstrong", LocalDate.of(1901, 8, 4));
 
-       // Metal Sottogeneri
-       Artista death = new Artista("Death", 1983, "ART-SUB-M1"); // Death Metal
-       Artista faithNoMore = new Artista("Faith No More", 1979, "ART-SUB-M2"); // Funk Metal
+        // --- AMBIENT ---
+        Musicista brianEno = new Musicista("Brian Eno", 1970, "ART-A01", "Brian", "Eno", LocalDate.of(1948, 5, 15));
+        Musicista aphexTwin = new Musicista("Aphex Twin", 1985, "ART-A02", "Richard", "James", LocalDate.of(1971, 8, 18));
+        Musicista basinski = new Musicista("William Basinski", 1998, "ART-A03", "William", "Basinski", LocalDate.of(1958, 6, 25));
 
-       // Ambient Sottogeneri
-       Artista lustmord = new Artista("Lustmord", 1980, "ART-SUB-A1"); // Dark Ambient
-       Artista steveRoach = new Artista("Steve Roach", 1979, "ART-SUB-A2"); // Tribal Ambient
+        // --- SOTTOGENERI SOLISTI ---
+        Musicista yamashita = new Musicista("Tatsuro Yamashita", 1973, "ART-SUB-P1", "Tatsuro", "Yamashita", LocalDate.of(1953, 2, 4));
+        Musicista lorde = new Musicista("Lorde", 2012, "ART-SUB-P2", "Ella", "Yelich-O'Connor", LocalDate.of(1996, 11, 7));
+        Musicista felaKuti = new Musicista("Fela Kuti", 1958, "ART-SUB-J1", "Fela", "Kuti", LocalDate.of(1938, 10, 15));
+        Musicista charlieParker = new Musicista("Charlie Parker", 1937, "ART-SUB-J2", "Charlie", "Parker", LocalDate.of(1920, 8, 29));
+        Musicista lustmord = new Musicista("Lustmord", 1980, "ART-SUB-A1", "Brian", "Williams", LocalDate.of(1964, 1, 1));
+        Musicista steveRoach = new Musicista("Steve Roach", 1979, "ART-SUB-A2", "Steve", "Roach", LocalDate.of(1955, 2, 16));
+        Musicista future = new Musicista("Future", 2003, "ART-SUB-H1", "Nayvadius", "Wilburn", LocalDate.of(1983, 11, 20));
+        Musicista drake = new Musicista("Drake", 2006, "ART-SUB-H2", "Aubrey", "Graham", LocalDate.of(1986, 10, 24));
+        Musicista sonHouse = new Musicista("Son House", 1930, "ART-SUB-B1", "Eddie", "House", LocalDate.of(1902, 3, 21));
+        Musicista albertAmmons = new Musicista("Albert Ammons", 1934, "ART-SUB-B2", "Albert", "Ammons", LocalDate.of(1907, 9, 23));
 
-       // Hip Hop Sottogeneri
-       Artista future = new Artista("Future", 2003, "ART-SUB-H1"); // Trap
-       Artista drake = new Artista("Drake", 2006, "ART-SUB-H2"); // Pop Rap
+        // CREAZIONE BAND E DEI LORO MEMBRI
 
-       // Blues Sottogeneri
-       Artista sonHouse = new Artista("Son House", 1930, "ART-SUB-B1"); // Acoustic Blues
-       Artista albertAmmons = new Artista("Albert Ammons", 1934, "ART-SUB-B2"); // Boogie Woogie
+        // --- ROCK: THE BEATLES (4 Membri) ---
+        Musicista johnLennon = new Musicista("John Lennon", 1957, "MB-01", "John", "Lennon", LocalDate.of(1940, 10, 9));
+        Musicista paulMcCartney = new Musicista("Paul McCartney", 1957, "MB-02", "Paul", "McCartney", LocalDate.of(1942, 6, 18));
+        Musicista georgeHarrison = new Musicista("George Harrison", 1958, "MB-03", "George", "Harrison", LocalDate.of(1943, 2, 25));
+        Musicista ringoStarr = new Musicista("Ringo Starr", 1957, "MB-04", "Richard", "Starkey", LocalDate.of(1940, 7, 7));
 
+        MembroBand mbLennon = new MembroBand(Strumento.VOCE, 1960, 1970, johnLennon);
+        MembroBand mbMcCartney = new MembroBand(Strumento.BASSO, 1960, 1970, paulMcCartney);
+        MembroBand mbHarrison = new MembroBand(Strumento.CHITARRA, 1960, 1970, georgeHarrison);
+        MembroBand mbStarr = new MembroBand(Strumento.BATTERIA, 1962, 1970, ringoStarr);
 
+        ArrayList<MembroBand> memBeatles = new ArrayList<>();
+        memBeatles.add(mbLennon); memBeatles.add(mbMcCartney); memBeatles.add(mbHarrison); memBeatles.add(mbStarr);
+        Band beatles = new Band("The Beatles", 1960, "ART-R01", 4, 1970, memBeatles);
 
-       //  SALVATAGGIO NEL "DATABASE" (ARRAYLIST)
+        mbLennon.setBand(beatles); mbMcCartney.setBand(beatles); mbHarrison.setBand(beatles); mbStarr.setBand(beatles);
+        johnLennon.addPartecipazioneBand(mbLennon); paulMcCartney.addPartecipazioneBand(mbMcCartney);
+        georgeHarrison.addPartecipazioneBand(mbHarrison); ringoStarr.addPartecipazioneBand(mbStarr);
 
+        // --- ROCK: THE ROLLING STONES (4 Membri Storici) ---
+        Musicista mickJagger = new Musicista("Mick Jagger", 1962, "MB-05", "Mick", "Jagger", LocalDate.of(1943, 7, 26));
+        Musicista keithRichards = new Musicista("Keith Richards", 1962, "MB-06", "Keith", "Richards", LocalDate.of(1943, 12, 18));
+        Musicista charlieWatts = new Musicista("Charlie Watts", 1960, "MB-07", "Charles", "Watts", LocalDate.of(1941, 6, 2));
+        Musicista brianJones = new Musicista("Brian Jones", 1961, "MB-08", "Lewis", "Jones", LocalDate.of(1942, 2, 28));
 
-       // Principali
-       this.artistiPresenti.add(beatles); this.artistiPresenti.add(stones); this.artistiPresenti.add(floyd);
-       this.artistiPresenti.add(mj); this.artistiPresenti.add(prince); this.artistiPresenti.add(weeknd);
-       this.artistiPresenti.add(ramones); this.artistiPresenti.add(clash); this.artistiPresenti.add(sexPistols);
-       this.artistiPresenti.add(bbKing); this.artistiPresenti.add(muddyWaters); this.artistiPresenti.add(robertJohnson);
-       this.artistiPresenti.add(blackSabbath); this.artistiPresenti.add(ironMaiden); this.artistiPresenti.add(metallica);
-       this.artistiPresenti.add(tupac); this.artistiPresenti.add(biggie); this.artistiPresenti.add(eminem);
-       this.artistiPresenti.add(milesDavis); this.artistiPresenti.add(coltrane); this.artistiPresenti.add(armstrong);
-       this.artistiPresenti.add(brianEno); this.artistiPresenti.add(aphexTwin); this.artistiPresenti.add(basinski);
+        MembroBand mbJagger = new MembroBand(Strumento.VOCE, 1962, null, mickJagger);
+        MembroBand mbRichards = new MembroBand(Strumento.CHITARRA, 1962, null, keithRichards);
+        MembroBand mbWatts = new MembroBand(Strumento.BATTERIA, 1963, 2021, charlieWatts);
+        MembroBand mbJones = new MembroBand(Strumento.CHITARRA, 1962, 1969, brianJones);
 
-       // Sottogeneri
-       this.artistiPresenti.add(radiohead); this.artistiPresenti.add(nirvana);
-       this.artistiPresenti.add(television); this.artistiPresenti.add(blackFlag);
-       this.artistiPresenti.add(yamashita); this.artistiPresenti.add(lorde);
-       this.artistiPresenti.add(felaKuti); this.artistiPresenti.add(charlieParker);
-       this.artistiPresenti.add(death); this.artistiPresenti.add(faithNoMore);
-       this.artistiPresenti.add(lustmord); this.artistiPresenti.add(steveRoach);
-       this.artistiPresenti.add(future); this.artistiPresenti.add(drake);
-       this.artistiPresenti.add(sonHouse); this.artistiPresenti.add(albertAmmons);
+        ArrayList<MembroBand> memStones = new ArrayList<>();
+        memStones.add(mbJagger); memStones.add(mbRichards); memStones.add(mbWatts); memStones.add(mbJones);
+        Band stones = new Band("The Rolling Stones", 1962, "ART-R02", 4, null, memStones);
 
-   } */
+        mbJagger.setBand(stones); mbRichards.setBand(stones); mbWatts.setBand(stones); mbJones.setBand(stones);
+        mickJagger.addPartecipazioneBand(mbJagger); keithRichards.addPartecipazioneBand(mbRichards);
+        charlieWatts.addPartecipazioneBand(mbWatts); brianJones.addPartecipazioneBand(mbJones);
+
+        // --- ROCK: PINK FLOYD (4 Membri Classici) ---
+        Musicista rogerWaters = new Musicista("Roger Waters", 1965, "MB-09", "Roger", "Waters", LocalDate.of(1943, 9, 6));
+        Musicista davidGilmour = new Musicista("David Gilmour", 1967, "MB-10", "David", "Gilmour", LocalDate.of(1946, 3, 6));
+        Musicista richardWright = new Musicista("Richard Wright", 1965, "MB-11", "Richard", "Wright", LocalDate.of(1943, 7, 28));
+        Musicista nickMason = new Musicista("Nick Mason", 1964, "MB-12", "Nicholas", "Mason", LocalDate.of(1944, 1, 27));
+
+        MembroBand mbWaters = new MembroBand(Strumento.BASSO, 1965, 1985, rogerWaters);
+        MembroBand mbGilmour = new MembroBand(Strumento.CHITARRA, 1967, 2014, davidGilmour);
+        MembroBand mbWright = new MembroBand(Strumento.PIANOFORTE, 1965, 2008, richardWright);
+        MembroBand mbMason = new MembroBand(Strumento.BATTERIA, 1965, 2014, nickMason);
+
+        ArrayList<MembroBand> memFloyd = new ArrayList<>();
+        memFloyd.add(mbWaters); memFloyd.add(mbGilmour); memFloyd.add(mbWright); memFloyd.add(mbMason);
+        Band floyd = new Band("Pink Floyd", 1965, "ART-R03", 4, 2014, memFloyd);
+
+        mbWaters.setBand(floyd); mbGilmour.setBand(floyd); mbWright.setBand(floyd); mbMason.setBand(floyd);
+        rogerWaters.addPartecipazioneBand(mbWaters); davidGilmour.addPartecipazioneBand(mbGilmour);
+        richardWright.addPartecipazioneBand(mbWright); nickMason.addPartecipazioneBand(mbMason);
+
+        // --- METAL: BLACK SABBATH (4 Membri Originali) ---
+        Musicista ozzy = new Musicista("Ozzy Osbourne", 1968, "MB-13", "John", "Osbourne", LocalDate.of(1948, 12, 3));
+        Musicista iommi = new Musicista("Tony Iommi", 1968, "MB-14", "Anthony", "Iommi", LocalDate.of(1948, 2, 19));
+        Musicista butler = new Musicista("Geezer Butler", 1967, "MB-15", "Terence", "Butler", LocalDate.of(1949, 7, 17));
+        Musicista ward = new Musicista("Bill Ward", 1968, "MB-16", "William", "Ward", LocalDate.of(1948, 5, 5));
+
+        MembroBand mbOzzy = new MembroBand(Strumento.VOCE, 1968, 2017, ozzy);
+        MembroBand mbIommi = new MembroBand(Strumento.CHITARRA, 1968, 2017, iommi);
+        MembroBand mbButler = new MembroBand(Strumento.BASSO, 1968, 2017, butler);
+        MembroBand mbWard = new MembroBand(Strumento.BATTERIA, 1968, 2012, ward);
+
+        ArrayList<MembroBand> memSabbath = new ArrayList<>();
+        memSabbath.add(mbOzzy); memSabbath.add(mbIommi); memSabbath.add(mbButler); memSabbath.add(mbWard);
+        Band blackSabbath = new Band("Black Sabbath", 1968, "ART-M01", 4, 2017, memSabbath);
+
+        mbOzzy.setBand(blackSabbath); mbIommi.setBand(blackSabbath); mbButler.setBand(blackSabbath); mbWard.setBand(blackSabbath);
+        ozzy.addPartecipazioneBand(mbOzzy); iommi.addPartecipazioneBand(mbIommi);
+        butler.addPartecipazioneBand(mbButler); ward.addPartecipazioneBand(mbWard);
+
+        // --- METAL: IRON MAIDEN (Formazione Storica a 6) ---
+        Musicista dickinson = new Musicista("Bruce Dickinson", 1979, "MB-17", "Bruce", "Dickinson", LocalDate.of(1958, 8, 7));
+        Musicista harris = new Musicista("Steve Harris", 1975, "MB-18", "Steve", "Harris", LocalDate.of(1956, 3, 12));
+        Musicista murray = new Musicista("Dave Murray", 1976, "MB-19", "David", "Murray", LocalDate.of(1956, 12, 23));
+        Musicista smith = new Musicista("Adrian Smith", 1974, "MB-20", "Adrian", "Smith", LocalDate.of(1957, 2, 27));
+        Musicista mcbrain = new Musicista("Nicko McBrain", 1975, "MB-21", "Michael", "McBrain", LocalDate.of(1952, 6, 5));
+        Musicista gers = new Musicista("Janick Gers", 1975, "MB-22", "Janick", "Gers", LocalDate.of(1957, 1, 27));
+
+        MembroBand mbDickinson = new MembroBand(Strumento.VOCE, 1981, null, dickinson);
+        MembroBand mbHarris = new MembroBand(Strumento.BASSO, 1975, null, harris);
+        MembroBand mbMurray = new MembroBand(Strumento.CHITARRA, 1976, null, murray);
+        MembroBand mbSmith = new MembroBand(Strumento.CHITARRA, 1980, null, smith);
+        MembroBand mbMcbrain = new MembroBand(Strumento.BATTERIA, 1982, null, mcbrain);
+        MembroBand mbGers = new MembroBand(Strumento.CHITARRA, 1990, null, gers);
+
+        ArrayList<MembroBand> memMaiden = new ArrayList<>();
+        memMaiden.add(mbDickinson); memMaiden.add(mbHarris); memMaiden.add(mbMurray);
+        memMaiden.add(mbSmith); memMaiden.add(mbMcbrain); memMaiden.add(mbGers);
+        Band ironMaiden = new Band("Iron Maiden", 1975, "ART-M02", 6, null, memMaiden);
+
+        mbDickinson.setBand(ironMaiden); mbHarris.setBand(ironMaiden); mbMurray.setBand(ironMaiden);
+        mbSmith.setBand(ironMaiden); mbMcbrain.setBand(ironMaiden); mbGers.setBand(ironMaiden);
+        dickinson.addPartecipazioneBand(mbDickinson); harris.addPartecipazioneBand(mbHarris);
+        murray.addPartecipazioneBand(mbMurray); smith.addPartecipazioneBand(mbSmith);
+        mcbrain.addPartecipazioneBand(mbMcbrain); gers.addPartecipazioneBand(mbGers);
+
+        // --- PUNK: RAMONES (4 Membri Originali) ---
+        Musicista joey = new Musicista("Joey Ramone", 1974, "MB-23", "Jeffrey", "Hyman", LocalDate.of(1951, 5, 19));
+        Musicista johnny = new Musicista("Johnny Ramone", 1974, "MB-24", "John", "Cummings", LocalDate.of(1948, 10, 8));
+        Musicista deedee = new Musicista("Dee Dee Ramone", 1974, "MB-25", "Douglas", "Colvin", LocalDate.of(1951, 9, 18));
+        Musicista tommy = new Musicista("Tommy Ramone", 1974, "MB-26", "Thomas", "Erdelyi", LocalDate.of(1949, 1, 29));
+
+        MembroBand mbJoey = new MembroBand(Strumento.VOCE, 1974, 1996, joey);
+        MembroBand mbJohnny = new MembroBand(Strumento.CHITARRA, 1974, 1996, johnny);
+        MembroBand mbDeedee = new MembroBand(Strumento.BASSO, 1974, 1989, deedee);
+        MembroBand mbTommy = new MembroBand(Strumento.BATTERIA, 1974, 1978, tommy);
+
+        ArrayList<MembroBand> memRamones = new ArrayList<>();
+        memRamones.add(mbJoey); memRamones.add(mbJohnny); memRamones.add(mbDeedee); memRamones.add(mbTommy);
+        Band ramones = new Band("Ramones", 1974, "ART-PK1", 4, 1996, memRamones);
+
+        mbJoey.setBand(ramones); mbJohnny.setBand(ramones); mbDeedee.setBand(ramones); mbTommy.setBand(ramones);
+        joey.addPartecipazioneBand(mbJoey); johnny.addPartecipazioneBand(mbJohnny);
+        deedee.addPartecipazioneBand(mbDeedee); tommy.addPartecipazioneBand(mbTommy);
+
+        //  SALVATAGGIO NEL DATABASE FITTIZIO
+
+        // Salviamo i Solisti Principali
+        this.artistiPresenti.add(mj); this.artistiPresenti.add(prince); this.artistiPresenti.add(weeknd);
+        this.artistiPresenti.add(bbKing); this.artistiPresenti.add(muddyWaters); this.artistiPresenti.add(robertJohnson);
+        this.artistiPresenti.add(tupac); this.artistiPresenti.add(biggie); this.artistiPresenti.add(eminem);
+        this.artistiPresenti.add(milesDavis); this.artistiPresenti.add(coltrane); this.artistiPresenti.add(armstrong);
+        this.artistiPresenti.add(brianEno); this.artistiPresenti.add(aphexTwin); this.artistiPresenti.add(basinski);
+
+        // Salviamo i Solisti dei Sottogeneri
+        this.artistiPresenti.add(yamashita); this.artistiPresenti.add(lorde);
+        this.artistiPresenti.add(felaKuti); this.artistiPresenti.add(charlieParker);
+        this.artistiPresenti.add(lustmord); this.artistiPresenti.add(steveRoach);
+        this.artistiPresenti.add(future); this.artistiPresenti.add(drake);
+        this.artistiPresenti.add(sonHouse); this.artistiPresenti.add(albertAmmons);
+
+        // Salviamo le Band Principali
+        this.artistiPresenti.add(beatles);
+        this.artistiPresenti.add(stones);
+        this.artistiPresenti.add(floyd);
+        this.artistiPresenti.add(blackSabbath);
+        this.artistiPresenti.add(ironMaiden);
+        this.artistiPresenti.add(ramones);
+
+        // Salviamo anche TUTTI i Musicisti delle Band!
+        this.artistiPresenti.add(johnLennon); this.artistiPresenti.add(paulMcCartney); this.artistiPresenti.add(georgeHarrison); this.artistiPresenti.add(ringoStarr);
+        this.artistiPresenti.add(mickJagger); this.artistiPresenti.add(keithRichards); this.artistiPresenti.add(charlieWatts); this.artistiPresenti.add(brianJones);
+        this.artistiPresenti.add(rogerWaters); this.artistiPresenti.add(davidGilmour); this.artistiPresenti.add(richardWright); this.artistiPresenti.add(nickMason);
+        this.artistiPresenti.add(ozzy); this.artistiPresenti.add(iommi); this.artistiPresenti.add(butler); this.artistiPresenti.add(ward);
+        this.artistiPresenti.add(dickinson); this.artistiPresenti.add(harris); this.artistiPresenti.add(murray); this.artistiPresenti.add(smith); this.artistiPresenti.add(mcbrain); this.artistiPresenti.add(gers);
+        this.artistiPresenti.add(joey); this.artistiPresenti.add(johnny); this.artistiPresenti.add(deedee); this.artistiPresenti.add(tommy);
+
+    }
+
+    public ArrayList<Artista> getArtistiPresenti(){
+        return artistiPresenti;
+    }
+
    public void creaUtentiRegistrati() throws CampoNonValido {
        // 1. Utente dall'Italia
        Utente u1 = new Utente("mario99", "PassMario123", Nazione.ITALIA);
@@ -234,33 +363,6 @@ public class Controller {
        this.utentiRegistrati.add(u9);
        this.utentiRegistrati.add(u10);
    }
-
-   // Metodi Class Login
-   public Utente cliccatoAccedi(String campoNomeUtente, String campoPassword) throws CampoNonValido{
-        for(Utente utente : utentiRegistrati ){
-            String passwordUtente = utente.getPassword();
-            String nomeUtente = utente.getUsername();
-            if(passwordUtente.equals(campoPassword) && nomeUtente.equals(campoNomeUtente)) {
-
-                return utente;
-            }
-
-        }
-       throw new CampoNonValido("ERRORE! Credenziali non valide");
-
-   }
-   // Metodi Class Registrazione
-
-    public Utente cliccatoRegistrati(String campoNomeUtente, String campoPassword,Nazione nazione) throws CampoNonValido {
-        Utente utenteAttuale = new Utente(campoNomeUtente,campoPassword,nazione);
-        return utenteAttuale;
-    }
-
-    // Metodi Class CreaProposta
-    public void CreaProposta(TipoProposta tipoElemento, String descrizione, String titoloElemento, Utente utenteAttuale) throws CampoNonValido{
-        Proposta newProposta = new Proposta(tipoElemento, descrizione, titoloElemento, utenteAttuale);
-        return;
-    }
 
     public Artista trovaArtista(String nomeArt){
         for(Artista artista : artistiPresenti){
