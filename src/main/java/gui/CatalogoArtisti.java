@@ -18,33 +18,53 @@ public class CatalogoArtisti {
     private JFrame frame;
 
 
-   public CatalogoArtisti(Controller controller, JFrame frameChiamante) {
-       frame = new JFrame("Catalogo Artisti");
-       frame.setContentPane(mainPanel);
-       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-       frame.pack();
-       frame.setLocationRelativeTo(null);
-       frame.setVisible(true);
+    public CatalogoArtisti(Controller controller, JFrame frameChiamante) {
+        frame = new JFrame("Catalogo Artisti");
+        frame.setContentPane(mainPanel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
 
-       DefaultListModel<String> modelloLista = new DefaultListModel<>();
 
-       ArrayList<Artista> artistiNelDataBase = controller.getArtistiPresenti();
+        DefaultListModel<String> modelloLista = new DefaultListModel<>();
 
-       for(Artista artistaNelDataBase : artistiNelDataBase){
-           modelloLista.addElement(artistaNelDataBase.getNomeArte());
-       }
+        ArrayList<Artista> artistiNelDataBase = controller.getArtistiPresenti();
 
-       listaArtisti.setModel(modelloLista);
+        for (Artista artistaNelDataBase : artistiNelDataBase) {
+            modelloLista.addElement(artistaNelDataBase.getNomeArte());
+        }
 
-       tornaAllaHomeButton.addActionListener(new ActionListener() {
-           @Override
-           public void actionPerformed(ActionEvent e) {
+
+        /*DefaultListModel<Artista> modelloLista = new DefaultListModel<>();
+        ArrayList<Artista> artistiNelDataBase = controller.getArtistiPresenti();
+
+        for (Artista artistaNelDataBase : artistiNelDataBase) {
+            modelloLista.addElement(artistaNelDataBase);
+        }*/
+
+        listaArtisti.setModel(modelloLista);
+
+
+        //Tasti
+        //Tasto torna alla home
+        tornaAllaHomeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 frameChiamante.setVisible(true);
                 frame.dispose();
-           }
-       });
-   }
+            }
+        });
 
+        //Tasto visualizza artista
+        visualizzaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ProfiloArtista(controller, frame, artistiNelDataBase.get(listaArtisti.getSelectedIndex()));
+                frame.setVisible(false);
+            }
+        });
+    }
 
 
 }

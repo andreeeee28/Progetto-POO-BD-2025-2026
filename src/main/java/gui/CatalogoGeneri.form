@@ -8,16 +8,6 @@
     <properties/>
     <border type="none"/>
     <children>
-      <component id="6378e" class="javax.swing.JList" binding="listaGeneri">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <preferred-size width="350" height="250"/>
-          </grid>
-        </constraints>
-        <properties>
-          <model/>
-        </properties>
-      </component>
       <component id="6fc5f" class="javax.swing.JTextField" binding="campoCerca">
         <constraints>
           <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
@@ -60,6 +50,23 @@
           <text value="Torna alla Home"/>
         </properties>
       </component>
+      <scrollpane id="49dca">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="350" height="250"/>
+          </grid>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="6378e" class="javax.swing.JList" binding="listaGeneri">
+            <constraints/>
+            <properties>
+              <model/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
     </children>
   </grid>
 </form>
