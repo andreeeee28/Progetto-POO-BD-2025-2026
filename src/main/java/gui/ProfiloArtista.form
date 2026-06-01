@@ -228,12 +228,12 @@
           </scrollpane>
           <scrollpane id="5e863" binding="partecipazioniMembriScrollPane">
             <constraints>
-              <tabbedpane title="Partecipazioni - Membri"/>
+              <tabbedpane title="Membri - Partecipazioni"/>
             </constraints>
             <properties/>
             <border type="none"/>
             <children>
-              <component id="dacad" class="javax.swing.JList" binding="parteciapzioniMembriList">
+              <component id="dacad" class="javax.swing.JList" binding="partecipazioniMembriList">
                 <constraints/>
                 <properties>
                   <model/>
@@ -243,12 +243,12 @@
           </scrollpane>
         </children>
       </tabbedpane>
-      <component id="7486d" class="javax.swing.JButton" binding="tornaAlCatalogoButton" default-binding="true">
+      <component id="7486d" class="javax.swing.JButton" binding="indietroButton">
         <constraints>
           <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Torna al Catalogo"/>
+          <text value="Indietro"/>
         </properties>
       </component>
       <component id="96ba5" class="javax.swing.JButton" binding="visualizzaButton">
