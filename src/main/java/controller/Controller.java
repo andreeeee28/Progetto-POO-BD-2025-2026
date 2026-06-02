@@ -3,6 +3,7 @@ package controller;
 import gui.CreaProposta;
 import model.*;
 
+import javax.swing.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -19,9 +20,9 @@ public class Controller {
         this.artistiPresenti = new ArrayList<>();
         this.generiPresenti = new ArrayList<>();
         try {
-            creaUtentiRegistrati();
-            //creaGeneri();
-            creaArtisti();
+            creaUtentiRegistratiDB();
+            creaGeneriDB();
+            creaArtistiDB();
         } catch (CampoNonValido e) {
             System.out.println("Errore nella creazione dei dati fittizzi");
         }
@@ -56,33 +57,94 @@ public class Controller {
         return;
     }
 
+    // Metodi Class AggiungiElementoAdmin
+
+    public ArrayList<Canzone> inserisciCanzoni(int numeroCanzoni, JFrame frameChiamante) throws CampoNonValido{
+        ArrayList<Canzone> canzoniAlbum = new ArrayList<>();
+        for(int i =0; i<numeroCanzoni;i++){
+            String titoloTraccia = JOptionPane.showInputDialog(frameChiamante,"Inserisci il titolo della canzone  numero " + i);
+            int durataSecondi =Integer.parseInt(JOptionPane.showInputDialog(frameChiamante,"Inserisci la durata in secondi della canzone"));
+            Canzone canzoneCreata = new Canzone(titoloTraccia,durataSecondi);
+            canzoniAlbum.add(canzoneCreata);
+        }
+        return canzoniAlbum;
+    }
+
+    public Artista trovaArtista(String nomeArt){
+        for(Artista artista : artistiPresenti){
+            if(artista.getNomeArte().equals(nomeArt)){
+                return artista;
+            }
+        }
+        return null;
+    }
+
+    public Genere trovaGenere(String nomeGenere){
+        for(Genere genere : generiPresenti){
+            if(genere.getNome().equals(nomeGenere)){
+                return genere;
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Genere> inserisciGeneri(int numeroGeneri, JFrame frameChiamante) throws CampoNonValido {
+        ArrayList<Genere> generiAlbum = new ArrayList<>();
+
+        for (int i = 0; i < numeroGeneri; i++) {
+            String nomeGenere = JOptionPane.showInputDialog(frameChiamante, "Inserisci il nome del genere numero " + (i+1));
+            // Usiamo il metodo che fa la ricerca
+            Genere trovato = trovaGenere(nomeGenere);
+
+            if (trovato != null) {
+                generiAlbum.add(trovato);
+            } else {
+                JOptionPane.showMessageDialog(frameChiamante, "Attenzione: Genere non trovato nel Database! Riprova.");
+                i--; // Diminuisce il contatore di 1, così ripete il giro per fargli inserire un genere valido
+            }
+        }
+        return generiAlbum;
+    }
+
+    public void creaAlbum(String titolo, LocalDate dataPubblicazione, Artista artista, ArrayList <Genere> generi, ArrayList<Canzone> tracklist) throws CampoNonValido {
+        new Album(titolo,dataPubblicazione,artista,generi,tracklist);
+    }
+
+    // Metodi Class Catalogo Artisti
+
+    public ArrayList<Artista> getArtistiPresenti(){
+        return artistiPresenti;
+    }
+
     // con questi metodi vogliamo riempire il database fittizio iniziale che poi potrà essere
     // ulteriermente ingrandito dall Admin
-   public void creaGeneri() throws CampoNonValido{
-        Genere rock = new Genere("Rock", "Tipicamente utilizza una struttura strofa-ritornello con un ritmo di backbeat e la chitarra elettrica in primo piano; generalmente più pesante (heavy) e/o veloce dei suoi predecessori come blues e gospel");
-        Genere pop = new Genere("Pop","Si tratta di un insieme di stili musicali popolari strettamente legati alla produzione e al marketing di massa, incentrati sulla orecchiabilità e l'accessibilità attraverso melodia, ritmo, testi e ritornelli accattivanti.");
-        Genere punk = new Genere("Punk","Prodotto musicale e culturale del Punk Rock, noto per il suo stile semplice e sfrontato e per i temi anti-establishment.");
-        Genere blues = new Genere("Blues","Nato verso la fine del XIX secolo nelle comunità afroamericane degli Stati Uniti, in particolare nel profondo Sud, questo genere musicale traeva ispirazione dai canti spirituali e di lavoro tradizionali, esercitando una grande influenza su tutta la musica popolare occidentale.");
-        Genere metal = new Genere("Metal","Riff trascinanti e distorti, batteria aggressiva, voce vigorosa e, agli inizi, una dimostrazione generale di forza bruta, per poi ramificarsi in decine di sottogeneri.");
-        Genere hipHop = new Genere("Hip Hop","Nato principalmente sulla costa orientale degli Stati Uniti, nelle comunità afroamericane, alla fine degli anni '70, questo genere musicale si caratterizza per i suoi schemi ritmici e per una particolare modalità di espressione vocale nota come rapping.");
-        Genere jazz = new Genere("Jazz","Nato nelle comunità afroamericane del Sud degli Stati Uniti all'inizio del XX secolo, il genere swing si è sviluppato a partire dalle sonorità delle brass band di New Orleans e dalle influenze del ragtime e del blues, diventando uno stile molto popolare con l'avvento dello swing negli anni '30.");
-        Genere ambient = new Genere("Ambient","Privilegia la consistenza e il timbro rispetto alla struttura musicale tradizionale, allo scopo di evocare una particolare atmosfera o stato d'animo.");
-        Genere artPunk = new Genere("Art Punk", "Coniuga l'aggressività essenziale del punk rock rudimentale con frequenti sperimentazioni che spaziano dall'interazione strumentale, al rumore, alla dissonanza e/o alle influenze di altri generi come il jazz o il funk.");
-        Genere hardcorePunk = new Genere("Hardcore Punk", "Nato alla fine degli anni '70, questo genere è caratterizzato spesso da un uso massiccio di urla e grida, da uno stile di produzione essenziale e da brani molto brevi.");
-        Genere alternativeRock = new Genere("Alternative Rock","Eseguita con un approccio meno commerciale, utilizzando sonorità più eccentriche e di ispirazione punk, testi più malinconici o stravaganti e, talvolta, un uso abbondante di distorsione, spesso abbinata a una struttura compositiva di ispirazione pop.");
-        Genere grunge = new Genere("Grunge","Unisce elementi punk e metal in un sound dal ritmo moderato, caratterizzato da un suono di chitarra pesante e “sludgy”, una voce “rauca” e testi angoscianti.");
-        Genere altPop = new Genere("Alt-Pop", "Nato tra la fine degli anni 2000 e l'inizio degli anni 2010, questo genere combina le convenzioni del pop da classifica con la sensibilità alternativa/indie e un'atmosfera talvolta più minimalista e contemplativa, spesso ispirata all'R&B alternativo.");
-        Genere cityPop = new Genere("cityPop","Il movimento della musica pop giapponese mirava a riflettere la vita urbana durante il periodo di forte espansione economica del Paese negli anni '70 e '80, caratterizzato da un sound occidentale contemporaneo e da arrangiamenti ricchi e sontuosi.");
-        Genere acousticBlues = new Genere("Acoustic Blues","Si è evoluto dal “Work Song” e dallo “Spiritual” fino a diventare la forma più significativa delle origini del blues.");
-        Genere boogieWoogie = new Genere("Boogie Woogie","Blues dal ritmo vivace e incalzante, con il pianoforte come strumento principale, caratterizzato da assoli e improvvisazioni su una linea di basso ripetitiva composta da ottavi.");
-        Genere funkMetal = new Genere("Funk Metal","Unisce ritmi funk rock a linee di basso slap e riff di chitarra dal suono metallico.");
-        Genere deathMetal = new Genere("Death Metal","Chitarre fortemente distorte e accordate in tonalità più basse, riff suonati con il palm muting e il tremolo, percussioni con doppia cassa e blast beat, progressioni di accordi cromatici, tonalità minori, bruschi cambi di tempo e voci gutturali.");
-        Genere bePop = new Genere("Bepop","Tempi veloci, improvvisazione, cromatismo melodico, armonie complesse e progressioni di accordi.");
-        Genere afroJazz = new Genere("Afro-Jazz","Percussioni e ritmi in stile africano.");
-        Genere popRap = new Genere("Pop Rap","Incorpora elementi pop quali voci melodiche, melodie orecchiabili, strutture strofa-ritornello e testi adatti alla radio.");
-        Genere trap = new Genere("Trap","Nato ad Atlanta nei primi anni 2000; caratterizzato da un suono rapido e incisivo del charleston e da un basso potente a tempi moderati.");
-        Genere darkAmbient = new Genere("Dark Ambient","Evoca un'atmosfera minacciosa, cupa e dissonante.");
-        Genere tribalAmbient = new Genere("Tribal Ambient","Coniuga la filosofia e l'atmosfera dell'Ambient con strumenti tradizionali e suoni provenienti da ogni parte del mondo.");
+
+    public void creaGeneriDB() throws CampoNonValido{
+        Genere rock = new Genere("Rock", "Struttura strofa-ritornello, ritmo di backbeat e chitarra elettrica. Più pesante e veloce rispetto al blues e al gospel.");
+        Genere pop = new Genere("Pop", "Stili legati alla produzione di massa, incentrati su grande orecchiabilità, melodie accessibili e ritornelli accattivanti.");
+        Genere punk = new Genere("Punk", "Prodotto musicale e culturale del Punk Rock, noto per il suo stile semplice e sfrontato e per i temi anti-establishment.");
+        Genere blues = new Genere("Blues", "Nato a fine '800 nel Sud USA dalle comunità afroamericane. Ispirato ai canti di lavoro, ha influenzato tutta la musica popolare.");
+        Genere metal = new Genere("Metal", "Riff trascinanti e distorti, batteria aggressiva e voce vigorosa. Nato come pura forza bruta, si è diviso in vari sottogeneri.");
+        Genere hipHop = new Genere("Hip Hop", "Nato a fine anni '70 sulla costa orientale USA. Caratterizzato da schemi ritmici e dalla forte espressione vocale del rapping.");
+        Genere jazz = new Genere("Jazz", "Nato a inizio '900 nel Sud USA dalle brass band, ragtime e blues. Divenuto popolarissimo negli anni '30 con l'avvento dello swing.");
+        Genere ambient = new Genere("Ambient", "Privilegia consistenza e timbro rispetto alla struttura tradizionale, per evocare una precisa atmosfera o uno stato d'animo.");
+        Genere artPunk = new Genere("Art Punk", "Unisce l'aggressività del punk a varie sperimentazioni: interazioni strumentali, rumore, dissonanza e influenze jazz o funk.");
+        Genere hardcorePunk = new Genere("Hardcore Punk", "Nato a fine anni '70, è caratterizzato da uso massiccio di urla, uno stile di produzione essenziale e brani estremamente brevi.");
+        Genere alternativeRock = new Genere("Alternative Rock", "Meno commerciale e di ispirazione punk. Testi malinconici, molta distorsione ma abbinata a una struttura compositiva simil-pop.");
+        Genere grunge = new Genere("Grunge", "Unisce punk e metal con ritmo moderato. Caratterizzato da chitarre pesanti e sludgy, voce rauca e testi spesso angoscianti.");
+        Genere altPop = new Genere("Alt-Pop", "Combina il pop da classifica con l'indie, offrendo atmosfere minimaliste e talvolta riflessive, ispirate all'R&B alternativo.");
+        Genere cityPop = new Genere("cityPop", "Pop giapponese anni '70-'80 che rifletteva la vita urbana dell'espansione economica, con sound occidentale e arrangiamenti ricchi.");
+        Genere acousticBlues = new Genere("Acoustic Blues", "Si è evoluto dal “Work Song” e dallo “Spiritual” fino a diventare la forma più significativa delle origini del blues.");
+        Genere boogieWoogie = new Genere("Boogie Woogie", "Blues dal ritmo vivace. Il pianoforte è lo strumento principale, con improvvisazioni su una linea di basso in ottavi ripetitiva.");
+        Genere funkMetal = new Genere("Funk Metal", "Unisce ritmi funk rock a linee di basso slap e riff di chitarra dal suono metallico.");
+        Genere deathMetal = new Genere("Death Metal", "Chitarre accordate basse, riff in palm muting, batteria con blast beat, progressioni cromatiche, cambi di tempo e voci gutturali.");
+        Genere bePop = new Genere("Bepop", "Tempi veloci, improvvisazione, cromatismo melodico, armonie complesse e progressioni di accordi.");
+        Genere afroJazz = new Genere("Afro-Jazz", "Percussioni e ritmi in stile africano.");
+        Genere popRap = new Genere("Pop Rap", "Incorpora elementi pop quali voci melodiche, melodie orecchiabili, strutture strofa-ritornello e testi adatti alla radio.");
+        Genere trap = new Genere("Trap", "Nato ad Atlanta nei primi anni 2000; caratterizzato da un suono rapido e incisivo del charleston e da un basso potente a tempi moderati.");
+        Genere darkAmbient = new Genere("Dark Ambient", "Evoca un'atmosfera minacciosa, cupa e dissonante.");
+        Genere tribalAmbient = new Genere("Tribal Ambient", "Coniuga la filosofia e l'atmosfera dell'Ambient con strumenti tradizionali e suoni provenienti da ogni parte del mondo.");
+
         rock.addSottogeneri(alternativeRock);
         rock.addSottogeneri(grunge);
         punk.addSottogeneri(artPunk);
@@ -99,6 +161,7 @@ public class Controller {
         hipHop.addSottogeneri(popRap);
         blues.addSottogeneri(acousticBlues);
         blues.addSottogeneri(boogieWoogie);
+
         alternativeRock.addGeneriPadre(rock);
         grunge.addGeneriPadre(rock);
         artPunk.addGeneriPadre(punk);
@@ -106,17 +169,17 @@ public class Controller {
         cityPop.addGeneriPadre(pop);
         altPop.addGeneriPadre(pop);
         afroJazz.addGeneriPadre(jazz);
-       bePop.addGeneriPadre(jazz);
-       deathMetal.addGeneriPadre(metal);
-       funkMetal.addGeneriPadre(metal);
-       darkAmbient.addGeneriPadre(ambient);
-       tribalAmbient.addGeneriPadre(ambient);
-       trap.addGeneriPadre(hipHop);
-       popRap.addGeneriPadre(hipHop);
-       acousticBlues.addGeneriPadre(blues);
-       boogieWoogie.addGeneriPadre(blues);
-   }
-    public void creaArtisti() throws CampoNonValido {
+        bePop.addGeneriPadre(jazz);
+        deathMetal.addGeneriPadre(metal);
+        funkMetal.addGeneriPadre(metal);
+        darkAmbient.addGeneriPadre(ambient);
+        tribalAmbient.addGeneriPadre(ambient);
+        trap.addGeneriPadre(hipHop);
+        popRap.addGeneriPadre(hipHop);
+        acousticBlues.addGeneriPadre(blues);
+        boogieWoogie.addGeneriPadre(blues);
+    }
+    public void creaArtistiDB() throws CampoNonValido {
 
 
         // CREAZIONE ARTISTI SOLISTI (MUSICISTI)
@@ -315,11 +378,7 @@ public class Controller {
 
     }
 
-    public ArrayList<Artista> getArtistiPresenti(){
-        return artistiPresenti;
-    }
-
-   public void creaUtentiRegistrati() throws CampoNonValido {
+   public void creaUtentiRegistratiDB() throws CampoNonValido {
        // 1. Utente dall'Italia
        Utente u1 = new Utente("mario99", "PassMario123", Nazione.ITALIA);
 
@@ -350,6 +409,8 @@ public class Controller {
        // 10. Utente dal Kazakistan
        Utente u10 = new Utente("borat_kaz", "VeryNice1234", Nazione.KAZAKISTAN);
 
+       Utente a1 = new Admin("Narin","CiaoMondo1",Nazione.PAESI_BASSI,"ABC123");
+
        // --- SALVATAGGIO NELLA LISTA DEL CONTROLLER ---
        // (Assicurati che la tua lista nel controller si chiami "utentiRegistrati")
        this.utentiRegistrati.add(u1);
@@ -362,25 +423,8 @@ public class Controller {
        this.utentiRegistrati.add(u8);
        this.utentiRegistrati.add(u9);
        this.utentiRegistrati.add(u10);
+       this.utentiRegistrati.add(a1);
    }
-
-    public Artista trovaArtista(String nomeArt){
-        for(Artista artista : artistiPresenti){
-            if(artista.getNomeArte().equals(nomeArt)){
-                return artista;
-            }
-        }
-        return null;
-    }
-
-    public Genere trovaGenere(String nomeGenere){
-        for(Genere genere : generiPresenti){
-            if(genere.getNome().equals(nomeGenere)){
-                return genere;
-            }
-        }
-        return null;
-    }
 
     private void aggiungiAlbumFinto(String titolo, LocalDate data, String nomeArtista, String nomeGenere, ArrayList<Canzone> tracce) throws CampoNonValido {
         Artista art = trovaArtista(nomeArtista);
@@ -401,7 +445,7 @@ public class Controller {
     }
 
 
-    public void creaAlbum() throws CampoNonValido {
+    public void creaAlbumDB() throws CampoNonValido {
 
         // ---  ROCK ---
         ArrayList<Canzone> trcAbbey = new ArrayList<>();
