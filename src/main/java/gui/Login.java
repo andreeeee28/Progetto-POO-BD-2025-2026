@@ -7,6 +7,8 @@ import model.Utente;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Arrays;
 
 public class Login {
@@ -34,6 +36,7 @@ public class Login {
 
     public Login() {
         controller = new Controller();
+        frame.getRootPane().setDefaultButton(accediButton);
 
         //Inizializzazione button group ad utente standard
         standardRadioButton.setSelected(true);
@@ -60,8 +63,7 @@ public class Login {
             }
         });
 
-        //Pulsante Accedi
-
+        //Pulsante accedi
         accediButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -75,21 +77,16 @@ public class Login {
                 } catch (CampoNonValido ex) {
                     javax.swing.JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
-
             }
         });
 
         //Pulsante registrati
-
         registrazioneButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Registrazione(controller,frame);
+                new Registrazione(controller, frame);
                 frame.setVisible(false);
             }
         });
-
     }
-
-
 }

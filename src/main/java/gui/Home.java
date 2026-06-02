@@ -16,7 +16,7 @@ public class Home {
     private JLabel creaPropostaLabel;
     private JFrame frame;
 
-    public Home(Controller controller, JFrame frameChiamante, Utente utenteAttuale ){
+    public Home(Controller controller, JFrame frameChiamante, Utente utenteAttuale) {
         frame = new JFrame("Home");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
