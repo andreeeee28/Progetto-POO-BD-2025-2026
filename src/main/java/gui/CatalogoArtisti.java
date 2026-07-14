@@ -35,14 +35,6 @@ public class CatalogoArtisti {
             modelloLista.addElement(artistaNelDataBase.getNomeArte());
         }
 
-
-        /*DefaultListModel<Artista> modelloLista = new DefaultListModel<>();
-        ArrayList<Artista> artistiNelDataBase = controller.getArtistiPresenti();
-
-        for (Artista artistaNelDataBase : artistiNelDataBase) {
-            modelloLista.addElement(artistaNelDataBase);
-        }*/
-
         listaArtisti.setModel(modelloLista);
 
 

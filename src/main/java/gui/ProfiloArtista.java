@@ -119,9 +119,11 @@ public class ProfiloArtista {
         //Caricamento informazioni
         nomeArteLabel.setText(artista.getNomeArte());
         idLabel.setText(artista.getIdArtista());
+        annoInizioAttivitaLabel.setText(String.valueOf(artista.getAnnoInizioAttivita()));
+        numeroAlbumLabel.setText(String.valueOf(artista.getAlbumPubblicati().toArray().length));
 
-        String numeroMembriString = new Integer(((Band) artista).getNumeroMembri()).toString();
-        numeroMembriLabel.setText(numeroMembriString);
+
+        numeroMembriLabel.setText(String.valueOf(((Band) artista).getNumeroMembri()));
         if (((Band) artista).getAnnoScioglimento() == null) {
             fineAttivitaLabel.setVisible(false);
             annoFineAttivitaLabel.setVisible(false);
@@ -147,6 +149,9 @@ public class ProfiloArtista {
         //Caricamento informazioni
         nomeArteLabel.setText(artista.getNomeArte());
         idLabel.setText(artista.getIdArtista());
+        annoInizioAttivitaLabel.setText(String.valueOf(artista.getAnnoInizioAttivita()));
+        numeroAlbumLabel.setText(String.valueOf(artista.getAlbumPubblicati().toArray().length));
+
 
         nomeVeroLabel.setText(((Musicista) artista).getNomeVero());
         cognomeVeroLabel.setText(((Musicista) artista).getCognonomeVero());
@@ -194,6 +199,7 @@ public class ProfiloArtista {
 
     //Funzioni Listeners
     private void indietro(JFrame frameChiamante, JFrame frame) {
+        frameChiamante.setLocationRelativeTo(null);
         frameChiamante.setVisible(true);
         frame.dispose();
     }

@@ -9,6 +9,17 @@ public class Admin extends Utente {
 
     }
 
+    public String getIdAdmin() {
+        return idAdmin;
+    }
+
+    public void setIdAdmin(String idAdmin) throws CampoNonValido{
+        if(idAdmin == null){
+            throw new CampoNonValido("Id Admin non valido.");
+        }
+        this.idAdmin = idAdmin;
+    }
+
     public void setStatoPropostaAccettata(Proposta propostaInviata) throws CampoNonValido{
         propostaInviata.setStatoProposta(StatoProposta.ACCETTATA);
     }

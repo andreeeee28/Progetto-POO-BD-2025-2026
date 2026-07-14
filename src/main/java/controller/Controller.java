@@ -1,6 +1,5 @@
 package controller;
 
-import gui.CreaProposta;
 import model.*;
 
 import javax.swing.*;
@@ -229,7 +228,66 @@ public class Controller {
         }
     }
 
+    // --- METODO PER CARICARE GLI BAND DAL FILE TXT ---
+    public void caricaBandDaFile() throws CampoNonValido{
 
+        String percorsoFile = "DB_fittizzi/band.txt";
+        java.io.BufferedReader br = null;
+        try {
+            // Apriamo il file
+            br = new java.io.BufferedReader(new java.io.FileReader(percorsoFile));
+            String linea;
 
+            while ((linea = br.readLine()) != null) {
+                String[] dati = linea.split(";");
+
+                String nomeArte = dati[0];
+                int annoInizioAttivita = Integer.parseInt(dati[1]);
+                String idArtista = dati[2];
+                int numeroMembri = Integer.parseInt(dati[3]);
+                int annoScioglimento = Integer.parseInt(dati[4]);
+
+                ArrayList<MembroBand> membriBand = new ArrayList<>();
+                String[] listaMembri = dati[5].split(",");
+                for(int i = 0; i < listaMembri.length; i++){
+                    String[] datiMembro = listaMembri[i].split(":");
+
+                    String idMusicista = datiMembro[0];
+                    Musicista musicista = (Musicista) idToArtista(idMusicista);
+
+                    Strumento strumento = Strumento.valueOf(datiMembro[1]);
+                    int ingresso = Integer.parseInt(dati[2]);
+                    Integer uscita = Integer.parseInt(dati[3]);
+
+                    membriBand.add(new MembroBand(strumento, ingresso, uscita, musicista));
+                }
+
+                Band nuovaBand = new Band(nomeArte, annoInizioAttivita, idArtista, numeroMembri, annoScioglimento, membriBand);
+                this.artistiPresenti.add(nuovaBand);
+
+            }
+            System.out.println("Utenti caricati con successo dal file txt!");
+
+        } catch (Exception e) {
+            System.out.println("Errore durante la lettura del file utenti: " + e.getMessage());
+        } finally {
+            if (br != null) {
+                try {
+                    br.close(); // Chiudiamo il file per liberare la memoria
+                } catch (Exception e) {
+                    System.out.println("Errore durante la chiusura del file: " + e.getMessage());
+                }
+            }
+        }
+    }
+
+    public Artista idToArtista(String idArtista){
+        for (Artista artista : artistiPresenti){
+            if (artista.getIdArtista().equals(idArtista)){
+                return artista;
+            }
+        }
+        return null;
+    }
 
 }
