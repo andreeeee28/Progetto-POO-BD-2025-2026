@@ -9,3 +9,5 @@ George Harrison;1958;MB-03;George;Harrison;1943-02-25
 Ringo Starr;1957;MB-04;Richard;Starkey;1940-07-07
 Joey Ramone;1974;MB-23;Jeffrey;Hyman;1951-05-19
 Johnny Ramone;1974;MB-24;John;Cummings;1948-10-08
+Dee Dee Ramone;1974;MB-25;Douglas;Colvin;1951-09-18
+Tommy Ramone;1974;MB-26;Thomas;Erdelyi;1949-01-29

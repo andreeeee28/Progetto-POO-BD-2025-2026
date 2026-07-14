@@ -1,7 +1,7 @@
-Thriller;1982-11-29;Michael Jackson;Pop;Thriller:357,Billie Jean:294
-Pure Heroine;2013-09-27;Lorde;Alt-Pop;Royals:190,Tennis Court:198
-Bird and Diz;1952-01-01;Charlie Parker;Bepop;Bloomdido:205,Leap Frog:149
-Live at the Regal;1965-11-21;B.B. King;Blues;Every Day I Have the Blues:158,Sweet Little Angel:250
-All Eyez on Me;1996-02-13;Tupac Shakur;Hip Hop;Ambitionz:279,California Love:241
-Abbey Road;1969-09-26;The Beatles;Rock;Come Together:259,Something:182
-Ramones;1976-04-23;Ramones;Punk;Blitzkrieg Bop:134,Judy Is a Punk:92
+Thriller;1982-11-29;Michael Jackson;Pop,R&B,Funk;Wanna Be Startin' Somethin':363,Baby Be Mine:260,The Girl Is Mine:222,Thriller:357,Beat It:258,Billie Jean:294,Human Nature:246,P.Y.T.:239,The Lady in My Life:300
+Pure Heroine;2013-09-27;Lorde;Alt-Pop;Tennis Court:198,400 Lux:234,Royals:190,Ribs:258,Buzzcut Season:246,Team:193,Glory and Gore:210,Still Sane:188,White Teeth Teens:216,A World Alone:294
+Bird and Diz;1952-01-01;Charlie Parker;Bepop;Bloomdido:204,My Melancholy Baby:204,Relaxin' with Lee:166,Passport:179,Leap Frog:149,An Oscar for Treadwell:202,Mohawk:214,Visa:178
+Live at the Regal;1965-11-21;B.B. King;Blues;Every Day I Have the Blues:158,Sweet Little Angel:250,It's My Own Fault:209,How Blue Can You Get:164,Please Love Me:181,You Upset Me Baby:142,Worry Worry:384,Woke Up This Morning:105,You Done Lost Your Good Thing Now:315,Help the Poor:158
+All Eyez on Me;1996-02-13;Tupac Shakur;Hip Hop;Ambitionz Az a Ridah:279,All Bout U:277,Skandalouz:252,Got My Mind Made Up:313,How Do U Want It:287,2 of Amerikaz Most Wanted:247,No More Pain:374,Heartz of Men:283,Life Goes On:302,Only God Can Judge Me:297,Tradin War Stories:329,California Love:385,I Ain't Mad at Cha:293,What'z Ya Phone #:310,Can't C Me:330,Shorty Wanna Be a Thug:231,Holla at Me:296,Wonda Why They Call U Bitch:259,When We Ride:309,Thug Passion:307,Picture Me Rollin':195,Check Out Time:279,Ratha Be Ya Nigga:254,All Eyez on Me:308,Run Tha Streetz:317,Ain't Hard 2 Find:269,Heaven Ain't Hard 2 Find:238
+Abbey Road;1969-09-26;The Beatles;Rock,Pop;Come Together:259,Something:182,Maxwell's Silver Hammer:207,Oh! Darling:206,Octopus's Garden:171,I Want You:467,Here Comes the Sun:185,Because:165,You Never Give Me Your Money:242,Sun King:146,Mean Mr. Mustard:66,Polythene Pam:72,She Came In Through the Bathroom Window:117,Golden Slumbers:91,Carry That Weight:96,The End:125,Her Majesty:23
+Ramones;1976-04-23;Ramones;Punk;Blitzkrieg Bop:134,Beat on the Brat:151,Judy Is a Punk:92,I Wanna Be Your Boyfriend:144,Chain Saw:116,Now I Wanna Sniff Some Glue:95,I Don't Wanna Go Down to the Basement:158,Loudmouth:134,Havana Affair:116,Listen to My Heart:118,53rd & 3rd:141,Let's Dance:111,I Don't Wanna Walk Around with You:102,Today Your Love Tomorrow the World:132

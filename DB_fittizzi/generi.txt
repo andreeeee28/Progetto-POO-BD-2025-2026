@@ -7,3 +7,5 @@ Punk;Nato negli anni '70, è caratterizzato da brani brevi e veloci, arrangiamen
 Jazz;Nato a inizio '900 a New Orleans, è celebre per la complessità armonica, l'uso massiccio dell'improvvisazione, le note swingate e ritmo sincopato.;
 Bepop;Stile jazz anni '40, caratterizzato da tempi velocissimi, fraseggio asimmetrico, armonie sofisticate ed estrema enfasi sull'improvvisazione.;Jazz
 Blues;Nato a fine '800 nel Sud USA, si basa sulla progressione a 12 battute e sulle note tristi (blue notes) per esprimere malinconia e dolore.;
+R&B;Rhythm and Blues, unisce influenze gospel, jazz e blues, caratterizzato da ritmi marcati e performance vocali cariche di emozione (soul).;
+Funk;Nato a metà anni '60, enfatizza il ritmo (groove) rispetto alla melodia, con linee di basso sincopate, chitarre ritmiche e sezioni fiati.;

@@ -20,6 +20,9 @@ public class Controller {
         this.generiPresenti = new ArrayList<>();
         try {
             caricaUtentiDaFile();
+            caricaGeneriDaFile();
+            caricaMusicistiDaFile();
+            caricaBandDaFile();
 
         } catch (CampoNonValido e) {
             System.out.println("Errore nella creazione dei dati fittizzi");
@@ -173,9 +176,16 @@ public class Controller {
 
                 String nome = dati[0];
                 String descrizione = dati[1];
-                Genere nuovoGenere = new Genere(nome,descrizione);
+                Genere nuovoGenere = new Genere(nome, descrizione);
                 this.generiPresenti.add(nuovoGenere);
 
+                if (dati.length == 3 && !dati[2].isEmpty()) {
+                    Genere padre = trovaGenere(dati[2]);
+                    if (padre != null) {
+                        nuovoGenere.addGeneriPadre(padre);
+                        padre.addSottogeneri(nuovoGenere);
+                    }
+                }
             }
             System.out.println("Utenti caricati con successo dal file txt!");
 
@@ -193,7 +203,7 @@ public class Controller {
     }
     public void caricaMusicistiDaFile() throws CampoNonValido{
 
-        String percorsoFile = "DB_fittizzi/Musicisti.txt";
+        String percorsoFile = "DB_fittizzi/musicisti.txt";
         java.io.BufferedReader br = null;
         try {
             // Apriamo il file
@@ -228,48 +238,66 @@ public class Controller {
         }
     }
 
-    // --- METODO PER CARICARE GLI BAND DAL FILE TXT ---
-    public void caricaBandDaFile() throws CampoNonValido{
-
+    // --- METODO PER CARICARE LE BAND DAL FILE TXT ---
+    public void caricaBandDaFile() throws CampoNonValido {
         String percorsoFile = "DB_fittizzi/band.txt";
         java.io.BufferedReader br = null;
+
         try {
             // Apriamo il file
             br = new java.io.BufferedReader(new java.io.FileReader(percorsoFile));
             String linea;
 
             while ((linea = br.readLine()) != null) {
+                // Dividiamo i dati principali della band col punto e virgola
                 String[] dati = linea.split(";");
 
                 String nomeArte = dati[0];
                 int annoInizioAttivita = Integer.parseInt(dati[1]);
                 String idArtista = dati[2];
                 int numeroMembri = Integer.parseInt(dati[3]);
-                int annoScioglimento = Integer.parseInt(dati[4]);
+
+                // Gestione dell'anno di scioglimento (se la band è attiva, nel file c'è scritto "null")
+                Integer annoScioglimento = null;
+                if (!dati[4].equals("null")) {
+                    annoScioglimento = Integer.parseInt(dati[4]);
+                }
 
                 ArrayList<MembroBand> membriBand = new ArrayList<>();
+                // Prendiamo tutto il blocco dei membri (indice 5) e lo dividiamo per virgola
                 String[] listaMembri = dati[5].split(",");
+
                 for(int i = 0; i < listaMembri.length; i++){
+                    // Ora per ogni membro dividiamo le sue specifiche per due punti
                     String[] datiMembro = listaMembri[i].split(":");
 
                     String idMusicista = datiMembro[0];
                     Musicista musicista = (Musicista) idToArtista(idMusicista);
 
                     Strumento strumento = Strumento.valueOf(datiMembro[1]);
-                    int ingresso = Integer.parseInt(dati[2]);
-                    Integer uscita = Integer.parseInt(dati[3]);
 
+                    // CORREZIONE: Usiamo datiMembro, non dati
+                    int ingresso = Integer.parseInt(datiMembro[2]);
+
+                    // Gestione dell'anno di uscita del membro
+                    Integer uscita = null;
+                    if (!datiMembro[3].equals("null")) {
+                        uscita = Integer.parseInt(datiMembro[3]);
+                    }
+
+                    // Creiamo il membro e lo aggiungiamo alla lista temporanea
                     membriBand.add(new MembroBand(strumento, ingresso, uscita, musicista));
                 }
 
+                // Infine creiamo la Band vera e propria e la salviamo nel database fittizio
                 Band nuovaBand = new Band(nomeArte, annoInizioAttivita, idArtista, numeroMembri, annoScioglimento, membriBand);
                 this.artistiPresenti.add(nuovaBand);
-
             }
-            System.out.println("Utenti caricati con successo dal file txt!");
+            // Messaggio aggiornato per non confonderci con gli utenti!
+            System.out.println("Band caricate con successo dal file txt!");
 
         } catch (Exception e) {
-            System.out.println("Errore durante la lettura del file utenti: " + e.getMessage());
+            System.out.println("Errore durante la lettura del file band: " + e.getMessage());
         } finally {
             if (br != null) {
                 try {
@@ -280,7 +308,6 @@ public class Controller {
             }
         }
     }
-
     public Artista idToArtista(String idArtista){
         for (Artista artista : artistiPresenti){
             if (artista.getIdArtista().equals(idArtista)){
@@ -289,5 +316,78 @@ public class Controller {
         }
         return null;
     }
+    // --- METODO PER CARICARE GLI ALBUM DAL FILE TXT ---
+    public void caricaAlbumDaFile() throws CampoNonValido {
+        String percorsoFile = "DB_fittizzi/album.txt";
+        java.io.BufferedReader br = null;
 
+        try {
+            br = new java.io.BufferedReader(new java.io.FileReader(percorsoFile));
+            String linea;
+
+            while ((linea = br.readLine()) != null) {
+                // 1. Tagliamo i dati principali dell'album
+                String[] dati = linea.split(";");
+
+                String titolo = dati[0];
+                LocalDate dataPubblicazione = LocalDate.parse(dati[1]);
+                String nomeArtista = dati[2];
+                String stringaGeneri = dati[3]; // Es: "Pop,R&B,Funk"
+
+                // 2. Cerchiamo il vero oggetto Artista
+                Artista artista = trovaArtista(nomeArtista);
+
+                // 3. Prepariamo la lista dei generi (potrebbero essere più di uno!)
+                ArrayList<Genere> listaGeneri = new ArrayList<>();
+                String[] nomiGeneri = stringaGeneri.split(",");
+
+                for (int i = 0; i < nomiGeneri.length; i++) {
+                    Genere genereTrovato = trovaGenere(nomiGeneri[i]);
+                    if (genereTrovato != null) {
+                        listaGeneri.add(genereTrovato);
+                    }
+                }
+
+                // 4. Prepariamo la tracklist
+                ArrayList<Canzone> tracklist = new ArrayList<>();
+                String[] tracce = dati[4].split(",");
+
+                for (int i = 0; i < tracce.length; i++) {
+                    String[] datiCanzone = tracce[i].split(":");
+                    String titoloCanzone = datiCanzone[0];
+                    int durata = Integer.parseInt(datiCanzone[1]);
+                    tracklist.add(new Canzone(titoloCanzone, durata));
+                }
+
+                // 5. Creiamo e colleghiamo l'album
+                // Ci assicuriamo di aver trovato l'artista e ALMENO un genere valido
+                if (artista != null && !listaGeneri.isEmpty()) {
+                    Album nuovoAlbum = new Album(titolo, dataPubblicazione, artista, listaGeneri, tracklist);
+                    this.albumPresenti.add(nuovoAlbum);
+
+                    // L'artista ha un nuovo album!
+                    artista.addAlbum(nuovoAlbum);
+
+                    // Dobbiamo dire a TUTTI i generi coinvolti che hanno un nuovo album
+                    for (Genere g : listaGeneri) {
+                        g.addListaAlbum(nuovoAlbum);
+                    }
+                } else {
+                    System.out.println("Attenzione: Artista o Genere non trovato per l'album " + titolo);
+                }
+            }
+            System.out.println("Album caricati con successo dal file txt!");
+
+        } catch (Exception e) {
+            System.out.println("Errore durante la lettura del file album: " + e.getMessage());
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (Exception e) {
+                    System.out.println("Errore durante la chiusura del file: " + e.getMessage());
+                }
+            }
+        }
+    }
 }
