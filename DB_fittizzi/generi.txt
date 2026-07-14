@@ -1,0 +1,9 @@
+Pop;Stili legati alla produzione di massa, incentrati su orecchiabilità.;
+Alt-Pop;Combina il pop da classifica con l'indie, atmosfere minimaliste.;
+Hip Hop;Nato a fine anni '70. Caratterizzato dal rapping.;
+Rock;Struttura strofa-ritornello, ritmo di backbeat e chitarra elettrica.;
+Alternative Rock;Meno commerciale e di ispirazione punk.;Rock
+Punk;Stile semplice e sfrontato, temi anti-establishment.;
+Jazz;Nato a inizio '900 nel Sud USA. Divenuto popolarissimo negli anni '30.;
+Bepop;Tempi veloci, improvvisazione e armonie complesse.;Jazz
+Blues;Nato a fine '800 nel Sud USA dalle comunità afroamericane.;

@@ -1,0 +1,11 @@
+Michael Jackson;1964;ART-P01;Michael;Jackson;1958-08-29
+Lorde;2012;ART-SUB-P2;Ella;Yelich-O'Connor;1996-11-07
+Charlie Parker;1937;ART-SUB-J2;Charlie;Parker;1920-08-29
+B.B. King;1948;ART-B01;Riley B.;King;1925-09-16
+Tupac Shakur;1989;ART-H01;Tupac;Shakur;1971-06-16
+John Lennon;1957;MB-01;John;Lennon;1940-10-09
+Paul McCartney;1957;MB-02;Paul;McCartney;1942-06-18
+George Harrison;1958;MB-03;George;Harrison;1943-02-25
+Ringo Starr;1957;MB-04;Richard;Starkey;1940-07-07
+Joey Ramone;1974;MB-23;Jeffrey;Hyman;1951-05-19
+Johnny Ramone;1974;MB-24;John;Cummings;1948-10-08

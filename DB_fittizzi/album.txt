@@ -1,0 +1,7 @@
+Thriller;1982-11-29;Michael Jackson;Pop;Thriller:357,Billie Jean:294
+Pure Heroine;2013-09-27;Lorde;Alt-Pop;Royals:190,Tennis Court:198
+Bird and Diz;1952-01-01;Charlie Parker;Bepop;Bloomdido:205,Leap Frog:149
+Live at the Regal;1965-11-21;B.B. King;Blues;Every Day I Have the Blues:158,Sweet Little Angel:250
+All Eyez on Me;1996-02-13;Tupac Shakur;Hip Hop;Ambitionz:279,California Love:241
+Abbey Road;1969-09-26;The Beatles;Rock;Come Together:259,Something:182
+Ramones;1976-04-23;Ramones;Punk;Blitzkrieg Bop:134,Judy Is a Punk:92

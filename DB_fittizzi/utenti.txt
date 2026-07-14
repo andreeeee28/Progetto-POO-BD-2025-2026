@@ -1,0 +1,4 @@
+mario99;PassMario123;ITALIA;Utente
+admin_root;SuperSegreta!!;USA;Admin
+giulia_fr;Paris2024!!!;FRANCIA;Utente
+hans_berlin;BerlinPass24;GERMANIA;Utente
