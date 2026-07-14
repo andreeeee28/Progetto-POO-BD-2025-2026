@@ -20,9 +20,8 @@ public class Controller {
         this.artistiPresenti = new ArrayList<>();
         this.generiPresenti = new ArrayList<>();
         try {
-            creaUtentiRegistratiDB();
-            creaGeneriDB();
-            creaArtistiDB();
+            caricaUtentiDaFile();
+
         } catch (CampoNonValido e) {
             System.out.println("Errore nella creazione dei dati fittizzi");
         }
@@ -120,12 +119,10 @@ public class Controller {
     // ulteriermente ingrandito dall Admin
 
     // --- METODO PER CARICARE GLI UTENTI DAL FILE TXT ---
-    public void caricaUtentiDaFile() {
+    public void caricaUtentiDaFile() throws CampoNonValido{
+
         String percorsoFile = "DB_fittizzi/utenti.txt";
-
-        // Dichiariamo il BufferedReader FUORI dal try, così possiamo vederlo anche nel blocco finally
         java.io.BufferedReader br = null;
-
         try {
             // Apriamo il file
             br = new java.io.BufferedReader(new java.io.FileReader(percorsoFile));
@@ -134,28 +131,94 @@ public class Controller {
             while ((linea = br.readLine()) != null) {
                 String[] dati = linea.split(";");
 
-                if (dati.length == 4) {
                     String username = dati[0];
                     String password = dati[1];
                     Nazione nazione = Nazione.valueOf(dati[2]);
                     String ruolo = dati[3];
 
                     if (ruolo.equals("Admin")) {
-                        Utente nuovoAdmin = new Admin(username, password, nazione, "CodiceFittizio");
+                        String idAdmin = dati[4];
+                        Utente nuovoAdmin = new Admin(username, password, nazione, idAdmin);
                         this.utentiRegistrati.add(nuovoAdmin);
                     } else {
                         Utente nuovoUtente = new Utente(username, password, nazione);
                         this.utentiRegistrati.add(nuovoUtente);
                     }
-                }
+
             }
             System.out.println("Utenti caricati con successo dal file txt!");
 
         } catch (Exception e) {
             System.out.println("Errore durante la lettura del file utenti: " + e.getMessage());
         } finally {
-            // Il blocco finally viene eseguito SEMPRE, sia che vada tutto bene, sia che ci sia un errore.
-            // È il posto perfetto per chiudere il file manualmente.
+            if (br != null) {
+                try {
+                    br.close(); // Chiudiamo il file per liberare la memoria
+                } catch (Exception e) {
+                    System.out.println("Errore durante la chiusura del file: " + e.getMessage());
+                }
+            }
+        }
+    }
+    public void caricaGeneriDaFile() throws CampoNonValido{
+
+        String percorsoFile = "DB_fittizzi/generi.txt";
+        java.io.BufferedReader br = null;
+        try {
+            // Apriamo il file
+            br = new java.io.BufferedReader(new java.io.FileReader(percorsoFile));
+            String linea;
+
+            while ((linea = br.readLine()) != null) {
+                String[] dati = linea.split(";");
+
+                String nome = dati[0];
+                String descrizione = dati[1];
+                Genere nuovoGenere = new Genere(nome,descrizione);
+                this.generiPresenti.add(nuovoGenere);
+
+            }
+            System.out.println("Utenti caricati con successo dal file txt!");
+
+        } catch (Exception e) {
+            System.out.println("Errore durante la lettura del file utenti: " + e.getMessage());
+        } finally {
+            if (br != null) {
+                try {
+                    br.close(); // Chiudiamo il file per liberare la memoria
+                } catch (Exception e) {
+                    System.out.println("Errore durante la chiusura del file: " + e.getMessage());
+                }
+            }
+        }
+    }
+    public void caricaMusicistiDaFile() throws CampoNonValido{
+
+        String percorsoFile = "DB_fittizzi/Musicisti.txt";
+        java.io.BufferedReader br = null;
+        try {
+            // Apriamo il file
+            br = new java.io.BufferedReader(new java.io.FileReader(percorsoFile));
+            String linea;
+
+            while ((linea = br.readLine()) != null) {
+                String[] dati = linea.split(";");
+
+                String nomeArte = dati[0];
+                int annoInizioAttivita = Integer.parseInt(dati[1]);
+                String idArtistia = dati[2];
+                String nomeVero = dati[3];
+                String cognomeVero = dati [4];
+                LocalDate dataDiNascita = LocalDate.parse(dati[5]);
+                Musicista NuovoMusicista = new Musicista(nomeArte,annoInizioAttivita,idArtistia,nomeVero,cognomeVero,dataDiNascita);
+                this.artistiPresenti.add(NuovoMusicista);
+
+            }
+            System.out.println("Utenti caricati con successo dal file txt!");
+
+        } catch (Exception e) {
+            System.out.println("Errore durante la lettura del file utenti: " + e.getMessage());
+        } finally {
             if (br != null) {
                 try {
                     br.close(); // Chiudiamo il file per liberare la memoria
@@ -166,18 +229,7 @@ public class Controller {
         }
     }
 
-    public void creaGeneriDB() throws CampoNonValido{
-    }
-    public void creaArtistiDB() throws CampoNonValido {
 
-    }
 
-   public void creaUtentiRegistratiDB() throws CampoNonValido {
-
-   }
-
-    private void aggiungiAlbumFinto(String titolo, LocalDate data, String nomeArtista, String nomeGenere, ArrayList<Canzone> tracce) throws CampoNonValido {
-
-    }
 
 }
