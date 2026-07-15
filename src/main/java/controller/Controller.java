@@ -23,6 +23,7 @@ public class Controller {
             caricaGeneriDaFile();
             caricaMusicistiDaFile();
             caricaBandDaFile();
+            caricaAlbumDaFile();
 
         } catch (CampoNonValido e) {
             System.out.println("Errore nella creazione dei dati fittizzi");
@@ -305,11 +306,16 @@ public class Controller {
                     }
 
                     // Creiamo il membro e lo aggiungiamo alla lista temporanea
-                    membriBand.add(new MembroBand(strumento, ingresso, uscita, musicista));
+                    MembroBand membroBand = new MembroBand(strumento, ingresso, uscita, musicista);
+                    membriBand.add(membroBand);
+                    musicista.addPartecipazioneBand(membroBand);
                 }
 
                 // Infine creiamo la Band vera e propria e la salviamo nel database fittizio
                 Band nuovaBand = new Band(nomeArte, annoInizioAttivita, idArtista, numeroMembri, annoScioglimento, membriBand);
+                for(MembroBand m : membriBand){
+                    m.setBand(nuovaBand);
+                }
                 this.artistiPresenti.add(nuovaBand);
             }
             // Messaggio aggiornato per non confonderci con gli utenti!

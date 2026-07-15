@@ -13,7 +13,6 @@ public class ProfiloArtista {
     private JPanel mainPanel;
     private JList partecipazioniMembriList;
     private JButton indietroButton;
-    private JTextPane biografiaTextArea;
     private JLabel nomeLabel;
     private JLabel nomeVeroLabel;
     private JLabel cognomeVeroLabel;
@@ -43,7 +42,6 @@ public class ProfiloArtista {
     private JSeparator fineAttivitaSeparator;
     private JSeparator albumSeparator;
     private JButton visualizzaButton;
-    private ArrayList<MembroBand> partecipazioniMembri;
 
     public ProfiloArtista(Controller controller, JFrame frameChiamante, Artista artista) {
         frame = new JFrame("Profilo Artista");
@@ -51,19 +49,20 @@ public class ProfiloArtista {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);
+        frame.getRootPane().setDefaultButton(visualizzaButton);
 
+        ArrayList<MembroBand> partecipazioniMembri = new ArrayList<>();
 
-        partecipazioniMembri = new ArrayList<>();
         if (artista.getClass() == Band.class) {         //Band
 
             configuraElementiBand(artista);
-            riempiListaMembriBand(artista);
+            riempiListaMembriBand(artista, partecipazioniMembri);
             riempiListaDiscografia(artista);
 
         } else if (artista.getClass() == Musicista.class) {         //Musicista
 
             configuraElementiMusicista(artista);
-            riempiListaMembriMusicista(artista);
+            riempiListaMembriMusicista(artista, partecipazioniMembri);
             riempiListaDiscografia(artista);
 
         }
@@ -71,7 +70,7 @@ public class ProfiloArtista {
         frame.setVisible(true);
 
 
-        //Tasto torna al catalogo
+        //Tasto torna alla form precedente
         indietroButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -162,7 +161,7 @@ public class ProfiloArtista {
     }
 
     //Riempimento lista Membri/Partecipazioni
-    private void riempiListaMembriBand(Artista artista) {
+    private void riempiListaMembriBand(Artista artista, ArrayList<MembroBand> partecipazioniMembri) {
         DefaultListModel<String> modelloLista = new DefaultListModel<>();
 
         partecipazioniMembri = ((Band) artista).getMembriBand();
@@ -173,7 +172,7 @@ public class ProfiloArtista {
         partecipazioniMembriList.setModel(modelloLista);
     }
 
-    private void riempiListaMembriMusicista(Artista artista) {
+    private void riempiListaMembriMusicista(Artista artista, ArrayList<MembroBand> partecipazioniMembri) {
         DefaultListModel<String> modelloLista = new DefaultListModel<>();
 
         partecipazioniMembri = ((Musicista) artista).getPartecipazioniBand();
