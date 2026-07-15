@@ -60,16 +60,35 @@ public class Controller {
 
     // Metodi Class AggiungiElementoAdmin
 
-    public ArrayList<Canzone> inserisciCanzoni(int numeroCanzoni, JFrame frameChiamante) throws CampoNonValido{
+    public ArrayList<Canzone> inserisciCanzoni(int numeroCanzoni, JFrame frameChiamante) throws CampoNonValido {
         ArrayList<Canzone> canzoniAlbum = new ArrayList<>();
-        for(int i =0; i<numeroCanzoni;i++){
-            String titoloTraccia = JOptionPane.showInputDialog(frameChiamante,"Inserisci il titolo della canzone  numero " + i);
-            int durataSecondi =Integer.parseInt(JOptionPane.showInputDialog(frameChiamante,"Inserisci la durata in secondi della canzone"));
-            Canzone canzoneCreata = new Canzone(titoloTraccia,durataSecondi);
-            canzoniAlbum.add(canzoneCreata);
+        for (int i = 0; i < numeroCanzoni; i++) {
+            String titoloTraccia = JOptionPane.showInputDialog(frameChiamante, "Inserisci il titolo della canzone numero " + (i + 1));
+            if (titoloTraccia == null) {
+                throw new CampoNonValido("ATTENZIONE cliccando su Canc si annulla l'intera operazione di creazione dell album");
+            }
+            try {
+                int durataSecondi = Integer.parseInt(JOptionPane.showInputDialog(frameChiamante, "Inserisci la durata in secondi della canzone"));
+                Canzone canzoneCreata = new Canzone(titoloTraccia, durataSecondi);
+                canzoniAlbum.add(canzoneCreata);
+            } catch (NumberFormatException ex){
+                throw new CampoNonValido("Operazione annullata (hai cliccato Canc o inserito lettere al posto dei numeri). L'album non è stato creato.");
+            }
         }
         return canzoniAlbum;
     }
+    public ArrayList<Genere> getGeneriPresenti(){return generiPresenti;}
+
+
+
+
+
+
+
+
+
+
+
 
     public Artista trovaArtista(String nomeArt){
         for(Artista artista : artistiPresenti){
@@ -187,7 +206,7 @@ public class Controller {
                     }
                 }
             }
-            System.out.println("Utenti caricati con successo dal file txt!");
+            System.out.println("Generi caricati con successo dal file txt!");
 
         } catch (Exception e) {
             System.out.println("Errore durante la lettura del file utenti: " + e.getMessage());
@@ -223,7 +242,7 @@ public class Controller {
                 this.artistiPresenti.add(NuovoMusicista);
 
             }
-            System.out.println("Utenti caricati con successo dal file txt!");
+            System.out.println("Musicisti caricati con successo dal file txt!");
 
         } catch (Exception e) {
             System.out.println("Errore durante la lettura del file utenti: " + e.getMessage());

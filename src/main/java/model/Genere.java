@@ -91,4 +91,9 @@ public class Genere {
 
         }
     }
+
+    @Override
+    public String toString() {
+        return this.nome;
+    }
 }

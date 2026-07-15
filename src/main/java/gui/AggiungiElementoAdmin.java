@@ -18,7 +18,6 @@ public class AggiungiElementoAdmin {
     private JButton creaButton;
     private JPanel mainPanel;
     private JLabel laberlArtista;
-    private JLabel labelGeneri;
     private JLabel labelCanzoni;
     private JLabel labelAnno;
     private JLabel labelTitolo;
@@ -28,6 +27,8 @@ public class AggiungiElementoAdmin {
     private JComboBox comboBoxAnno;
     private JComboBox comboBoxArtista;
     private JLabel labelMese;
+    private JList listaGeneri;
+    private JLabel labelGeneri;
     private JFrame frame;
 
     public AggiungiElementoAdmin(Controller controller, JFrame frameChiamante){
@@ -38,8 +39,11 @@ public class AggiungiElementoAdmin {
         frame.setVisible(true);
 
         // qui setto i valori delle ComboBox
-        tipoElemento.setModel(new DefaultComboBoxModel<>(TipoProposta.values()));
-
+        DefaultComboBoxModel<String> modelTipoElemento = new DefaultComboBoxModel<>();
+        modelTipoElemento.addElement("ALBUM");
+        modelTipoElemento.addElement("GENERE");
+        modelTipoElemento.addElement("ARTISTA");
+        tipoElemento.setModel(modelTipoElemento);
         ArrayList<Artista> artistiNelDataBase = controller.getArtistiPresenti();
 
         for(Artista artistaNelDataBase : artistiNelDataBase){
@@ -47,32 +51,49 @@ public class AggiungiElementoAdmin {
         }
 
         for (int i = 1900; i< Year.now().getValue() + 1; i++){
-            comboBoxAnno.addItem(String.valueOf(i));
+            comboBoxAnno.addItem(i);
         }
         for (int i = 1; i< 13; i++){
-            comboBoxMese.addItem(String.valueOf(i));
+            comboBoxMese.addItem(i);
         }
         for (int i = 1; i< 32; i++){
-            comboBoxGiorno.addItem(String.valueOf(i));
+            comboBoxGiorno.addItem(i);
         }
+        ArrayList<Genere> generiPresenti = controller.getGeneriPresenti();
+        DefaultListModel<Genere> modelGeneri = new DefaultListModel<>();
+        for(Genere genere : generiPresenti){
+            modelGeneri.addElement(genere);
+        }
+        listaGeneri.setModel(modelGeneri);
+        listaGeneri.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
         creaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String nomeArtista = (String) comboBoxArtista.getSelectedItem();
-                int numeroGeneri = Integer.parseInt(fieldGeneri.getText());
-                int numeroCanzoni =Integer.parseInt( fieldCanzoni.getText());
-                String titolo = fieldTitolo.getText();
-                int giorno = (int) comboBoxGiorno.getSelectedItem();
-                int mese = (int) comboBoxMese.getSelectedItem();
-                int anno = (int) comboBoxAnno.getSelectedItem();
-                LocalDate dataPubblicazione = LocalDate.of(anno, mese, giorno);
                 try {
+                    String nomeArtista = (String) comboBoxArtista.getSelectedItem();
+                    int numeroCanzoni =Integer.parseInt( fieldCanzoni.getText());
+                    String titolo = fieldTitolo.getText();
+                    int giorno = (Integer)comboBoxGiorno.getSelectedItem();
+                    int mese = (Integer) comboBoxMese.getSelectedItem();
+                    int anno = (Integer) comboBoxAnno.getSelectedItem();
+                    LocalDate dataPubblicazione = LocalDate.of(anno, mese, giorno);
                     ArrayList<Canzone> canzoniAlbum = controller.inserisciCanzoni(numeroCanzoni,frame);
-                    ArrayList<Genere> generiAlbum = controller.inserisciGeneri(numeroGeneri,frame);
                     Artista artista = controller.trovaArtista(nomeArtista);
-                    controller.creaAlbum(titolo,dataPubblicazione,artista,generiAlbum,canzoniAlbum);
+                    ArrayList<Genere> generiSelezionati = new ArrayList<>(listaGeneri.getSelectedValuesList());
+                    controller.creaAlbum(titolo,dataPubblicazione,artista,generiSelezionati,canzoniAlbum);
+                    javax.swing.JOptionPane.showMessageDialog(null, "album creato con successo");
+
                 } catch (CampoNonValido ex) {
                     javax.swing.JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
+                catch (NumberFormatException ex) {
+                    // QUESTA È LA RETE CHE MANCAVA! Cattura il campo vuoto o testuale
+                    javax.swing.JOptionPane.showMessageDialog(null, "Attenzione: Inserisci un numero valido nel campo Canzoni!");
+
+                } catch (Exception ex) {
+                    // Questa è una "super rete" che cattura qualsiasi altro crash imprevisto
+                    javax.swing.JOptionPane.showMessageDialog(null, "Errore imprevisto: " + ex.getMessage());
                 }
 
             }
