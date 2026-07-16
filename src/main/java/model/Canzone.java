@@ -37,8 +37,8 @@ public class Canzone {
     }
 
     public void setTitolo(String titolo) throws CampoNonValido {
-        if(titolo == null ||  titolo.trim().length()<1 || titolo.trim().length()>30){
-            throw new CampoNonValido("Il titolo deve avere minimo 1 carattere e massimo 30!");
+        if(titolo == null ||  titolo.trim().length()<1 || titolo.trim().length()>50){
+            throw new CampoNonValido("Il titolo deve avere minimo 1 carattere e massimo 50!");
         }
         this.titolo = titolo;
     }

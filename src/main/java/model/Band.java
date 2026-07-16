@@ -79,6 +79,11 @@ public class Band extends Artista {
             throw new CampoNonValido("Membro della band già presente nella lista dei membri");
         }
     }
+    @Override
+    public String toString() {
+        return this.getNomeArte();
+    }
+
 
     }
 

@@ -26,9 +26,9 @@ public class Registrazione {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        campoNazione.setModel(new DefaultComboBoxModel<>(Nazione.values()));
 
-        //Tasto torna al Login
+        campoNazione.setModel(new DefaultComboBoxModel<>(Nazione.values()));
+        // tasto torna al Login
         tornaAlLoginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -41,10 +41,10 @@ public class Registrazione {
         registratiButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String stringaCampoUtente = campoUtente.getText();
-                String stringaCampoPassword = campoPassword.getText();
-                Nazione enumCampoNazione = (Nazione) campoNazione.getSelectedItem();
                 try {
+                    String stringaCampoUtente = campoUtente.getText();
+                    String stringaCampoPassword = campoPassword.getText();
+                    Nazione enumCampoNazione = (Nazione) campoNazione.getSelectedItem();
                     Utente utenteAttuale = controller.cliccatoRegistrati(stringaCampoUtente,stringaCampoPassword,enumCampoNazione);
                     new Home(controller,frame, utenteAttuale);
                     frame.setVisible(false);

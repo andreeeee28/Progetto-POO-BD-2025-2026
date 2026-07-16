@@ -14,6 +14,8 @@ public class Home {
     private JButton esploraArtistiButton;
     private JButton esploraGeneriButton;
     private JLabel creaPropostaLabel;
+    private JButton aggiungiArtistaButton;
+    private JButton aggiungiGenereButton;
     private JFrame frame;
 
     public Home(Controller controller, JFrame frameChiamante, Utente utenteAttuale) {
@@ -23,15 +25,33 @@ public class Home {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        aggiungiArtistaButton.setVisible(false);
+        aggiungiGenereButton.setVisible(false);
         
         if (utenteAttuale instanceof Admin adminLoggato){
-            creaPropostaLabel.setText("Clicca qui per aggiungere un album o un artista al sito");
-            creaPropostaButton.setText("aggiungi elemento");
+            creaPropostaLabel.setText("Clicca qui per aggiungere un album o un artista o un genere al sito");
+            creaPropostaButton.setText("Aggiungi Album");
+            aggiungiArtistaButton.setVisible(true);
+            aggiungiGenereButton.setVisible(true);
             creaPropostaButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    new AggiungiElementoAdmin(controller,frame);
+                    new AggiungiAlbumAdmin(controller,frame);
                     frame.setVisible(false);
+                }
+            });
+            aggiungiArtistaButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    new AggiungiArtistaAdmin(controller,frame);
+                    frame.setVisible(false);
+
+                }
+            });
+            aggiungiGenereButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
                 }
             });
 

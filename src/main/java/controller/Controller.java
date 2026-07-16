@@ -3,6 +3,9 @@ package controller;
 import model.*;
 
 import javax.swing.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -137,6 +140,38 @@ public class Controller {
         return artistiPresenti;
     }
 
+    // Metodo classe AggiungiArtistaAdmin
+
+    public ArrayList<Band> getBandPresenti(){
+        ArrayList<Band> bandPresenti = new ArrayList<>();
+        for(Artista artista : artistiPresenti){
+            if (artista instanceof Band){
+                bandPresenti.add((Band) artista);
+            }
+        }
+        return bandPresenti;
+    }
+    public void scriviMusicistaDataBase(Musicista musicistaAggiunto) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("DB_fittizzi/musicisti.txt", true))) {
+            writer.write(musicistaAggiunto.getNomeArte() + ";" + musicistaAggiunto.getAnnoInizioAttivita() + ";" +
+                    musicistaAggiunto.getIdArtista() + ";" + musicistaAggiunto.getNomeVero() + ";" + musicistaAggiunto.getCognonomeVero()
+                    + ";" + musicistaAggiunto.getDataDiNascita().toString());
+            writer.newLine();
+
+        } catch (IOException e) {
+            System.out.println("Errore: " + e.getMessage());
+        }
+    }
+    public void scriviMembroBandDataBase(MembroBand membroBandDaAggiungere, Band bandCuiAggiungere) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("DB_fittizzi/band.txt", true))) {
+            writer.write("");
+            writer.newLine();
+
+        } catch (IOException e) {
+            System.out.println("Errore: " + e.getMessage());
+        }
+    }
+
     // con questi metodi vogliamo riempire il database fittizio iniziale che poi potrà essere
     // ulteriermente ingrandito dall Admin
 
@@ -246,7 +281,7 @@ public class Controller {
             System.out.println("Musicisti caricati con successo dal file txt!");
 
         } catch (Exception e) {
-            System.out.println("Errore durante la lettura del file utenti: " + e.getMessage());
+            System.out.println("Errore durante la lettura del file Musicista: " + e.getMessage());
         } finally {
             if (br != null) {
                 try {

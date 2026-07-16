@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.time.Year;
 import java.util.ArrayList;
 
-public class AggiungiElementoAdmin {
+public class AggiungiAlbumAdmin {
     private JComboBox tipoElemento;
     private JTextField fieldTitolo;
     private JTextField fieldGeneri;
@@ -31,7 +31,7 @@ public class AggiungiElementoAdmin {
     private JLabel labelGeneri;
     private JFrame frame;
 
-    public AggiungiElementoAdmin(Controller controller, JFrame frameChiamante){
+    public AggiungiAlbumAdmin(Controller controller, JFrame frameChiamante){
         frame = new JFrame("AggiungiElementoAdmin");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
