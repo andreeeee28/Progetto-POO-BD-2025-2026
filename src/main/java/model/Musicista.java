@@ -85,4 +85,9 @@ public class Musicista extends Artista {
             throw new CampoNonValido("Partecipazione alla band già presente nella lista di partecipazioni");
         }
     }
+
+    @Override
+    public String toString() {
+        return nomeVero + cognonomeVero;
+    }
 }

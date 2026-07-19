@@ -105,4 +105,10 @@ public class Proposta {
         }
         this.autoreProposta = autoreProposta;
     }
+
+    @Override
+    public String toString() {
+        return  tipoElemento+ titoloElemento;
+
+    }
 }

@@ -31,7 +31,7 @@ public class AggiungiAlbumAdmin {
     private JLabel labelGeneri;
     private JFrame frame;
 
-    public AggiungiAlbumAdmin(Controller controller, JFrame frameChiamante){
+    public AggiungiAlbumAdmin(Controller controller, JFrame frameChiamante,Utente utente){
         frame = new JFrame("AggiungiElementoAdmin");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -83,6 +83,8 @@ public class AggiungiAlbumAdmin {
                     ArrayList<Genere> generiSelezionati = new ArrayList<>(listaGeneri.getSelectedValuesList());
                     controller.creaAlbum(titolo,dataPubblicazione,artista,generiSelezionati,canzoniAlbum);
                     javax.swing.JOptionPane.showMessageDialog(null, "album creato con successo");
+                    new Home(controller,frame,utente);
+                    frame.dispose();
 
                 } catch (CampoNonValido ex) {
                     javax.swing.JOptionPane.showMessageDialog(null, ex.getMessage());

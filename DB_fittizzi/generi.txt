@@ -1,11 +1,11 @@
-Pop;Struttura musicale semplice, forte orecchiabilità e ritornelli memorabili. Stile accessibile legato alla produzione di massa e ai trend globali.;
-Alt-Pop;Fonde melodie pop con l'approccio sperimentale e atmosfere minimaliste dell'indie, affrontando spesso tematiche più cupe e introspettive.;Pop
-Hip Hop;Nato nel Bronx negli anni '70, si fonda su basi ritmiche campionate (beat) su cui si sviluppa l'espressione vocale in rima nota come rapping.;
-Rock;Nato negli anni '50, si basa su chitarra elettrica e una solida sezione ritmica (basso-batteria), con struttura strofa-ritornello e animo ribelle.;
-Alternative Rock;Unisce l'energia del punk a strutture complesse e chitarre distorte, con testi malinconici e un forte spirito anticonformista e underground.;Rock
-Punk;Nato negli anni '70, è caratterizzato da brani brevi e veloci, arrangiamenti grezzi e un forte messaggio di ribellione contro il sistema.;
-Jazz;Nato a inizio '900 a New Orleans, è celebre per la complessità armonica, l'uso massiccio dell'improvvisazione, le note swingate e ritmo sincopato.;
-Bepop;Stile jazz anni '40, caratterizzato da tempi velocissimi, fraseggio asimmetrico, armonie sofisticate ed estrema enfasi sull'improvvisazione.;Jazz
-Blues;Nato a fine '800 nel Sud USA, si basa sulla progressione a 12 battute e sulle note tristi (blue notes) per esprimere malinconia e dolore.;
-R&B;Rhythm and Blues, unisce influenze gospel, jazz e blues, caratterizzato da ritmi marcati e performance vocali cariche di emozione (soul).;
-Funk;Nato a metà anni '60, enfatizza il ritmo (groove) rispetto alla melodia, con linee di basso sincopate, chitarre ritmiche e sezioni fiati.;
+Pop;Struttura musicale semplice, forte orecchiabilità e ritornelli memorabili. Stile accessibile legato alla produzione di massa e ai trend globali.;;
+Alt-Pop;Fonde melodie pop con l'approccio sperimentale e atmosfere minimaliste dell'indie, affrontando spesso tematiche più cupe e introspettive.;Pop;
+Hip Hop;Nato nel Bronx negli anni '70, si fonda su basi ritmiche campionate (beat) su cui si sviluppa l'espressione vocale in rima nota come rapping.;;
+Rock;Nato negli anni '50, si basa su chitarra elettrica e una solida sezione ritmica (basso-batteria), con struttura strofa-ritornello e animo ribelle.;;
+Alternative Rock;Unisce l'energia del punk a strutture complesse e chitarre distorte, con testi malinconici e un forte spirito anticonformista e underground.;Rock;
+Punk;Nato negli anni '70, è caratterizzato da brani brevi e veloci, arrangiamenti grezzi e un forte messaggio di ribellione contro il sistema.;;
+Jazz;Nato a inizio '900 a New Orleans, è celebre per la complessità armonica, l'uso massiccio dell'improvvisazione, le note swingate e ritmo sincopato.;;
+Bepop;Stile jazz anni '40, caratterizzato da tempi velocissimi, fraseggio asimmetrico, armonie sofisticate ed estrema enfasi sull'improvvisazione.;Jazz;
+Blues;Nato a fine '800 nel Sud USA, si basa sulla progressione a 12 battute e sulle note tristi (blue notes) per esprimere malinconia e dolore.;;
+R&B;Rhythm and Blues, unisce influenze gospel, jazz e blues, caratterizzato da ritmi marcati e performance vocali cariche di emozione (soul).;;
+Funk;Nato a metà anni '60, enfatizza il ritmo (groove) rispetto alla melodia, con linee di basso sincopate, chitarre ritmiche e sezioni fiati.;;

@@ -1,4 +1,4 @@
-package gui;
+﻿package gui;
 
 import controller.Controller;
 import model.Admin;
@@ -16,6 +16,8 @@ public class Home {
     private JLabel creaPropostaLabel;
     private JButton aggiungiArtistaButton;
     private JButton aggiungiGenereButton;
+    private JButton aggiungiBandButton;
+    private JButton valutaProposteButton;
     private JFrame frame;
 
     public Home(Controller controller, JFrame frameChiamante, Utente utenteAttuale) {
@@ -27,23 +29,25 @@ public class Home {
         frame.setVisible(true);
         aggiungiArtistaButton.setVisible(false);
         aggiungiGenereButton.setVisible(false);
+        valutaProposteButton.setVisible(false);
         
         if (utenteAttuale instanceof Admin adminLoggato){
             creaPropostaLabel.setText("Clicca qui per aggiungere un album o un artista o un genere al sito");
             creaPropostaButton.setText("Aggiungi Album");
             aggiungiArtistaButton.setVisible(true);
             aggiungiGenereButton.setVisible(true);
+            valutaProposteButton.setVisible(true);
             creaPropostaButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    new AggiungiAlbumAdmin(controller,frame);
+                    new AggiungiAlbumAdmin(controller,frame,utenteAttuale);
                     frame.setVisible(false);
                 }
             });
             aggiungiArtistaButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    new AggiungiArtistaAdmin(controller,frame);
+                    new AggiungiMusicistaAdmin(controller,frame,utenteAttuale);
                     frame.setVisible(false);
 
                 }
@@ -67,7 +71,7 @@ public class Home {
         esploraArtistiButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new CatalogoArtisti(controller, frame);
+                new CatalogoArtisti(controller, frame,utenteAttuale);
                 frame.setVisible(false);
             }
         });
@@ -75,10 +79,26 @@ public class Home {
         esploraGeneriButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new CatalogoGeneri(controller, frame);
+                new CatalogoGeneri(controller, frame,utenteAttuale);
                 frame.setVisible(false);
             }
         });
 
+
+        aggiungiGenereButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new AggiungiGeneriAdmin(controller,frame,utenteAttuale);
+            }
+        });
+        aggiungiBandButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) { new AggiungiBandAdmin(controller,frame,utenteAttuale);
+            }
+        });
+        valutaProposteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) { new ValutaProposteAdmin(controller,frame,utenteAttuale);}
+        });
     }
 }
