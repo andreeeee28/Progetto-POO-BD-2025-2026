@@ -4,6 +4,7 @@ import controller.Controller;
 import model.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class ProfiloGenere {
         frame.getRootPane().setDefaultButton(visualizzaButton);
 
         //Caricamento ArrayList
-        ArrayList<Genere> generiPadre = genere.getGeneriPadre();;
+        ArrayList<Genere> generiPadre = genere.getGeneriPadre();
         ArrayList<Genere> sottogeneri = genere.getSottogeneri();
         ArrayList<Album> albums = genere.getListaAlbum();
 
@@ -46,7 +47,7 @@ public class ProfiloGenere {
         frame.setVisible(true);
 
 
-        //Tasto torna alla form precedente
+        //Tasto indietro
         indietroButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -58,21 +59,7 @@ public class ProfiloGenere {
         visualizzaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (tabbedPane.getSelectedIndex() == 0) {           //Generi Padre
-
-                    new ProfiloGenere(controller, frame, generiPadre.get(generiPadreList.getSelectedIndex()), utenteAttuale);
-                    frame.setVisible(false);
-
-                } else if (tabbedPane.getSelectedIndex() == 1) {    //Sottogeneri
-
-                    new ProfiloGenere(controller, frame, sottogeneri.get(sottogeneriList.getSelectedIndex()), utenteAttuale);
-                    frame.setVisible(false);
-
-                } else if (tabbedPane.getSelectedIndex() == 2) {    //Album
-
-                    /*CREARE FORM PAGINA ALBUM*/
-
-                }
+                visualizza(controller, generiPadre, sottogeneri, albums, utenteAttuale);
             }
         });
     }
@@ -81,6 +68,7 @@ public class ProfiloGenere {
     private void configuraElementi(Genere genere) {
         //Caricamento informazioni
         nomeLabel.setText(genere.getNome());
+        nomeLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
         descrizioneTextArea.setText(genere.getDescrizione());
     }
 
@@ -117,5 +105,22 @@ public class ProfiloGenere {
         frameChiamante.setLocationRelativeTo(null);
         frameChiamante.setVisible(true);
         frame.dispose();
+    }
+
+    private void visualizza(Controller controller, ArrayList<Genere> generiPadre, ArrayList<Genere> sottogeneri, ArrayList<Album> albums, Utente utenteAttuale) {
+        switch (tabbedPane.getSelectedIndex()) {
+            case 0:                                 //Generi Padre
+                new ProfiloGenere(controller, frame, generiPadre.get(generiPadreList.getSelectedIndex()), utenteAttuale);
+                frame.setVisible(false);
+                break;
+            case 1:                                 //Sottogeneri
+                new ProfiloGenere(controller, frame, sottogeneri.get(sottogeneriList.getSelectedIndex()), utenteAttuale);
+                frame.setVisible(false);
+                break;
+            case 2:                                 //Album
+                new ProfiloAlbum(controller, frame, albums.get(albumList.getSelectedIndex()), utenteAttuale);
+                frame.setVisible(false);
+                break;
+        }
     }
 }

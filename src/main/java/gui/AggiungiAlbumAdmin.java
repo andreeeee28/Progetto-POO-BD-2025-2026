@@ -32,7 +32,7 @@ public class AggiungiAlbumAdmin {
     private JFrame frame;
 
     public AggiungiAlbumAdmin(Controller controller, JFrame frameChiamante,Utente utente){
-        frame = new JFrame("AggiungiElementoAdmin");
+        frame = new JFrame("Aggiungi Album");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();

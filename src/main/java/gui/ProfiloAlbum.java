@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
@@ -68,7 +69,7 @@ public class ProfiloAlbum {
         frame.setVisible(true);
 
 
-        //Tasto torna alla form precedente
+        //Tasto indietro
         indietroButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -99,7 +100,7 @@ public class ProfiloAlbum {
         recensioneSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                recensioneVoto.setText(String.valueOf((float)recensioneSlider.getValue()/10));
+                recensioneVoto.setText(String.valueOf((float) recensioneSlider.getValue() / 10));
             }
         });
     }
@@ -108,6 +109,7 @@ public class ProfiloAlbum {
     private void configuraElementi(Album album) {
         //Caricamento informazioni
         titoloLabel.setText(album.getTitolo());
+        titoloLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
         nomeArtistaLabel.setText(album.getArtista().getNomeArte());
         numeroTracceLabel.setText(String.valueOf(album.getTracklist().size()));
         dataPubblicazioneLabel.setText(String.valueOf(album.getDataPubblicazione()));
@@ -115,7 +117,7 @@ public class ProfiloAlbum {
         mediaVotiLabel.setText(String.valueOf(album.getRating()));
         numeroGeneriLabel.setText(String.valueOf(album.getGeneri().size()));
         visualizzaButton.setVisible(false);
-        recensioneVoto.setText(String.valueOf((float)recensioneSlider.getValue()/10));
+        recensioneVoto.setText(String.valueOf((float) recensioneSlider.getValue() / 10));
     }
 
     //Riempimento liste
@@ -173,19 +175,7 @@ public class ProfiloAlbum {
     }
 
     private void visualizza(Controller controller, ArrayList<Genere> generi, ArrayList<Artista> crediti, Album album, Utente utenteAttuale) throws CampoNonValido {
-        if (tabbedPane.getSelectedIndex() == 1) {           //Generi
-
-            new ProfiloGenere(controller, frame, generi.get(generiList.getSelectedIndex()), utenteAttuale);
-            frame.setVisible(false);
-
-        } else if (tabbedPane.getSelectedIndex() == 2) {            //Crediti
-
-            new ProfiloArtista(controller, frame, crediti.get(creditiList.getSelectedIndex()), utenteAttuale);
-            frame.setVisible(false);
-
-        }
-
-        switch (tabbedPane.getSelectedIndex()){
+        switch (tabbedPane.getSelectedIndex()) {
             case 1:                                 //Generi
                 new ProfiloGenere(controller, frame, generi.get(generiList.getSelectedIndex()), utenteAttuale);
                 frame.setVisible(false);
@@ -195,8 +185,8 @@ public class ProfiloAlbum {
                 frame.setVisible(false);
                 break;
             case 3:
-                new Recensione(album, utenteAttuale, (float)recensioneSlider.getValue()/10, LocalDate.now());
-                JOptionPane.showMessageDialog(null,"Recensione inviata con successo!");
+                new Recensione(album, utenteAttuale, (float) recensioneSlider.getValue() / 10, LocalDate.now());
+                JOptionPane.showMessageDialog(null, "Recensione inviata con successo!");
                 break;
 
         }

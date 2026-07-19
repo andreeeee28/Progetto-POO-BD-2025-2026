@@ -4,8 +4,10 @@ import controller.Controller;
 import model.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ProfiloArtista {
@@ -74,7 +76,7 @@ public class ProfiloArtista {
         frame.setVisible(true);
 
 
-        //Tasto torna alla form precedente
+        //Tasto indietro
         indietroButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -86,22 +88,7 @@ public class ProfiloArtista {
         visualizzaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (tabbedPane.getSelectedIndex() == 0) {           //Discografia
-
-                    new ProfiloAlbum(controller, frame, discografia.get(discografiaList.getSelectedIndex()), utenteAttuale);
-                    frame.setVisible(false);
-
-                } else if (tabbedPane.getSelectedIndex() == 1) {            //Membri - Partecipazioni
-
-                    if (artista.getClass() == Band.class) {
-                        new ProfiloArtista(controller, frame, partecipazioniMembri.get(partecipazioniMembriList.getSelectedIndex()).getMusicista(), utenteAttuale);
-                        frame.setVisible(false);
-                    } else if (artista.getClass() == Musicista.class) {
-                        new ProfiloArtista(controller, frame, partecipazioniMembri.get(partecipazioniMembriList.getSelectedIndex()).getBand(), utenteAttuale);
-                        frame.setVisible(false);
-                    }
-
-                }
+                visualizza(controller, partecipazioniMembri, discografia, artista, utenteAttuale);
             }
         });
     }
@@ -123,6 +110,7 @@ public class ProfiloArtista {
 
         //Caricamento informazioni
         nomeArteLabel.setText(artista.getNomeArte());
+        nomeArteLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
         idLabel.setText(artista.getIdArtista());
         annoInizioAttivitaLabel.setText(String.valueOf(artista.getAnnoInizioAttivita()));
         numeroAlbumLabel.setText(String.valueOf(artista.getAlbumPubblicati().toArray().length));
@@ -153,6 +141,7 @@ public class ProfiloArtista {
 
         //Caricamento informazioni
         nomeArteLabel.setText(artista.getNomeArte());
+        nomeArteLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
         idLabel.setText(artista.getIdArtista());
         annoInizioAttivitaLabel.setText(String.valueOf(artista.getAnnoInizioAttivita()));
         numeroAlbumLabel.setText(String.valueOf(artista.getAlbumPubblicati().toArray().length));
@@ -210,5 +199,27 @@ public class ProfiloArtista {
         frameChiamante.setLocationRelativeTo(null);
         frameChiamante.setVisible(true);
         frame.dispose();
+    }
+
+    private void visualizza(Controller controller, ArrayList<MembroBand> partecipazioniMembri, ArrayList<Album> discografia, Artista artista, Utente utenteAttuale) {
+        switch (tabbedPane.getSelectedIndex()) {
+            case 0:                                 //Discografia
+
+                new ProfiloAlbum(controller, frame, discografia.get(discografiaList.getSelectedIndex()), utenteAttuale);
+                frame.setVisible(false);
+                break;
+
+            case 1:                                 //Crediti
+
+                if (artista.getClass() == Band.class) {
+                    new ProfiloArtista(controller, frame, partecipazioniMembri.get(partecipazioniMembriList.getSelectedIndex()).getMusicista(), utenteAttuale);
+                    frame.setVisible(false);
+                } else if (artista.getClass() == Musicista.class) {
+                    new ProfiloArtista(controller, frame, partecipazioniMembri.get(partecipazioniMembriList.getSelectedIndex()).getBand(), utenteAttuale);
+                    frame.setVisible(false);
+                }
+
+                break;
+        }
     }
 }
