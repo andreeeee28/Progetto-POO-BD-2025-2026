@@ -43,28 +43,32 @@ public class ProfiloArtista {
     private JSeparator albumSeparator;
     private JButton visualizzaButton;
 
-    public ProfiloArtista(Controller controller, JFrame frameChiamante, Artista artista) {
-        frame = new JFrame("Profilo Artista");
+    public ProfiloArtista(Controller controller, JFrame frameChiamante, Artista artista, Utente utenteAttuale) {
+        frame = new JFrame("Profilo Artista - " + artista.getNomeArte());
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.getRootPane().setDefaultButton(visualizzaButton);
 
-        ArrayList<MembroBand> partecipazioniMembri = new ArrayList<>();
+        ArrayList<MembroBand> partecipazioniMembri;
+        ArrayList<Album> discografia;
 
         if (artista.getClass() == Band.class) {         //Band
 
             configuraElementiBand(artista);
-            riempiListaMembriBand(artista, partecipazioniMembri);
-            riempiListaDiscografia(artista);
+            partecipazioniMembri = riempiListaMembriBand(artista);
+            discografia = riempiListaDiscografia(artista);
 
         } else if (artista.getClass() == Musicista.class) {         //Musicista
 
             configuraElementiMusicista(artista);
-            riempiListaMembriMusicista(artista, partecipazioniMembri);
-            riempiListaDiscografia(artista);
+            partecipazioniMembri = riempiListaMembriMusicista(artista);
+            discografia = riempiListaDiscografia(artista);
 
+        } else {
+            partecipazioniMembri = new ArrayList<>();
+            discografia = new ArrayList<>();
         }
 
         frame.setVisible(true);
@@ -84,17 +88,19 @@ public class ProfiloArtista {
             public void actionPerformed(ActionEvent e) {
                 if (tabbedPane.getSelectedIndex() == 0) {           //Discografia
 
-                    /*CREARE FORM PAGINA ALBUM*/
+                    new ProfiloAlbum(controller, frame, discografia.get(discografiaList.getSelectedIndex()), utenteAttuale);
+                    frame.setVisible(false);
 
                 } else if (tabbedPane.getSelectedIndex() == 1) {            //Membri - Partecipazioni
 
                     if (artista.getClass() == Band.class) {
-                        new ProfiloArtista(controller, frame, partecipazioniMembri.get(partecipazioniMembriList.getSelectedIndex()).getMusicista());
+                        new ProfiloArtista(controller, frame, partecipazioniMembri.get(partecipazioniMembriList.getSelectedIndex()).getMusicista(), utenteAttuale);
                         frame.setVisible(false);
                     } else if (artista.getClass() == Musicista.class) {
-                        new ProfiloArtista(controller, frame, partecipazioniMembri.get(partecipazioniMembriList.getSelectedIndex()).getBand());
+                        new ProfiloArtista(controller, frame, partecipazioniMembri.get(partecipazioniMembriList.getSelectedIndex()).getBand(), utenteAttuale);
                         frame.setVisible(false);
                     }
+
                 }
             }
         });
@@ -161,38 +167,41 @@ public class ProfiloArtista {
     }
 
     //Riempimento lista Membri/Partecipazioni
-    private void riempiListaMembriBand(Artista artista, ArrayList<MembroBand> partecipazioniMembri) {
+    private ArrayList<MembroBand> riempiListaMembriBand(Artista artista) {
         DefaultListModel<String> modelloLista = new DefaultListModel<>();
-
-        partecipazioniMembri = ((Band) artista).getMembriBand();
+        ArrayList<MembroBand> partecipazioniMembri = ((Band) artista).getMembriBand();
 
         for (MembroBand membroBand : partecipazioniMembri) {
             modelloLista.addElement(membroBand.getMusicista().getNomeArte());
         }
         partecipazioniMembriList.setModel(modelloLista);
+
+        return partecipazioniMembri;
     }
 
-    private void riempiListaMembriMusicista(Artista artista, ArrayList<MembroBand> partecipazioniMembri) {
+    private ArrayList<MembroBand> riempiListaMembriMusicista(Artista artista) {
         DefaultListModel<String> modelloLista = new DefaultListModel<>();
-
-        partecipazioniMembri = ((Musicista) artista).getPartecipazioniBand();
+        ArrayList<MembroBand> partecipazioniMembri = ((Musicista) artista).getPartecipazioniBand();
 
         for (MembroBand membroBand : partecipazioniMembri) {
             modelloLista.addElement(membroBand.getBand().getNomeArte());
         }
         partecipazioniMembriList.setModel(modelloLista);
+
+        return partecipazioniMembri;
     }
 
     //Riempimento lista Discografia
-    private void riempiListaDiscografia(Artista artista) {
+    private ArrayList<Album> riempiListaDiscografia(Artista artista) {
         DefaultListModel<String> modelloLista = new DefaultListModel<>();
-
         ArrayList<Album> discografia = artista.getAlbumPubblicati();
 
         for (Album album : discografia) {
             modelloLista.addElement(album.getTitolo());
         }
         discografiaList.setModel(modelloLista);
+
+        return discografia;
     }
 
 

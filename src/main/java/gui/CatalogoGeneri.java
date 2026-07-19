@@ -2,6 +2,7 @@ package gui;
 
 import controller.Controller;
 import model.Genere;
+import model.Utente;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -19,7 +20,7 @@ public class CatalogoGeneri {
     private JFrame frame;
 
 
-    public CatalogoGeneri(Controller controller, JFrame frameChiamante) {
+    public CatalogoGeneri(Controller controller, JFrame frameChiamante, Utente utenteAttuale) {
         frame = new JFrame("Catalogo Artisti");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,7 +67,7 @@ public class CatalogoGeneri {
         visualizzaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ProfiloGenere(controller, frame, generiFiltrati.get(listaGeneri.getSelectedIndex()));
+                new ProfiloGenere(controller, frame, generiFiltrati.get(listaGeneri.getSelectedIndex()), utenteAttuale);
                 frame.setVisible(false);
             }
         });

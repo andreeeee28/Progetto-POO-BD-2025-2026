@@ -25,8 +25,8 @@ public class ProfiloGenere {
     private JScrollPane albumScrollPane;
     private JList albumList;
 
-    public ProfiloGenere(Controller controller, JFrame frameChiamante, Genere genere) {
-        frame = new JFrame("Profilo Genere");
+    public ProfiloGenere(Controller controller, JFrame frameChiamante, Genere genere, Utente utenteAttuale) {
+        frame = new JFrame("Profilo Genere - " + genere.getNome());
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
@@ -39,9 +39,9 @@ public class ProfiloGenere {
         ArrayList<Album> albums = genere.getListaAlbum();
 
         configuraElementi(genere);
-        riempiListaGeneriPadre(genere, generiPadre);
-        riempiListaSottogeneri(genere, sottogeneri);
-        riempiListaAlbum(genere, albums);
+        riempiListaGeneriPadre(generiPadre);
+        riempiListaSottogeneri(sottogeneri);
+        riempiListaAlbum(albums);
 
         frame.setVisible(true);
 
@@ -60,12 +60,12 @@ public class ProfiloGenere {
             public void actionPerformed(ActionEvent e) {
                 if (tabbedPane.getSelectedIndex() == 0) {           //Generi Padre
 
-                    new ProfiloGenere(controller, frame, generiPadre.get(generiPadreList.getSelectedIndex()));
+                    new ProfiloGenere(controller, frame, generiPadre.get(generiPadreList.getSelectedIndex()), utenteAttuale);
                     frame.setVisible(false);
 
                 } else if (tabbedPane.getSelectedIndex() == 1) {    //Sottogeneri
 
-                    new ProfiloGenere(controller, frame, sottogeneri.get(sottogeneriList.getSelectedIndex()));
+                    new ProfiloGenere(controller, frame, sottogeneri.get(sottogeneriList.getSelectedIndex()), utenteAttuale);
                     frame.setVisible(false);
 
                 } else if (tabbedPane.getSelectedIndex() == 2) {    //Album
@@ -85,7 +85,7 @@ public class ProfiloGenere {
     }
 
     //Riempimento liste
-    private void riempiListaGeneriPadre(Genere genere, ArrayList<Genere> generiPadre) {
+    private void riempiListaGeneriPadre(ArrayList<Genere> generiPadre) {
         DefaultListModel<String> modelloLista = new DefaultListModel<>();
 
         for (Genere g : generiPadre) {
@@ -94,7 +94,7 @@ public class ProfiloGenere {
         generiPadreList.setModel(modelloLista);
     }
 
-    private void riempiListaSottogeneri(Genere genere, ArrayList<Genere> sottogeneri) {
+    private void riempiListaSottogeneri(ArrayList<Genere> sottogeneri) {
         DefaultListModel<String> modelloLista = new DefaultListModel<>();
 
         for (Genere g : sottogeneri) {
@@ -103,7 +103,7 @@ public class ProfiloGenere {
         sottogeneriList.setModel(modelloLista);
     }
 
-    private void riempiListaAlbum(Genere genere, ArrayList<Album> albums) {
+    private void riempiListaAlbum(ArrayList<Album> albums) {
         DefaultListModel<String> modelloLista = new DefaultListModel<>();
 
         for (Album a : albums) {

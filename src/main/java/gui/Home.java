@@ -27,8 +27,8 @@ public class Home {
         frame.setVisible(true);
         aggiungiArtistaButton.setVisible(false);
         aggiungiGenereButton.setVisible(false);
-        
-        if (utenteAttuale instanceof Admin adminLoggato){
+
+        if (utenteAttuale instanceof Admin adminLoggato) {
             creaPropostaLabel.setText("Clicca qui per aggiungere un album o un artista o un genere al sito");
             creaPropostaButton.setText("Aggiungi Album");
             aggiungiArtistaButton.setVisible(true);
@@ -36,14 +36,14 @@ public class Home {
             creaPropostaButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    new AggiungiAlbumAdmin(controller,frame);
+                    new AggiungiAlbumAdmin(controller, frame);
                     frame.setVisible(false);
                 }
             });
             aggiungiArtistaButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    new AggiungiArtistaAdmin(controller,frame);
+                    new AggiungiArtistaAdmin(controller, frame);
                     frame.setVisible(false);
 
                 }
@@ -55,19 +55,20 @@ public class Home {
                 }
             });
 
-        } else{
-                creaPropostaButton.addActionListener(new ActionListener() {
+        } else {
+            creaPropostaButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     new CreaProposta(controller, frame, utenteAttuale);
                     frame.setVisible(false);
                 }
-            });}
+            });
+        }
 
         esploraArtistiButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new CatalogoArtisti(controller, frame);
+                new CatalogoArtisti(controller, frame, utenteAttuale);
                 frame.setVisible(false);
             }
         });
@@ -75,7 +76,7 @@ public class Home {
         esploraGeneriButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new CatalogoGeneri(controller, frame);
+                new CatalogoGeneri(controller, frame, utenteAttuale);
                 frame.setVisible(false);
             }
         });

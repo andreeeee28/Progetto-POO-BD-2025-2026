@@ -38,7 +38,7 @@ public class Login {
         controller = new Controller();
         frame.getRootPane().setDefaultButton(accediButton);
 
-        //Inizializzazione button group ad utente standard
+        //Inizializzazione button group a utente standard
         standardRadioButton.setSelected(true);
         inserireIdLabel.setVisible(false);
         campoID.setVisible(false);
