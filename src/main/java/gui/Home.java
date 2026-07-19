@@ -1,4 +1,5 @@
 package gui;
+
 import controller.Controller;
 import model.Admin;
 import model.Utente;
@@ -9,92 +10,122 @@ import java.awt.event.ActionListener;
 
 public class Home {
     private JPanel mainPanel;
+    private JFrame frame;
     private JButton creaPropostaButton;
     private JButton esploraArtistiButton;
     private JButton esploraGeneriButton;
     private JLabel creaPropostaLabel;
-    private JButton aggiungiArtistaButton;
+    private JButton aggiungiMusicistaButton;
     private JButton aggiungiGenereButton;
-    private JFrame frame;
     private JButton aggiungiBandButton;
     private JButton valutaProposteButton;
+    private JLabel aggiungiElementoLabel;
+    private JLabel valutaProposteLabel;
+    private JSeparator valutaProposteSeparator;
+    private JSeparator catalogoSeparator;
+    private JButton aggiungiAlbumButton;
 
     public Home(Controller controller, JFrame frameChiamante, Utente utenteAttuale) {
         frame = new JFrame("Home");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
+
+        configuraElementi(utenteAttuale);
         frame.setVisible(true);
-        aggiungiArtistaButton.setVisible(false);
-        aggiungiGenereButton.setVisible(false);
-        aggiungiBandButton.setVisible(false);
-        valutaProposteButton.setVisible(false);
-        
-        if (utenteAttuale instanceof Admin adminLoggato){
-            creaPropostaLabel.setText("Clicca qui per aggiungere un album o un artista o un genere al sito");
-            creaPropostaButton.setText("Aggiungi Album");
-            aggiungiArtistaButton.setVisible(true);
-            aggiungiGenereButton.setVisible(true);
-            valutaProposteButton.setVisible(true);
-            aggiungiGenereButton.setVisible(true);
-            creaPropostaButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    new AggiungiAlbumAdmin(controller,frame,utenteAttuale);
-                    frame.setVisible(false);
-                }
-            });
-            aggiungiArtistaButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    new AggiungiMusicistaAdmin(controller,frame,utenteAttuale);
-                    frame.setVisible(false);
 
-                }
-            });
-            aggiungiGenereButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) { new AggiungiGeneriAdmin(controller,frame,utenteAttuale);
-                }
-            });
-
-        } else{
-                creaPropostaButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    new CreaProposta(controller, frame, utenteAttuale);
-                    frame.setVisible(false);
-                }
-            });}
-
-        esploraArtistiButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new CatalogoArtisti(controller, frame,utenteAttuale);
-                frame.setVisible(false);
-            }
-        });
-
+        //Catalogo Generi
         esploraGeneriButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new CatalogoGeneri(controller, frame,utenteAttuale);
+                new CatalogoGeneri(controller, frame, utenteAttuale);
                 frame.setVisible(false);
             }
         });
 
+        //Catalogo Artisti
+        esploraArtistiButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new CatalogoArtisti(controller, frame, utenteAttuale);
+                frame.setVisible(false);
+            }
+        });
+
+
+        //Tasto crea Proposta
+        creaPropostaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new CreaProposta(controller, frame, utenteAttuale);
+                frame.setVisible(false);
+            }
+        });
+
+
+        //Tasto aggiungi Musicista
+        aggiungiMusicistaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new AggiungiMusicistaAdmin(controller, frame, utenteAttuale);
+                frame.setVisible(false);
+            }
+        });
+
+        //Tasto aggiungi Band
         aggiungiBandButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new AggiungiBandAdmin(controller,frame,utenteAttuale);
+                new AggiungiBandAdmin(controller, frame, utenteAttuale);
+                frame.setVisible(false);
             }
         });
+
+        //Tasto aggiungi Album
+        aggiungiAlbumButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new AggiungiAlbumAdmin(controller, frame, utenteAttuale);
+                frame.setVisible(false);
+            }
+        });
+
+        //Tasto aggiungi Genere
+        aggiungiGenereButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new AggiungiGeneriAdmin(controller, frame, utenteAttuale);
+                frame.setVisible(false);
+            }
+        });
+
+
+        //Tasto valuta Proposte
         valutaProposteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ValutaProposteAdmin(controller,frame,utenteAttuale);
+                new ValutaProposteAdmin(controller, frame, utenteAttuale);
+                frame.setVisible(false);
             }
         });
+    }
+
+    private void configuraElementi(Utente utenteAttuale) {
+        if (utenteAttuale instanceof Admin) {
+            //Nascondi elementi non inerenti
+            creaPropostaLabel.setVisible(false);
+            creaPropostaButton.setVisible(false);
+        } else {
+            //Nascondi elementi non inerenti
+            aggiungiElementoLabel.setVisible(false);
+            valutaProposteLabel.setVisible(false);
+            aggiungiMusicistaButton.setVisible(false);
+            aggiungiBandButton.setVisible(false);
+            aggiungiAlbumButton.setVisible(false);
+            aggiungiGenereButton.setVisible(false);
+            valutaProposteButton.setVisible(false);
+            valutaProposteSeparator.setVisible(false);
+        }
+        frame.pack();
+        frame.setLocationRelativeTo(null);
     }
 }

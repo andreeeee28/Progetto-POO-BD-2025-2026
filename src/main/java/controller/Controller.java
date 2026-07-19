@@ -233,7 +233,7 @@ public class Controller {
         return null;
     }
     public ArrayList<Proposta> getPropostePresenti(){return propostePresenti;}
-    public ArrayList<Object[]> creaRicheTabella(){
+    public ArrayList<Object[]> creaRigheTabella(){
         ArrayList<Object[]> listaRighe = new ArrayList<>();
         for (Proposta proposta : propostePresenti){
             if(proposta.getStatoProposta()!= StatoProposta.VALUTAZIONE_IN_CORSO){

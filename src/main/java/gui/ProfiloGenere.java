@@ -30,8 +30,6 @@ public class ProfiloGenere {
         frame = new JFrame("Profilo Genere - " + genere.getNome());
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
         frame.getRootPane().setDefaultButton(visualizzaButton);
 
         //Caricamento ArrayList
@@ -70,6 +68,9 @@ public class ProfiloGenere {
         nomeLabel.setText(genere.getNome());
         nomeLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
         descrizioneTextArea.setText(genere.getDescrizione());
+
+        frame.pack();
+        frame.setLocationRelativeTo(null);
     }
 
     //Riempimento liste

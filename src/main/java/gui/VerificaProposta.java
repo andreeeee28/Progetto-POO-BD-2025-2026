@@ -17,42 +17,41 @@ public class VerificaProposta {
     private JLabel labelTitoloProposta;
     private JLabel labelDataProposta;
     private JLabel labelUtente;
-    private JLabel labelDescrizione;
     private JFrame frame;
 
     public VerificaProposta(Controller controller, JFrame frameChiamante, Proposta propostaDaValutare, Utente utente) {
-        frame = new JFrame("VerificaProposta");
+        frame = new JFrame("Dettagli Proposta");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
+
         labelTipoProposta.setText("Tipo Proposta : " + propostaDaValutare.getTipoElemento());
         labelTitoloProposta.setText("Titolo Proposta : " + propostaDaValutare.getTitoloElemento());
         labelDataProposta.setText("Data Proposta : " + propostaDaValutare.getDataRichiesta());
         labelUtente.setText("Utente da cui è stata inviata la proposta : " + propostaDaValutare.getAutoreProposta().getUsername());
-        textAreaDescrizioneProposta.setText(propostaDaValutare.getDescrizione()
-        );
+        textAreaDescrizioneProposta.setText(propostaDaValutare.getDescrizione());
 
+        frame.pack();
+        frame.setVisible(true);
 
-        accettaButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                controller.setPropostaAccettaDataBase(propostaDaValutare);
-                JOptionPane.showMessageDialog(null,"Proposta aggiornata con Successo");
-                frame.dispose();
-                new Home (controller,frameChiamante,utente);
-
-
-            }
-        });
+        //Tasto rifiuta
         rifiutaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 controller.setPropostaRifiutataDataBase(propostaDaValutare);
-                JOptionPane.showMessageDialog(null,"Proposta aggiornata con Successo");
+                JOptionPane.showMessageDialog(null, "Proposta aggiornata con Successo");
                 frame.dispose();
-                new Home (controller,frameChiamante,utente);
+                new Home(controller, frameChiamante, utente);
+            }
+        });
 
+        //Tasto accetta
+        accettaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.setPropostaAccettaDataBase(propostaDaValutare);
+                JOptionPane.showMessageDialog(null, "Proposta aggiornata con Successo");
+                frame.dispose();
+                new Home(controller, frameChiamante, utente);
             }
         });
     }

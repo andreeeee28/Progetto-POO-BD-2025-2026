@@ -49,8 +49,6 @@ public class ProfiloArtista {
         frame = new JFrame("Profilo Artista - " + artista.getNomeArte());
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
         frame.getRootPane().setDefaultButton(visualizzaButton);
 
         ArrayList<MembroBand> partecipazioniMembri;
@@ -127,6 +125,9 @@ public class ProfiloArtista {
 
         tipoLabel.setText("Band");
         tabbedPane.setTitleAt(1, "Membri");
+
+        frame.pack();
+        frame.setLocationRelativeTo(null);
     }
 
     private void configuraElementiMusicista(Artista artista) {
@@ -153,6 +154,9 @@ public class ProfiloArtista {
 
         tipoLabel.setText("Musicista");
         tabbedPane.setTitleAt(1, "Partecipazioni");
+
+        frame.pack();
+        frame.setLocationRelativeTo(null);
     }
 
     //Riempimento lista Membri/Partecipazioni

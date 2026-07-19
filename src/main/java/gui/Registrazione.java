@@ -23,17 +23,20 @@ public class Registrazione {
         frame = new JFrame("Registrazione");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getRootPane().setDefaultButton(registratiButton);
+
+        campoNazione.setModel(new DefaultComboBoxModel<>(Nazione.values()));
+
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        campoNazione.setModel(new DefaultComboBoxModel<>(Nazione.values()));
-        // tasto torna al Login
+
+        //Tasto indietro
         tornaAlLoginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frameChiamante.setVisible(true);
-                frame.dispose();
+                indietro(frameChiamante, frame);
             }
         });
 
@@ -42,17 +45,31 @@ public class Registrazione {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    String stringaCampoUtente = campoUtente.getText();
-                    String stringaCampoPassword = campoPassword.getText();
-                    Nazione enumCampoNazione = (Nazione) campoNazione.getSelectedItem();
-                    Utente utenteAttuale = controller.cliccatoRegistrati(stringaCampoUtente,stringaCampoPassword,enumCampoNazione);
-                    new Home(controller,frame, utenteAttuale);
-                    frame.setVisible(false);
-                    javax.swing.JOptionPane.showMessageDialog(null,"Registrazione avvenuta con successo");
+                    registrati(controller);
+                    JOptionPane.showMessageDialog(null,"Registrazione avvenuta con successo");
                 } catch (CampoNonValido ex) {
-                    javax.swing.JOptionPane.showMessageDialog(null, ex.getMessage());
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
             }
         });
+    }
+
+    //Funzioni Listeners
+    private void indietro(JFrame frameChiamante, JFrame frame) {
+        frameChiamante.setLocationRelativeTo(null);
+        frameChiamante.setVisible(true);
+        frame.dispose();
+    }
+
+    private void registrati(Controller controller) throws CampoNonValido {
+        //Creazione utente
+        String stringaCampoUtente = campoUtente.getText();
+        String stringaCampoPassword = campoPassword.getText();
+        Nazione enumCampoNazione = (Nazione) campoNazione.getSelectedItem();
+        Utente utenteAttuale = controller.cliccatoRegistrati(stringaCampoUtente,stringaCampoPassword,enumCampoNazione);
+
+        //Apertura Home
+        new Home(controller,frame, utenteAttuale);
+        frame.setVisible(false);
     }
 }

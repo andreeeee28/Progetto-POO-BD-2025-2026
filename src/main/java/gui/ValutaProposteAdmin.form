@@ -1,69 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="gui.ValutaProposteAdmin">
-  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="0" left="0" bottom="0" right="0"/>
+  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="5" left="5" bottom="5" right="5"/>
     <constraints>
       <xy x="20" y="20" width="624" height="400"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
-      <component id="26619" class="javax.swing.JLabel" binding="labelProposteVerificate">
-        <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Proposte già verificate"/>
-        </properties>
-      </component>
-      <component id="28ebc" class="javax.swing.JLabel" binding="labelProposteDaValutare">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Proposte da valutare"/>
-        </properties>
-      </component>
-      <scrollpane id="55bd7">
-        <constraints>
-          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties/>
-        <border type="none"/>
-        <children>
-          <component id="e14ca" class="javax.swing.JList" binding="listaProposte">
-            <constraints/>
-            <properties/>
-          </component>
-        </children>
-      </scrollpane>
       <scrollpane id="36a9">
         <constraints>
-          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="2" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="450" height="200"/>
+          </grid>
+        </constraints>
+        <properties>
+          <enabled value="true"/>
+        </properties>
+        <border type="none" title="Proposte Verificate"/>
+        <children>
+          <component id="67516" class="javax.swing.JTable" binding="valutateTable">
+            <constraints/>
+            <properties>
+              <enabled value="false"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
+      <scrollpane id="55bd7">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="450" height="200"/>
+          </grid>
         </constraints>
         <properties/>
-        <border type="none"/>
+        <border type="none" title="Proposte da Valutare"/>
         <children>
-          <component id="67516" class="javax.swing.JTable" binding="tableProposte">
+          <component id="e14ca" class="javax.swing.JList" binding="proposteList">
             <constraints/>
             <properties/>
           </component>
         </children>
       </scrollpane>
-      <component id="13954" class="javax.swing.JButton" binding="vediDettagliButton" default-binding="true">
+      <component id="13954" class="javax.swing.JButton" binding="visualizzaButton">
         <constraints>
-          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="vedi dettagli"/>
+          <text value="Visualizza"/>
         </properties>
       </component>
-      <component id="da91f" class="javax.swing.JLabel" binding="labelPulsante">
+      <component id="7e4e6" class="javax.swing.JButton" binding="indietroButton">
         <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="selezionare la proposta ( una sola) di cui si vuole vedere i dettagli"/>
+          <text value="Indietro"/>
         </properties>
       </component>
     </children>

@@ -52,14 +52,11 @@ public class ProfiloAlbum {
         frame = new JFrame("Profilo Album - " + album.getTitolo());
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
         frame.getRootPane().setDefaultButton(visualizzaButton);
 
         //Caricamento ArrayList
         ArrayList<Genere> generi;
         ArrayList<Artista> crediti;
-
 
         configuraElementi(album);
         riempiListaTracklist(album);
@@ -118,6 +115,9 @@ public class ProfiloAlbum {
         numeroGeneriLabel.setText(String.valueOf(album.getGeneri().size()));
         visualizzaButton.setVisible(false);
         recensioneVoto.setText(String.valueOf((float) recensioneSlider.getValue() / 10));
+
+        frame.pack();
+        frame.setLocationRelativeTo(null);
     }
 
     //Riempimento liste
