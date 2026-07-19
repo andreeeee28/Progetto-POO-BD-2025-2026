@@ -108,7 +108,7 @@ public class Proposta {
 
     @Override
     public String toString() {
-        return  tipoElemento+ titoloElemento;
+        return  tipoElemento + " " + titoloElemento;
 
     }
 }
