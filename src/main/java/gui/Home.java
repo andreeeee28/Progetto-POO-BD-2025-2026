@@ -24,6 +24,8 @@ public class Home {
     private JSeparator valutaProposteSeparator;
     private JSeparator catalogoSeparator;
     private JButton aggiungiAlbumButton;
+    private JButton creaPropostaAdminButton;
+    private JLabel labelCreaPropostaAdmin;
 
     public Home(Controller controller, JFrame frameChiamante, Utente utenteAttuale) {
         frame = new JFrame("Home");
@@ -107,6 +109,13 @@ public class Home {
                 frame.setVisible(false);
             }
         });
+        creaPropostaAdminButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new CreaProposta(controller,frame,utenteAttuale);
+                frame.setVisible(false);
+            }
+        });
     }
 
     private void configuraElementi(Utente utenteAttuale) {
@@ -116,6 +125,8 @@ public class Home {
             creaPropostaButton.setVisible(false);
         } else {
             //Nascondi elementi non inerenti
+            creaPropostaAdminButton.setVisible(false);
+            labelCreaPropostaAdmin.setVisible(false);
             aggiungiElementoLabel.setVisible(false);
             valutaProposteLabel.setVisible(false);
             aggiungiMusicistaButton.setVisible(false);

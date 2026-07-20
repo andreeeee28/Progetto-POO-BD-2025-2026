@@ -14,6 +14,7 @@ public class Controller {
     private ArrayList<Genere> generiPresenti;
     private ArrayList<MembroBand> membriBandPresenti;
     private ArrayList<Proposta> propostePresenti;
+    private ArrayList<Recensione> recensioniPresenti;
 
     public Controller() {
         //RICORDA DI FARE TUTTI I TRY E I CATCH PER L ECCEZIONI LANCIATE ALL INTERNO DI QUESTA CLASSE CONTROLLER DAI METODI
@@ -23,6 +24,7 @@ public class Controller {
         this.generiPresenti = new ArrayList<>();
         this.membriBandPresenti = new ArrayList<>();
         this.propostePresenti = new ArrayList<>();
+        this.recensioniPresenti = new ArrayList<>();
         try {
             caricaUtentiDaFile();
             caricaGeneriDaFile();
@@ -30,6 +32,8 @@ public class Controller {
             caricaBandDaFile();
             caricaAlbumDaFile();
             caricaProposteDaFile();
+            caricaRecensioniDaFile();
+            setRecensioniAlbum();
 
         } catch (CampoNonValido e) {
             System.out.println("Errore nella creazione dei dati fittizzi");
@@ -55,16 +59,99 @@ public class Controller {
     // Metodi Class Registrazione
 
     public Utente cliccatoRegistrati(String campoNomeUtente, String campoPassword, Nazione nazione) throws CampoNonValido {
+
+        // 1. Controllo base: Verifichiamo subito se ci sono i caratteri vietati
+        if(campoNomeUtente.contains(";;;;") || campoPassword.contains(";;;;")) {
+            throw new CampoNonValido("Errore: Il nome utente o la password non possono contenere ';;;;'");
+        }
+
+        // 2. Controllo duplicati: Verifichiamo se l'username è già stato preso
+        for(Utente utente : utentiRegistrati) {
+            if(campoNomeUtente.equals(utente.getUsername())) {
+                throw new CampoNonValido("Errore: Il nome utente '" + campoNomeUtente + "' è già in uso. Scegline un altro!");
+            }
+        }
+
+        // 3. Creazione e salvataggio
         Utente utenteAttuale = new Utente(campoNomeUtente, campoPassword, nazione);
+        scriviUtenteDataBase(utenteAttuale);
+
+        // NOTA: ricordati di aggiungerlo anche alla lista in RAM, così può fare login subito!
+        this.utentiRegistrati.add(utenteAttuale);
+
         return utenteAttuale;
     }
+    public void scriviUtenteDataBase(Utente utenteDaScrivere){
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("DB_fittizzi/utenti.txt", true))) {
+            writer.write( utenteDaScrivere.getUsername() + ";;;;" + utenteDaScrivere.getPassword() + ";;;;" +
+                    utenteDaScrivere.getNazione().name() + ";;;;" +"Utente");
+            writer.newLine();
 
-    // Metodi Class CreaProposta
-    public void CreaProposta(TipoProposta tipoElemento, String descrizione, String titoloElemento, Utente utenteAttuale) throws CampoNonValido {
-        Proposta newProposta = new Proposta(tipoElemento, descrizione, titoloElemento, utenteAttuale);
-        return;
+        } catch (IOException e) {
+            System.out.println("Errore: " + e.getMessage());
+        } catch (CampoNonValido e) {
+            throw new RuntimeException(e);
+        }
+
     }
+    // Metodi Class CreaProposta
+    public void scriviPropostaNelDataBase(Proposta propostaDaAggiungere)  {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("DB_fittizzi/proposte.txt", true))) {
+            String descrizioneSicura = propostaDaAggiungere.getDescrizione().replace("\n", "[ACCAPO]");
+            writer.write(propostaDaAggiungere.getTipoElemento() + ";;;;" + propostaDaAggiungere.getTitoloElemento() + ";;;;" +
+                    propostaDaAggiungere.getDescrizione() + ";;;;" + propostaDaAggiungere.getDataRichiesta() + ";;;;" +
+                    propostaDaAggiungere.getStatoProposta() + ";;;;" + propostaDaAggiungere.getAutoreProposta().getUsername() );
+            writer.newLine();
 
+        } catch (IOException e) {
+            System.out.println("Errore: " + e.getMessage());
+        }
+
+
+    }
+    // Metodi Class Profilo Album
+    public void scriviRecensioniDataBase(Recensione recensioneDaAggiungere){
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("DB_fittizzi/recensioni.txt", true))) {
+            writer.write(recensioneDaAggiungere.getAlbum().getTitolo() + ";;;;" + recensioneDaAggiungere.getUtente().getUsername()
+            + ";;;;" + recensioneDaAggiungere.getVoto() + ";;;;" + recensioneDaAggiungere.getData()) ;
+            writer.newLine();
+        } catch (IOException e) {
+            System.out.println("Errore: " + e.getMessage());
+        }
+
+    }
+    // Metodi Class AggiungiBandAdmin
+// Non restituisce più boolean, ma lancia l'eccezione se qualcosa va storto
+    public void verificaBand(String nomeBand, ArrayList<Musicista> musicistiBand, String id) throws CampoNonValido {
+
+        // 1. Controllo caratteri illegali
+        if (nomeBand.contains(";;;;") || id.contains(";;;;")) {
+            throw new CampoNonValido("Errore: I campi non possono contenere i caratteri ';;;;'");
+        }
+
+        // 2. Cicliamo su tutte le band già presenti
+        for (Band band : getBandPresenti()) {
+
+            // Controllo A: ID Duplicato
+            if (band.getIdArtista().equals(id)) {
+                throw new CampoNonValido("Errore: Esiste già un artista/band con questo ID (" + id + ")!");
+            }
+
+            // Controllo B: Nome e Membri duplicati
+            if (band.getNomeArte().equals(nomeBand)) {
+                ArrayList<Musicista> musicistiGiaPresenti = new ArrayList<>();
+                for (MembroBand membro : band.getMembriBand()) {
+                    musicistiGiaPresenti.add(membro.getMusicista());
+                }
+
+                if (musicistiBand.size() == musicistiGiaPresenti.size() && musicistiBand.containsAll(musicistiGiaPresenti)) {
+                    throw new CampoNonValido("Errore: Questa band esiste già nel database con lo stesso nome e gli stessi componenti!");
+                }
+            }
+        }
+        // Se arriva fin qui senza lanciare eccezioni, significa che è tutto perfetto!
+    }
     // Metodi Class AggiungiElementoAdmin
 
     public ArrayList<Canzone> inserisciCanzoni(int numeroCanzoni, JFrame frameChiamante) throws CampoNonValido {
@@ -89,7 +176,14 @@ public class Controller {
         return generiPresenti;
     }
 
-
+    public Album trovaAlbum(String titoloAlbum){
+        for(Album album : albumPresenti){
+            if(album.getTitolo().equals(titoloAlbum)){
+                return album;
+            }
+        }
+        return null;
+    }
     public Artista trovaArtista(String nomeArt) {
         for (Artista artista : artistiPresenti) {
             if (artista.getNomeArte().equals(nomeArt)) {
@@ -160,9 +254,9 @@ public class Controller {
 
     public void scriviMusicistaDataBase(Musicista musicistaAggiunto) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("DB_fittizzi/musicisti.txt", true))) {
-            writer.write(musicistaAggiunto.getNomeArte() + ";" + musicistaAggiunto.getAnnoInizioAttivita() + ";" +
-                    musicistaAggiunto.getIdArtista() + ";" + musicistaAggiunto.getNomeVero() + ";" + musicistaAggiunto.getCognonomeVero()
-                    + ";" + musicistaAggiunto.getDataDiNascita().toString());
+            writer.write(musicistaAggiunto.getNomeArte() + ";;;;" + musicistaAggiunto.getAnnoInizioAttivita() + ";;;;" +
+                    musicistaAggiunto.getIdArtista() + ";;;;" + musicistaAggiunto.getNomeVero() + ";;;;" + musicistaAggiunto.getCognonomeVero()
+                    + ";;;;" + musicistaAggiunto.getDataDiNascita().toString());
             writer.newLine();
 
         } catch (IOException e) {
@@ -172,8 +266,8 @@ public class Controller {
 
     public void scriviMembroBandDataBase(MembroBand membroBandDaAggiungere) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("DB_fittizzi/membroBand.txt", true))) {
-            writer.write(membroBandDaAggiungere.getMusicista().getIdArtista() + ";" + membroBandDaAggiungere.getStrumentoPrincipale()
-                    + ";" + membroBandDaAggiungere.getAnnoIngresso() + ";" + membroBandDaAggiungere.getAnnoUscita() + ";" +
+            writer.write(membroBandDaAggiungere.getMusicista().getIdArtista() + ";;;;" + membroBandDaAggiungere.getStrumentoPrincipale()
+                    + ";;;;" + membroBandDaAggiungere.getAnnoIngresso() + ";;;;" + membroBandDaAggiungere.getAnnoUscita() + ";;;;" +
                     membroBandDaAggiungere.getBand().getIdArtista());
             writer.newLine();
 
@@ -211,15 +305,32 @@ public class Controller {
             }
 
             // 3. Scriviamo tutto nel file: Nome;Descrizione;Padri;Figli
-            writer.write(genereDaAggiungere.getNome() + ";" +
-                    genereDaAggiungere.getDescrizione() + ";" +
-                    stringaPadri + ";" +
+            writer.write(genereDaAggiungere.getNome() + ";;;;" +
+                    genereDaAggiungere.getDescrizione() + ";;;;" +
+                    stringaPadri + ";;;;" +
                     stringaFigli);
             writer.newLine(); // Consueto Invio a capo
 
         } catch (IOException e) {
             System.out.println("Errore: " + e.getMessage());
         }
+    }
+    public void verificaGeneri(Genere genereDaVerificare) throws CampoNonValido {
+
+        // 1. Controllo dei caratteri illegali
+        if(genereDaVerificare.getNome().contains(";;;;") || genereDaVerificare.getDescrizione().contains(";;;;")){
+            throw new CampoNonValido("Errore: Il nome o la descrizione non possono contenere i caratteri ';;;;'");
+        }
+
+        // 2. Controllo duplicati (verifichiamo se esiste già un genere con lo stesso nome)
+        for (Genere genereSalvato : getGeneriPresenti()) {
+            // Ignoriamo maiuscole/minuscole (es. "Pop" sarà considerato uguale a "pop")
+            if (genereSalvato.getNome().equalsIgnoreCase(genereDaVerificare.getNome())) {
+                throw new CampoNonValido("Errore: Esiste già un genere con il nome '" + genereDaVerificare.getNome() + "' nel database!");
+            }
+        }
+
+        // Se arriva fin qui, il genere è perfetto e pronto per essere salvato!
     }
 
 
@@ -256,6 +367,15 @@ public class Controller {
 
         return  proposteDaValutare;
     }
+    // Metodi Class Aggiungi Musicista Admin
+
+    public boolean verificaMusicista(Musicista musicista){
+        if(musicista.getNomeArte().contains(";;;;") || musicista.getNomeVero().contains(";;;;") || musicista.getCognonomeVero().contains(";;;;")||
+                musicista.getIdArtista().contains(";;;;") ){
+            return false;
+        }
+        return true;
+    }
     // Metodi Classe Verifica Proposta
     public void setPropostaAccettaDataBase(Proposta propostaDaAccettare) {
         String percorsoFile = "DB_fittizzi/proposte.txt";
@@ -266,7 +386,7 @@ public class Controller {
             String linea;
 
             while ((linea = br.readLine()) != null) {
-                String[] dati = linea.split(";;");
+                String[] dati = linea.split(";;;;");
 
                 // Estraiamo i 3 dati che ci servono per il riconoscimento
                 String titoloSalvato = dati[1];
@@ -282,7 +402,7 @@ public class Controller {
                     dati[4] = StatoProposta.ACCETTATA.name();
 
                     // Ricostruiamo la riga con lo stato aggiornato
-                    String rigaModificata = dati[0] + ";;" + dati[1] + ";;" + dati[2] + ";;" + dati[3] + ";;" + dati[4] + ";;" + dati[5];
+                    String rigaModificata = dati[0] + ";;;;" + dati[1] + ";;;;" + dati[2] + ";;;;" + dati[3] + ";;;;" + dati[4] + ";;;;" + dati[5];
                     righeAggiornate.add(rigaModificata);
 
                     // (Opzionale) Aggiorniamo anche l'oggetto in memoria nel Controller
@@ -319,7 +439,7 @@ public class Controller {
             String linea;
 
             while ((linea = br.readLine()) != null) {
-                String[] dati = linea.split(";;");
+                String[] dati = linea.split(";;;;");
 
                 // Estraiamo i 3 dati che ci servono per il riconoscimento
                 String titoloSalvato = dati[1];
@@ -335,7 +455,7 @@ public class Controller {
                     dati[4] = StatoProposta.RIFIUTATA.name();
 
                     // Ricostruiamo la riga con lo stato aggiornato
-                    String rigaModificata = dati[0] + ";;" + dati[1] + ";;" + dati[2] + ";;" + dati[3] + ";;" + dati[4] + ";;" + dati[5];
+                    String rigaModificata = dati[0] + ";;;;" + dati[1] + ";;;;" + dati[2] + ";;;;" + dati[3] + ";;;;" + dati[4] + ";;;;" + dati[5];
                     righeAggiornate.add(rigaModificata);
 
                     // (Opzionale) Aggiorniamo anche l'oggetto in memoria nel Controller
@@ -374,7 +494,7 @@ public class Controller {
             String linea;
 
             while ((linea = br.readLine()) != null) {
-                String[] dati = linea.split(";");
+                String[] dati = linea.split(";;;;");
 
                     String username = dati[0];
                     String password = dati[1];
@@ -416,10 +536,10 @@ public class Controller {
 
             while ((linea = br.readLine()) != null) {
 
-                if (linea.trim().isEmpty() || !linea.contains(";")) {
+                if (linea.trim().isEmpty() || !linea.contains(";;;;")) {
                     continue; // Se la riga è vuota, questo comando blocca tutto e passa subito al prossimo "giro"
                 }
-                String[] dati = linea.split(";");
+                String[] dati = linea.split(";;;;");
 
                 String nome = dati[0];
                 String descrizione = dati[1];
@@ -471,7 +591,7 @@ public class Controller {
             String linea;
 
             while ((linea = br.readLine()) != null) {
-                String[] dati = linea.split(";");
+                String[] dati = linea.split(";;;;");
 
                 String nomeArte = dati[0];
                 int annoInizioAttivita = Integer.parseInt(dati[1]);
@@ -511,7 +631,7 @@ public class Controller {
             while ((lineaMembro = brMembri.readLine()) != null) {
 
                 // PRIMO SCUDO: Ignoriamo le righe vuote nel file dei membri
-                if (lineaMembro.trim().isEmpty() || !lineaMembro.contains(";")) {
+                if (lineaMembro.trim().isEmpty() || !lineaMembro.contains(";;;;")) {
                     continue;
                 }
 
@@ -528,11 +648,11 @@ public class Controller {
             while ((lineaBand = brBand.readLine()) != null) {
 
                 // SECONDO SCUDO: Ignoriamo le righe vuote nel file delle band
-                if (lineaBand.trim().isEmpty() || !lineaBand.contains(";")) {
+                if (lineaBand.trim().isEmpty() || !lineaBand.contains(";;;;")) {
                     continue;
                 }
 
-                String[] dati = lineaBand.split(";");
+                String[] dati = lineaBand.split(";;;;");
 
                 String nomeArte = dati[0];
                 int annoInizioAttivita = Integer.parseInt(dati[1]);
@@ -548,7 +668,7 @@ public class Controller {
 
                 // Scendiamo nell'ArrayList dei membri che avevamo salvato prima
                 for (String rigaMembro : righeMembri) {
-                    String[] datiMembro = rigaMembro.split(";");
+                    String[] datiMembro = rigaMembro.split(";;;;");
                     String idBandAppartenenza = datiMembro[4]; // L'ID in fondo alla riga
 
                     // Se questo membro appartiene alla band che stiamo caricando in questo momento...
@@ -616,7 +736,7 @@ public class Controller {
 
             while ((linea = br.readLine()) != null) {
                 // 1. Tagliamo i dati principali dell'album
-                String[] dati = linea.split(";");
+                String[] dati = linea.split(";;;;");
 
                 String titolo = dati[0];
                 LocalDate dataPubblicazione = LocalDate.parse(dati[1]);
@@ -688,7 +808,7 @@ public class Controller {
             String linea;
 
             while ((linea = br.readLine()) != null) {
-                String[] dati = linea.split(";;");
+                String[] dati = linea.split(";;;;");
 
                 TipoProposta tipo = TipoProposta.valueOf(dati[0]);
                 String titolo = dati[1];
@@ -728,11 +848,63 @@ public class Controller {
 
     public void scriviBandDataBase(Band nuovaBand) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("DB_fittizzi/band.txt", true))) {
-            writer.write(nuovaBand.getNomeArte() + ";" + nuovaBand.getAnnoInizioAttivita() + ";" + nuovaBand.getIdArtista() + ";" +nuovaBand.getAnnoScioglimento());
+            writer.write(nuovaBand.getNomeArte() + ";;;;" + nuovaBand.getAnnoInizioAttivita() + ";;;;" + nuovaBand.getIdArtista() + ";;;;" +nuovaBand.getAnnoScioglimento());
             writer.newLine();
 
         } catch (IOException e) {
             System.out.println("Errore: " + e.getMessage());
         }
+    }
+    public void caricaRecensioniDaFile() throws CampoNonValido{
+
+        String percorsoFile = "DB_fittizzi/recensioni.txt";
+        java.io.BufferedReader br = null;
+        try {
+            // Apriamo il file
+            br = new java.io.BufferedReader(new java.io.FileReader(percorsoFile));
+            String linea;
+
+            while ((linea = br.readLine()) != null) {
+                String[] dati = linea.split(";;;;");
+
+                String nomeAlbum = dati[0];
+                Album albumRecensione = trovaAlbum(nomeAlbum);
+                String nomeUtente= dati[1];
+                Utente utenteRecensione = trovaUtentePerUsername(nomeUtente);
+                if (albumRecensione != null && utenteRecensione != null) {
+                    float voto  = Float.parseFloat(dati[2]);
+                    LocalDate dataRecensione = LocalDate.parse(dati[3]);
+                    Recensione nuovaRecensione = new Recensione(albumRecensione, utenteRecensione, voto, dataRecensione);
+                    recensioniPresenti.add(nuovaRecensione);
+                } else {
+                    System.out.println("Attenzione: recensione saltata, utente o album non trovati.");
+                }
+            }
+            System.out.println("recensioni caricate con successo dal file txt!");
+
+        } catch (Exception e) {
+            System.out.println("Errore durante la lettura del file Musicista: " + e.getMessage());
+        } finally {
+            if (br != null) {
+                try {
+                    br.close(); // Chiudiamo il file per liberare la memoria
+                } catch (Exception e) {
+                    System.out.println("Errore durante la chiusura del file: " + e.getMessage());
+                }
+            }
+        }
+    }
+
+    public void setRecensioniAlbum() throws CampoNonValido {
+        for(Album album : albumPresenti){
+            ArrayList<Recensione> recensioniAlbumSingolo = new ArrayList();
+            for(Recensione recensione : recensioniPresenti){
+                if(recensione.getAlbum().equals(album)){
+                    recensioniAlbumSingolo.add(recensione);
+                }
+            }
+            album.setRecensioni(recensioniAlbumSingolo);
+        }
+
     }
 }

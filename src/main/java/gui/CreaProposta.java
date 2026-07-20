@@ -2,6 +2,7 @@ package gui;
 
 import controller.Controller;
 import model.CampoNonValido;
+import model.Proposta;
 import model.TipoProposta;
 import model.Utente;
 
@@ -38,7 +39,8 @@ public class CreaProposta {
                 String descrizioneInserita = descrzioneTextArea.getText();
 
                 try {
-                    controller.CreaProposta(tipoSelezionato, descrizioneInserita, titoloInserito, utenteAttuale);
+                    Proposta propostaDaCreare = new Proposta(tipoSelezionato, descrizioneInserita, titoloInserito, utenteAttuale);
+                    controller.scriviPropostaNelDataBase(propostaDaCreare);
                     javax.swing.JOptionPane.showMessageDialog(null, "Proposta inviata con successo!");
                     frameChiamante.setVisible(true);
                     frame.dispose();

@@ -1,0 +1,7 @@
+Thriller;;;;mario99;;;;5.0;;;;2024-01-10
+Pure Heroine;;;;admin_root;;;;4.5;;;;2024-02-15
+Bird and Diz;;;;hans_berlin;;;;4.0;;;;2024-03-20
+Live at the Regal;;;;mario99;;;;4.8;;;;2024-04-05
+All Eyez on Me;;;;admin_root;;;;5.0;;;;2024-05-12
+Abbey Road;;;;hans_berlin;;;;5.0;;;;2024-06-18
+Ramones;;;;mario99;;;;4.2;;;;2024-07-22

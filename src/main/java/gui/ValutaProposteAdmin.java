@@ -41,6 +41,10 @@ public class ValutaProposteAdmin {
             public void actionPerformed(ActionEvent e) {
                 try {
                     Proposta propostaDaValutare = (Proposta) proposteList.getSelectedValue();
+                    if (propostaDaValutare.getAutoreProposta().getUsername().equals(utente.getUsername())){
+                        JOptionPane.showMessageDialog(null,"Non puoi valutare le proposte inviate da te");
+                        return;
+                    }
                     new VerificaProposta(controller, frame, propostaDaValutare, utente);
                     frame.dispose();
                 } catch (Exception ex) {

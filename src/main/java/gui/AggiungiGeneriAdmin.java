@@ -56,6 +56,7 @@ public class AggiungiGeneriAdmin {
                             nuovoGenere.addGeneriPadre(genere);
                         }
                     }
+                    controller.verificaGeneri(nuovoGenere);
                     controller.scriviGenereDataBase(nuovoGenere);
                     JOptionPane.showMessageDialog(null, "Genere creato con successo!");
                     frame.dispose();

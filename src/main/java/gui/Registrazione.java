@@ -46,7 +46,6 @@ public class Registrazione {
             public void actionPerformed(ActionEvent e) {
                 try {
                     registrati(controller);
-                    JOptionPane.showMessageDialog(null,"Registrazione avvenuta con successo");
                 } catch (CampoNonValido ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
@@ -63,13 +62,14 @@ public class Registrazione {
 
     private void registrati(Controller controller) throws CampoNonValido {
         //Creazione utente
-        String stringaCampoUtente = campoUtente.getText();
-        String stringaCampoPassword = campoPassword.getText();
-        Nazione enumCampoNazione = (Nazione) campoNazione.getSelectedItem();
-        Utente utenteAttuale = controller.cliccatoRegistrati(stringaCampoUtente,stringaCampoPassword,enumCampoNazione);
+            String stringaCampoUtente = campoUtente.getText();
+            String stringaCampoPassword = campoPassword.getText();
+            Nazione enumCampoNazione = (Nazione) campoNazione.getSelectedItem();
+            Utente utenteAttuale = controller.cliccatoRegistrati(stringaCampoUtente, stringaCampoPassword, enumCampoNazione);
+            //Apertura Home
+            JOptionPane.showMessageDialog(null, "Registrazione avvenuta con successo");
+            new Home(controller, frame, utenteAttuale);
+            frame.setVisible(false);
 
-        //Apertura Home
-        new Home(controller,frame, utenteAttuale);
-        frame.setVisible(false);
     }
 }

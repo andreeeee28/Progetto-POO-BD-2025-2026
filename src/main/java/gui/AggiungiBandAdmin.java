@@ -64,12 +64,16 @@ public class AggiungiBandAdmin {
                         JOptionPane.showMessageDialog(null,"I membri selezionati devono essere dello stesso numero del parametro numero membri");
                         return;
                     }
+                    controller.verificaBand(nomeBand,musicistiSelezionati,idArtista);
                     new AssegnaRuoliBandAdmin(controller, frameChiamante, nomeBand, annoInizio, idArtista, numMembri, annoScioglimento, musicistiSelezionati,utente);
 
                     // 4. Chiudiamo questa finestra (Form 1)
                     frame.dispose();
 
-                } catch (Exception ex) {
+                } catch (CampoNonValido ex) {
+                    JOptionPane.showMessageDialog(null,ex.getMessage());
+                }
+                catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Errore nell'inserimento dati. Controlla che gli anni siano numeri validi.");
                 }
 
