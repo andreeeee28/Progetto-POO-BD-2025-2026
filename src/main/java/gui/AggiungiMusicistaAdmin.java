@@ -88,9 +88,7 @@ public class AggiungiMusicistaAdmin {
                         return;
                     }
                     nuovoMusicista = new Musicista(nomeArte, annoInizioAttivita, idArtista, nomeVero, cognomeVero, dataNascita);
-                    if(!controller.verificaMusicista(nuovoMusicista)){
-                        JOptionPane.showMessageDialog(null,"ERRORE! Verificare che la sequenza consecutiva di caratteri ';;;;' non sia presente nei campi compilati");
-                    }
+                    controller.verificaMusicista(nuovoMusicista);
                     controller.scriviMusicistaDataBase(nuovoMusicista);
                     javax.swing.JOptionPane.showMessageDialog(null, "Musicista creato con successo");
 

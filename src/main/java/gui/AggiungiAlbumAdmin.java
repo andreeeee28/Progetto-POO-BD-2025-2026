@@ -119,15 +119,14 @@ public class AggiungiAlbumAdmin {
         String nomeArtista = (String) comboBoxArtista.getSelectedItem();
         int numeroCanzoni = Integer.parseInt(fieldCanzoni.getText());
         String titolo = fieldTitolo.getText();
-        LocalDate dataPubblicazione = LocalDate.of((Integer) comboBoxGiorno.getSelectedItem(), (Integer) comboBoxMese.getSelectedItem(), (Integer) comboBoxAnno.getSelectedItem());
+        LocalDate dataPubblicazione = LocalDate.of((Integer) comboBoxAnno.getSelectedItem(), (Integer) comboBoxMese.getSelectedItem(), (Integer) comboBoxGiorno.getSelectedItem());
         ArrayList<Genere> generiSelezionati = new ArrayList<>(listaGeneri.getSelectedValuesList());
-
         //Inserimento canzoni
-        ArrayList<Canzone> canzoniAlbum = controller.inserisciCanzoni(numeroCanzoni, frame);
-        //Ricerca artista dal DB
         Artista artista = controller.trovaArtista(nomeArtista);
-
-        controller.creaAlbum(titolo, dataPubblicazione, artista, generiSelezionati, canzoniAlbum);
+        controller.verificaAlbum(titolo,artista);
+        ArrayList<Canzone> canzoniAlbum = controller.inserisciCanzoni(numeroCanzoni, frame);
+        Album albumDaAggiungere = controller.creaAlbum(titolo, dataPubblicazione, artista, generiSelezionati, canzoniAlbum);
+        controller.scriviAlbumDataBase(albumDaAggiungere);
         JOptionPane.showMessageDialog(null, "Album creato con successo!");
         indietro(frameChiamante, frame);
     }

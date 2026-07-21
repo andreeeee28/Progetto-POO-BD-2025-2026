@@ -106,8 +106,19 @@ public class Controller {
         } catch (IOException e) {
             System.out.println("Errore: " + e.getMessage());
         }
+    }
+    public void verificaProposta(Proposta proposta) throws CampoNonValido {
+        if (proposta.getTitoloElemento().contains(";;;;")) {
+            throw new CampoNonValido("Errore: Il titolo non può contenere ';;;;'");
+        }
 
-
+        for (Proposta p : propostePresenti) {
+            if (p.getTitoloElemento().equalsIgnoreCase(proposta.getTitoloElemento()) &&
+                    p.getTipoElemento() == proposta.getTipoElemento() &&
+                    p.getAutoreProposta().getUsername().equals(proposta.getAutoreProposta().getUsername())) {
+                throw new CampoNonValido("Errore: Hai già inviato una proposta identica per questo elemento!");
+            }
+        }
     }
     // Metodi Class Profilo Album
     public void scriviRecensioniDataBase(Recensione recensioneDaAggiungere){
@@ -121,8 +132,27 @@ public class Controller {
         }
 
     }
+
+    public void verificaRecensione(Recensione recensioneDaVerificare) throws CampoNonValido {
+        // Estraiamo l'album e l'utente dalla recensione che stiamo verificando
+        Album albumDaRecensire = recensioneDaVerificare.getAlbum();
+        Utente utenteRecensore = recensioneDaVerificare.getUtente();
+
+        // Controlliamo in tutto lo storico delle recensioni
+        for (Recensione r : recensioniPresenti) {
+            // Se troviamo una recensione che ha lo stesso titolo dell'album E lo stesso username...
+            if (r.getAlbum().getTitolo().equals(albumDaRecensire.getTitolo()) &&
+                    r.getUtente().getUsername().equals(utenteRecensore.getUsername())) {
+
+                throw new CampoNonValido("Errore: Hai già recensito questo album! Non puoi lasciare più di un voto.");
+            }
+        }
+
+        this.recensioniPresenti.add(recensioneDaVerificare);
+        albumDaRecensire.getRecensioni().add(recensioneDaVerificare);
+    }
+
     // Metodi Class AggiungiBandAdmin
-// Non restituisce più boolean, ma lancia l'eccezione se qualcosa va storto
     public void verificaBand(String nomeBand, ArrayList<Musicista> musicistiBand, String id) throws CampoNonValido {
 
         // 1. Controllo caratteri illegali
@@ -152,7 +182,7 @@ public class Controller {
         }
         // Se arriva fin qui senza lanciare eccezioni, significa che è tutto perfetto!
     }
-    // Metodi Class AggiungiElementoAdmin
+    // Metodi Class AggiungiAlbumoAdmin
 
     public ArrayList<Canzone> inserisciCanzoni(int numeroCanzoni, JFrame frameChiamante) throws CampoNonValido {
         ArrayList<Canzone> canzoniAlbum = new ArrayList<>();
@@ -160,6 +190,9 @@ public class Controller {
             String titoloTraccia = JOptionPane.showInputDialog(frameChiamante, "Inserisci il titolo della canzone numero " + (i + 1));
             if (titoloTraccia == null) {
                 throw new CampoNonValido("ATTENZIONE cliccando su Canc si annulla l'intera operazione di creazione dell album");
+            }
+            if (titoloTraccia.contains(";;;;") || titoloTraccia.contains("::::") || titoloTraccia.contains(",,,,")) {
+                throw new CampoNonValido("Errore: Il titolo della traccia non può contenere le sequenze ';;;;', '::::' o ',,,,' !");
             }
             try {
                 int durataSecondi = Integer.parseInt(JOptionPane.showInputDialog(frameChiamante, "Inserisci la durata in secondi della canzone"));
@@ -170,6 +203,18 @@ public class Controller {
             }
         }
         return canzoniAlbum;
+    }
+    public void verificaAlbum(String titoloAlbum, Artista artista) throws CampoNonValido {
+        if (titoloAlbum.contains(";;;;")) {
+            throw new CampoNonValido("Errore: Il titolo dell'album non può contenere ';;;;'");
+        }
+
+        for (Album album : albumPresenti) {
+            // Se un album ha lo stesso titolo ed è dello stesso artista, è un duplicato!
+            if (album.getTitolo().equalsIgnoreCase(titoloAlbum) && album.getArtista().equals(artista)) {
+                throw new CampoNonValido("Errore: Questo album esiste già per questo artista!");
+            }
+        }
     }
 
     public ArrayList<Genere> getGeneriPresenti() {
@@ -220,8 +265,18 @@ public class Controller {
         return generiAlbum;
     }
 
-    public void creaAlbum(String titolo, LocalDate dataPubblicazione, Artista artista, ArrayList<Genere> generi, ArrayList<Canzone> tracklist) throws CampoNonValido {
-        new Album(titolo, dataPubblicazione, artista, generi, tracklist);
+    public Album creaAlbum(String titolo, LocalDate dataPubblicazione, Artista artista, ArrayList<Genere> generi, ArrayList<Canzone> tracklist) throws CampoNonValido {
+        // 1. Crea l'oggetto
+        Album nuovoAlbum = new Album(titolo, dataPubblicazione, artista, generi, tracklist);
+
+        this.albumPresenti.add(nuovoAlbum);
+
+        artista.addAlbum(nuovoAlbum);
+        for(Genere genere : generi){
+            genere.addListaAlbum(nuovoAlbum);
+        }
+
+        return nuovoAlbum;
     }
 
     // Metodi Class Catalogo Artisti
@@ -287,7 +342,7 @@ public class Controller {
                 for (int i = 0; i < padri.size(); i++) {
                     stringaPadri += padri.get(i).getNome();
                     if (i < padri.size() - 1) {
-                        stringaPadri += ","; // Aggiunge la virgola tranne che all'ultimo elemento
+                        stringaPadri += ",,,,"; // Aggiunge la virgola tranne che all'ultimo elemento
                     }
                 }
             }
@@ -299,7 +354,7 @@ public class Controller {
                 for (int i = 0; i < figli.size(); i++) {
                     stringaFigli += figli.get(i).getNome();
                     if (i < figli.size() - 1) {
-                        stringaFigli += ",";
+                        stringaFigli += ",,,,";
                     }
                 }
             }
@@ -332,7 +387,45 @@ public class Controller {
 
         // Se arriva fin qui, il genere è perfetto e pronto per essere salvato!
     }
+    public void scriviAlbumDataBase(Album albumDaAggiungere) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("DB_fittizzi/album.txt", true))) {
 
+            // 1. Costruiamo la stringa dei generi separati da ",,,,"
+            String stringaGeneri = "";
+            ArrayList<Genere> generi = albumDaAggiungere.getGeneri();
+            if (generi != null && !generi.isEmpty()) {
+                for (int i = 0; i < generi.size(); i++) {
+                    stringaGeneri += generi.get(i).getNome();
+                    if (i < generi.size() - 1) {
+                        stringaGeneri += ",,,,";
+                    }
+                }
+            }
+
+            // 2. Costruiamo la stringa della tracklist (Titolo::::Durata,,,,Titolo::::Durata)
+            String stringaTracklist = "";
+            ArrayList<Canzone> tracklist = albumDaAggiungere.getTracklist();
+            if (tracklist != null && !tracklist.isEmpty()) {
+                for (int i = 0; i < tracklist.size(); i++) {
+                    stringaTracklist += tracklist.get(i).getTitolo() + "::::" + tracklist.get(i).getDurataSecondi();
+                    if (i < tracklist.size() - 1) {
+                        stringaTracklist += ",,,,";
+                    }
+                }
+            }
+
+            // 3. Scriviamo tutto nel file, unendo i 5 blocchi principali con i ";;;;"
+            writer.write(albumDaAggiungere.getTitolo() + ";;;;" +
+                    albumDaAggiungere.getDataPubblicazione().toString() + ";;;;" +
+                    albumDaAggiungere.getArtista().getNomeArte() + ";;;;" +
+                    stringaGeneri + ";;;;" +
+                    stringaTracklist);
+            writer.newLine();
+
+        } catch (IOException e) {
+            System.out.println("Errore: " + e.getMessage());
+        }
+    }
 
     // Metodi Class ValutaPropostaAdmin
     public Utente trovaUtentePerUsername (String username){
@@ -369,12 +462,22 @@ public class Controller {
     }
     // Metodi Class Aggiungi Musicista Admin
 
-    public boolean verificaMusicista(Musicista musicista){
-        if(musicista.getNomeArte().contains(";;;;") || musicista.getNomeVero().contains(";;;;") || musicista.getCognonomeVero().contains(";;;;")||
-                musicista.getIdArtista().contains(";;;;") ){
-            return false;
+    public void verificaMusicista(Musicista musicista) throws CampoNonValido {
+        // 1. Controllo caratteri illegali
+        if(musicista.getNomeArte().contains(";;;;") || musicista.getNomeVero().contains(";;;;") ||
+                musicista.getCognonomeVero().contains(";;;;") || musicista.getIdArtista().contains(";;;;")) {
+            throw new CampoNonValido("Errore: I campi non possono contenere ';;;;'");
         }
-        return true;
+
+        // 2. Controllo duplicati
+        for (Artista artista : artistiPresenti) {
+            if (artista.getIdArtista().equals(musicista.getIdArtista())) {
+                throw new CampoNonValido("Errore: Esiste già un artista con questo ID!");
+            }
+            if (artista.getNomeArte().equalsIgnoreCase(musicista.getNomeArte())) {
+                throw new CampoNonValido("Errore: Esiste già un artista chiamato " + musicista.getNomeArte());
+            }
+        }
     }
     // Metodi Classe Verifica Proposta
     public void setPropostaAccettaDataBase(Proposta propostaDaAccettare) {
@@ -547,7 +650,7 @@ public class Controller {
                 this.generiPresenti.add(nuovoGenere);
 
                 if (dati.length >= 3 && !dati[2].isEmpty()) {
-                    String[] generiPadriString = dati[2].split(",");
+                    String[] generiPadriString = dati[2].split(",,,,");
                     for(String generePadre : generiPadriString ) {
                         Genere padre = trovaGenere(generePadre.trim());
                         if (padre != null) {
@@ -557,7 +660,7 @@ public class Controller {
                     }
                 }
                 if (dati.length >= 4 && !dati[3].isEmpty()) {
-                    String[] generiFigliString = dati[3].split(",");
+                    String[] generiFigliString = dati[3].split(",,,,");
                     for(String genereFiglio : generiFigliString ) {
                         Genere figlio = trovaGenere(genereFiglio.trim());
                         if (figlio != null) {
@@ -618,7 +721,6 @@ public class Controller {
         }
     }
 
-    // --- METODO PER CARICARE LE BAND DAL FILE TXT ---
     // --- METODO PER CARICARE LE BAND DAL FILE TXT ---
     public void caricaBandDaFile() throws CampoNonValido {
         String percorsoBand = "DB_fittizzi/band.txt";
@@ -748,7 +850,7 @@ public class Controller {
 
                 // 3. Prepariamo la lista dei generi (potrebbero essere più di uno!)
                 ArrayList<Genere> listaGeneri = new ArrayList<>();
-                String[] nomiGeneri = stringaGeneri.split(",");
+                String[] nomiGeneri = stringaGeneri.split(",,,,");
 
                 for (int i = 0; i < nomiGeneri.length; i++) {
                     Genere genereTrovato = trovaGenere(nomiGeneri[i]);
@@ -759,10 +861,10 @@ public class Controller {
 
                 // 4. Prepariamo la tracklist
                 ArrayList<Canzone> tracklist = new ArrayList<>();
-                String[] tracce = dati[4].split(",");
+                String[] tracce = dati[4].split(",,,,");
 
                 for (int i = 0; i < tracce.length; i++) {
-                    String[] datiCanzone = tracce[i].split(":");
+                    String[] datiCanzone = tracce[i].split("::::");
                     String titoloCanzone = datiCanzone[0];
                     int durata = Integer.parseInt(datiCanzone[1]);
                     tracklist.add(new Canzone(titoloCanzone, durata));
@@ -897,7 +999,7 @@ public class Controller {
 
     public void setRecensioniAlbum() throws CampoNonValido {
         for(Album album : albumPresenti){
-            ArrayList<Recensione> recensioniAlbumSingolo = new ArrayList();
+            ArrayList<Recensione> recensioniAlbumSingolo = new ArrayList<>();
             for(Recensione recensione : recensioniPresenti){
                 if(recensione.getAlbum().equals(album)){
                     recensioniAlbumSingolo.add(recensione);

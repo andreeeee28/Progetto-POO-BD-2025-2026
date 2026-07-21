@@ -186,6 +186,7 @@ public class ProfiloAlbum {
                 break;
             case 3:
                 Recensione nuovaRecensione = new Recensione(album, utenteAttuale, (float) recensioneSlider.getValue() / 10, LocalDate.now());
+                controller.verificaRecensione(nuovaRecensione);
                 controller.scriviRecensioniDataBase(nuovaRecensione);
                 JOptionPane.showMessageDialog(null, "Recensione inviata con successo!");
                 break;

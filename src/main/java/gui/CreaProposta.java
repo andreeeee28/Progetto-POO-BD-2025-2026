@@ -40,6 +40,7 @@ public class CreaProposta {
 
                 try {
                     Proposta propostaDaCreare = new Proposta(tipoSelezionato, descrizioneInserita, titoloInserito, utenteAttuale);
+                    controller.verificaProposta(propostaDaCreare);
                     controller.scriviPropostaNelDataBase(propostaDaCreare);
                     javax.swing.JOptionPane.showMessageDialog(null, "Proposta inviata con successo!");
                     frameChiamante.setVisible(true);
