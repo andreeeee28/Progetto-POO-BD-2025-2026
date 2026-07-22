@@ -13,6 +13,9 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * The type Profilo album.
+ */
 public class ProfiloAlbum {
     private JFrame frame;
     private JPanel mainPanel;
@@ -48,6 +51,14 @@ public class ProfiloAlbum {
     private JSlider recensioneSlider;
     private JLabel recensioneVoto;
 
+    /**
+     * Instantiates a new Profilo album.
+     *
+     * @param controller     the controller
+     * @param frameChiamante the frame chiamante
+     * @param album          the album
+     * @param utenteAttuale  the utente attuale
+     */
     public ProfiloAlbum(Controller controller, JFrame frameChiamante, Album album, Utente utenteAttuale) {
         frame = new JFrame("Profilo Album - " + album.getTitolo());
         frame.setContentPane(mainPanel);

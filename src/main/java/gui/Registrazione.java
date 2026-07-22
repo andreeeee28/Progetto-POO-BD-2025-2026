@@ -9,6 +9,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The type Registrazione.
+ */
 public class Registrazione {
     private JPanel mainPanel;
     private JTextField campoUtente;
@@ -19,6 +22,12 @@ public class Registrazione {
     private JButton tornaAlLoginButton;
 
 
+    /**
+     * Instantiates a new Registrazione.
+     *
+     * @param controller     the controller
+     * @param frameChiamante the frame chiamante
+     */
     public Registrazione(Controller controller, JFrame frameChiamante){
         frame = new JFrame("Registrazione");
         frame.setContentPane(mainPanel);

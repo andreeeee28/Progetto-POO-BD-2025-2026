@@ -2,6 +2,9 @@ package model;
 
 import java.util.ArrayList;
 
+/**
+ * The type Genere.
+ */
 public class Genere {
     private String nome;
     private String descrizione;
@@ -9,6 +12,13 @@ public class Genere {
     private ArrayList<Genere> sottogeneri;
     private ArrayList<Album> listaAlbum;
 
+    /**
+     * Instantiates a new Genere.
+     *
+     * @param nome        the nome
+     * @param descrizione the descrizione
+     * @throws CampoNonValido the campo non valido
+     */
     public Genere(String nome, String descrizione) throws CampoNonValido{
         setNome(nome);
         setDescrizione(descrizione);
@@ -19,28 +29,59 @@ public class Genere {
 
     //Getter
 
+    /**
+     * Gets nome.
+     *
+     * @return the nome
+     */
     public String getNome() {
         return nome;
     }
 
+    /**
+     * Gets descrizione.
+     *
+     * @return the descrizione
+     */
     public String getDescrizione() {
         return descrizione;
     }
 
+    /**
+     * Gets generi padre.
+     *
+     * @return the generi padre
+     */
     public ArrayList<Genere> getGeneriPadre() {
         return generiPadre;
     }
 
+    /**
+     * Gets lista album.
+     *
+     * @return the lista album
+     */
     public ArrayList<Album> getListaAlbum() {
         return listaAlbum;
     }
 
+    /**
+     * Gets sottogeneri.
+     *
+     * @return the sottogeneri
+     */
     public ArrayList<Genere> getSottogeneri() {
         return sottogeneri;
     }
 
     //Setter
 
+    /**
+     * Sets nome.
+     *
+     * @param nome the nome
+     * @throws CampoNonValido the campo non valido
+     */
     public void setNome(String nome) throws CampoNonValido {
         if(nome == null ||  nome.trim().length()<1 || nome.trim().length()>30){
             throw new CampoNonValido("Il nome deve avere minimo 1 carattere e massimo 30!");
@@ -48,6 +89,12 @@ public class Genere {
         this.nome = nome;
     }
 
+    /**
+     * Sets descrizione.
+     *
+     * @param descrizione the descrizione
+     * @throws CampoNonValido the campo non valido
+     */
     public void setDescrizione(String descrizione) throws CampoNonValido {
         if(descrizione == null ||  descrizione.trim().length()<1 || descrizione.trim().length()>150){
             throw new CampoNonValido("La descrizione deve avere minimo 1 carattere e massimo 150!");
@@ -56,6 +103,12 @@ public class Genere {
     }
     // Altri metodi
 
+    /**
+     * Add generi padre.
+     *
+     * @param newGenere the new genere
+     * @throws CampoNonValido the campo non valido
+     */
     public void addGeneriPadre(Genere newGenere) throws CampoNonValido{
         if (newGenere == null){
             throw new CampoNonValido("Genere non valido.");
@@ -67,6 +120,12 @@ public class Genere {
         }
     }
 
+    /**
+     * Add sottogeneri.
+     *
+     * @param newGenere the new genere
+     * @throws CampoNonValido the campo non valido
+     */
     public void addSottogeneri(Genere newGenere) throws CampoNonValido{
         if (newGenere == null){
             throw new CampoNonValido("Genere non valido.");
@@ -78,6 +137,12 @@ public class Genere {
         }
     }
 
+    /**
+     * Add lista album.
+     *
+     * @param newAlbum the new album
+     * @throws CampoNonValido the campo non valido
+     */
     public void addListaAlbum(Album newAlbum) throws CampoNonValido {
         if (newAlbum == null){
             throw new CampoNonValido("Album non valido.");

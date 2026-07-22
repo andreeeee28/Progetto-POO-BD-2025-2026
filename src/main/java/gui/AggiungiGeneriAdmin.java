@@ -10,6 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * The type Aggiungi generi admin.
+ */
 public class AggiungiGeneriAdmin {
     private JPanel mainPanel;
     private JTextField textFieldNomeGenere;
@@ -17,8 +20,18 @@ public class AggiungiGeneriAdmin {
     private JList listGeneriPadre;
     private JList listGeneriFigli;
     private JButton creaGenereButton;
+    /**
+     * The Frame.
+     */
     JFrame frame;
 
+    /**
+     * Instantiates a new Aggiungi generi admin.
+     *
+     * @param controller     the controller
+     * @param frameChiamante the frame chiamante
+     * @param utente         the utente
+     */
     public AggiungiGeneriAdmin(Controller controller, JFrame frameChiamante, Utente utente) {
         frame = new JFrame("AggiungiGeneriAdmin");
         frame.setContentPane(mainPanel);
@@ -39,28 +52,8 @@ public class AggiungiGeneriAdmin {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    String nomeGenere = textFieldNomeGenere.getText();
-                    String descrizioneGenere = textAreaDescrizione.getText();
-                    Genere nuovoGenere = new Genere(nomeGenere,descrizioneGenere);
-                    ArrayList<Genere> generiPadriSelezionati = new ArrayList<>(listGeneriPadre.getSelectedValuesList());
-                    ArrayList<Genere> generiFigliSelezionati = new ArrayList<>(listGeneriFigli.getSelectedValuesList());
-                    if(!generiFigliSelezionati.isEmpty()){
-                        for(Genere genere : generiFigliSelezionati){
-                            genere.addGeneriPadre(nuovoGenere);
-                            nuovoGenere.addSottogeneri(genere);
-                        }
-                    }
-                    if(!generiPadriSelezionati.isEmpty()){
-                        for(Genere genere : generiPadriSelezionati){
-                            genere.addSottogeneri(nuovoGenere);
-                            nuovoGenere.addGeneriPadre(genere);
-                        }
-                    }
-                    controller.verificaGeneri(nuovoGenere);
-                    controller.scriviGenereDataBase(nuovoGenere);
-                    JOptionPane.showMessageDialog(null, "Genere creato con successo!");
-                    frame.dispose();
-                    new Home(controller,frame,utente);
+                    cliccatoCreaGenereButton(controller,frameChiamante,utente);
+
                 } catch (CampoNonValido ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 } catch (Exception ex) {
@@ -69,6 +62,39 @@ public class AggiungiGeneriAdmin {
                 }
             }
         });
+    }
+
+    /**
+     *
+     * @param controller
+     * @param frameChiamante
+     * @param utente
+     * @throws CampoNonValido
+     */
+    private void  cliccatoCreaGenereButton(Controller controller,JFrame frameChiamante, Utente utente) throws CampoNonValido{
+        String nomeGenere = textFieldNomeGenere.getText();
+        String descrizioneGenere = textAreaDescrizione.getText();
+        Genere nuovoGenere = new Genere(nomeGenere,descrizioneGenere);
+        ArrayList<Genere> generiPadriSelezionati = new ArrayList<>(listGeneriPadre.getSelectedValuesList());
+        ArrayList<Genere> generiFigliSelezionati = new ArrayList<>(listGeneriFigli.getSelectedValuesList());
+        if(!generiFigliSelezionati.isEmpty()){
+            for(Genere genere : generiFigliSelezionati){
+                genere.addGeneriPadre(nuovoGenere);
+                nuovoGenere.addSottogeneri(genere);
+            }
+        }
+        if(!generiPadriSelezionati.isEmpty()){
+            for(Genere genere : generiPadriSelezionati){
+                genere.addSottogeneri(nuovoGenere);
+                nuovoGenere.addGeneriPadre(genere);
+            }
+        }
+        controller.verificaGeneri(nuovoGenere);
+        controller.scriviGenereDataBase(nuovoGenere);
+        JOptionPane.showMessageDialog(null, "Genere creato con successo!");
+        frame.dispose();
+        new Home(controller,frame,utente);
+
     }
 
 }

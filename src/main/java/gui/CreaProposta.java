@@ -10,6 +10,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The type Crea proposta.
+ */
 public class CreaProposta {
     private JTextField titoloTextField;
     private JTextArea descrzioneTextArea;
@@ -19,6 +22,13 @@ public class CreaProposta {
     private JButton tornaAllaHomeButton;
     private JFrame frame;
 
+    /**
+     * Instantiates a new Crea proposta.
+     *
+     * @param controller     the controller
+     * @param frameChiamante the frame chiamante
+     * @param utenteAttuale  the utente attuale
+     */
     public CreaProposta(Controller controller, JFrame frameChiamante, Utente utenteAttuale) {
         frame = new JFrame("Crea proposta");
         frame.setContentPane(mainPanel);
@@ -34,19 +44,12 @@ public class CreaProposta {
         inviaPropostaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TipoProposta tipoSelezionato = (TipoProposta) tipoPropostaComboBox.getSelectedItem();
-                String titoloInserito = titoloTextField.getText();
-                String descrizioneInserita = descrzioneTextArea.getText();
-
                 try {
-                    Proposta propostaDaCreare = new Proposta(tipoSelezionato, descrizioneInserita, titoloInserito, utenteAttuale);
-                    controller.verificaProposta(propostaDaCreare);
-                    controller.scriviPropostaNelDataBase(propostaDaCreare);
-                    javax.swing.JOptionPane.showMessageDialog(null, "Proposta inviata con successo!");
-                    frameChiamante.setVisible(true);
-                    frame.dispose();
+                    cliccatoInviaPropostaButton(controller,frameChiamante,utenteAttuale);
                 } catch (CampoNonValido ex) {
                     javax.swing.JOptionPane.showMessageDialog(null, ex.getMessage());
+                } catch (Exception ex) {
+                    javax.swing.JOptionPane.showMessageDialog(null, "Errore nell'inserimento dei dati");
                 }
 
             }
@@ -60,5 +63,18 @@ public class CreaProposta {
                 frame.dispose();
             }
         });
+    }
+    private void cliccatoInviaPropostaButton(Controller controller, JFrame frameChiamante, Utente utenteAttuale) throws CampoNonValido{
+        TipoProposta tipoSelezionato = (TipoProposta) tipoPropostaComboBox.getSelectedItem();
+        String titoloInserito = titoloTextField.getText();
+        String descrizioneInserita = descrzioneTextArea.getText();
+        Proposta propostaDaCreare = new Proposta(tipoSelezionato, descrizioneInserita, titoloInserito, utenteAttuale);
+        controller.verificaProposta(propostaDaCreare);
+        controller.scriviPropostaNelDataBase(propostaDaCreare);
+        javax.swing.JOptionPane.showMessageDialog(null, "Proposta inviata con successo!");
+        frameChiamante.setVisible(true);
+        frame.dispose();
+
+
     }
 }

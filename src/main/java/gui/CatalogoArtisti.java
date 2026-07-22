@@ -11,6 +11,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+/**
+ * The type Catalogo artisti.
+ */
 public class CatalogoArtisti {
     private JPanel mainPanel;
     private JList listaArtisti;
@@ -20,6 +23,13 @@ public class CatalogoArtisti {
     private JFrame frame;
 
 
+    /**
+     * Instantiates a new Catalogo artisti.
+     *
+     * @param controller     the controller
+     * @param frameChiamante the frame chiamante
+     * @param utenteAttuale  the utente attuale
+     */
     public CatalogoArtisti(Controller controller, JFrame frameChiamante, Utente utenteAttuale) {
         frame = new JFrame("Catalogo Artisti");
         frame.setContentPane(mainPanel);
@@ -73,6 +83,13 @@ public class CatalogoArtisti {
         });
     }
 
+    /**
+     *
+     * @param testoCercato
+     * @param modelloDestinazione
+     * @param artistiNelDataBase
+     * @param artistiFiltrati
+     */
     private void filtraLista(String testoCercato,DefaultListModel<String> modelloDestinazione, ArrayList<Artista> artistiNelDataBase, ArrayList<Artista> artistiFiltrati)
     {
         modelloDestinazione.clear();

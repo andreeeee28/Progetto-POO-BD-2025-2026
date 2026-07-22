@@ -9,6 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * The type Profilo genere.
+ */
 public class ProfiloGenere {
     private JFrame frame;
     private JPanel mainPanel;
@@ -26,6 +29,14 @@ public class ProfiloGenere {
     private JScrollPane albumScrollPane;
     private JList albumList;
 
+    /**
+     * Instantiates a new Profilo genere.
+     *
+     * @param controller     the controller
+     * @param frameChiamante the frame chiamante
+     * @param genere         the genere
+     * @param utenteAttuale  the utente attuale
+     */
     public ProfiloGenere(Controller controller, JFrame frameChiamante, Genere genere, Utente utenteAttuale) {
         frame = new JFrame("Profilo Genere - " + genere.getNome());
         frame.setContentPane(mainPanel);

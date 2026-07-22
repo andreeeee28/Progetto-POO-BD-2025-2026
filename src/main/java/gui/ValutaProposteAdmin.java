@@ -10,15 +10,28 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * The type Valuta proposte admin.
+ */
 public class ValutaProposteAdmin {
     private JPanel mainPanel;
     private JTable valutateTable;
     private JList proposteList;
     private JButton visualizzaButton;
     private JButton indietroButton;
+    /**
+     * The Frame.
+     */
     JFrame frame;
 
 
+    /**
+     * Instantiates a new Valuta proposte admin.
+     *
+     * @param controller     the controller
+     * @param frameChiamante the frame chiamante
+     * @param utente         the utente
+     */
     public ValutaProposteAdmin(Controller controller, JFrame frameChiamante, Utente utente) {
         frame = new JFrame("Proposte");
         frame.setContentPane(mainPanel);

@@ -11,6 +11,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
 
+/**
+ * The type Login.
+ */
 public class Login {
     private JPanel mainPanel;
     private JPasswordField campoPassword;
@@ -25,6 +28,15 @@ public class Login {
     private Controller controller;
     private static JFrame frame;
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     * @throws UnsupportedLookAndFeelException the unsupported look and feel exception
+     * @throws ClassNotFoundException          the class not found exception
+     * @throws InstantiationException          the instantiation exception
+     * @throws IllegalAccessException          the illegal access exception
+     */
     public static void main(String[] args) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         frame = new JFrame("Login");
@@ -35,6 +47,9 @@ public class Login {
         frame.setVisible(true);
     }
 
+    /**
+     * Instantiates a new Login.
+     */
     public Login() {
         controller = new Controller();
         frame.getRootPane().setDefaultButton(accediButton);
@@ -77,6 +92,8 @@ public class Login {
 
                 } catch (CampoNonValido ex) {
                     javax.swing.JOptionPane.showMessageDialog(null, ex.getMessage());
+                } catch (Exception ex) {
+                    javax.swing.JOptionPane.showMessageDialog(null, "Errore imprevisto provare a rinserire i dati");
                 }
             }
         });

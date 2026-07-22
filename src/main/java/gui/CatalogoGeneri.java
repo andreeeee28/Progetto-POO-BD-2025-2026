@@ -11,6 +11,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+/**
+ * The type Catalogo generi.
+ */
 public class CatalogoGeneri {
     private JPanel mainPanel;
     private JList listaGeneri;
@@ -20,6 +23,13 @@ public class CatalogoGeneri {
     private JFrame frame;
 
 
+    /**
+     * Instantiates a new Catalogo generi.
+     *
+     * @param controller     the controller
+     * @param frameChiamante the frame chiamante
+     * @param utenteAttuale  the utente attuale
+     */
     public CatalogoGeneri(Controller controller, JFrame frameChiamante, Utente utenteAttuale) {
         frame = new JFrame("Catalogo Artisti");
         frame.setContentPane(mainPanel);

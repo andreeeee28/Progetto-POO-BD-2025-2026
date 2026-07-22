@@ -3,12 +3,23 @@ package model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * The type Artista.
+ */
 public abstract class  Artista {
     private String nomeArte;
     private int annoInizioAttivita;
     private String idArtista;
     private ArrayList<Album> albumPubblicati;
 
+    /**
+     * Instantiates a new Artista.
+     *
+     * @param nomeArte           the nome arte
+     * @param annoInizioAttivita the anno inizio attivita
+     * @param idArtista          the id artista
+     * @throws CampoNonValido the campo non valido
+     */
     public Artista(String nomeArte, int annoInizioAttivita, String idArtista) throws CampoNonValido{
         setNomeArte(nomeArte);
         setAnnoInizioAttivita(annoInizioAttivita);
@@ -18,24 +29,50 @@ public abstract class  Artista {
 
     //Getter
 
+    /**
+     * Gets nome arte.
+     *
+     * @return the nome arte
+     */
     public String getNomeArte() {
         return nomeArte;
     }
 
+    /**
+     * Gets anno inizio attivita.
+     *
+     * @return the anno inizio attivita
+     */
     public int getAnnoInizioAttivita() {
         return annoInizioAttivita;
     }
 
+    /**
+     * Gets id artista.
+     *
+     * @return the id artista
+     */
     public String getIdArtista() {
         return idArtista;
     }
 
+    /**
+     * Get album pubblicati array list.
+     *
+     * @return the array list
+     */
     public ArrayList<Album> getAlbumPubblicati(){
         return albumPubblicati;
     }
 
     // Setter
 
+    /**
+     * Sets nome arte.
+     *
+     * @param nomeArte the nome arte
+     * @throws CampoNonValido the campo non valido
+     */
     public void setNomeArte(String nomeArte) throws CampoNonValido {
         if(nomeArte == null ||  nomeArte.trim().length()<1 || nomeArte.trim().length()>30){
             throw new CampoNonValido("Il Nome d'Arte deve avere minimo 1 carattere e massimo 30!");
@@ -43,6 +80,12 @@ public abstract class  Artista {
         this.nomeArte = nomeArte;
     }
 
+    /**
+     * Sets anno inizio attivita.
+     *
+     * @param annoInizioAttivita the anno inizio attivita
+     * @throws CampoNonValido the campo non valido
+     */
     public void setAnnoInizioAttivita(int annoInizioAttivita) throws CampoNonValido {
         if (annoInizioAttivita > LocalDate.now().getYear()){
             throw new CampoNonValido("L'anno di inizio attività non può superare l'anno in corso.");
@@ -53,6 +96,12 @@ public abstract class  Artista {
         this.annoInizioAttivita = annoInizioAttivita;
     }
 
+    /**
+     * Sets id artista.
+     *
+     * @param idArtista the id artista
+     * @throws CampoNonValido the campo non valido
+     */
     public void setIdArtista(String idArtista) throws CampoNonValido{
         if(idArtista == null){
             throw new CampoNonValido("Id Artista non valido.");
@@ -60,6 +109,12 @@ public abstract class  Artista {
         this.idArtista = idArtista;
     }
 
+    /**
+     * Sets album pubblicati.
+     *
+     * @param albumPubblicati the album pubblicati
+     * @throws CampoNonValido the campo non valido
+     */
     public void setAlbumPubblicati(ArrayList<Album> albumPubblicati) throws CampoNonValido{
         if(albumPubblicati == null){
             throw new CampoNonValido("Gli album publicati non possono essere null");
@@ -69,6 +124,12 @@ public abstract class  Artista {
 
     // Altri metodi
 
+    /**
+     * Add album.
+     *
+     * @param nuovoAlbum the nuovo album
+     * @throws CampoNonValido the campo non valido
+     */
     public void addAlbum(Album nuovoAlbum) throws CampoNonValido{
         if(nuovoAlbum == null){
             throw new CampoNonValido("Album non valido.");

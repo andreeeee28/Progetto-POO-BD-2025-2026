@@ -11,6 +11,9 @@ import java.time.LocalDate;
 import java.time.Year;
 import java.util.ArrayList;
 
+/**
+ * The type Aggiungi album admin.
+ */
 public class AggiungiAlbumAdmin {
     private JComboBox tipoElemento;
     private JTextField fieldTitolo;
@@ -33,6 +36,13 @@ public class AggiungiAlbumAdmin {
     private JButton indietroButton;
     private JFrame frame;
 
+    /**
+     * Instantiates a new Aggiungi album admin.
+     *
+     * @param controller     the controller
+     * @param frameChiamante the frame chiamante
+     * @param utente         the utente
+     */
     public AggiungiAlbumAdmin(Controller controller, JFrame frameChiamante, Utente utente) {
         frame = new JFrame("Aggiungi Album");
         frame.setContentPane(mainPanel);
@@ -79,7 +89,11 @@ public class AggiungiAlbumAdmin {
         });
     }
 
-    //Configurazione
+    /**
+     *
+     * @param artistiNelDataBase
+     * @param generiPresenti
+     */
     private void configuraElementi(ArrayList<Artista> artistiNelDataBase, ArrayList<Genere> generiPresenti) {
         //Caricamento informazioni
         //Artisti
@@ -107,13 +121,25 @@ public class AggiungiAlbumAdmin {
         listaGeneri.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     }
 
-    //Funzioni Listeners
+    /**
+     *
+     * @param frameChiamante
+     * @param frame
+     */
     private void indietro(JFrame frameChiamante, JFrame frame) {
         frameChiamante.setLocationRelativeTo(null);
         frameChiamante.setVisible(true);
         frame.dispose();
     }
 
+    /**
+     *
+     *
+     * @param controller
+     * @param frameChiamante
+     * @param frame
+     * @throws CampoNonValido
+     */
     private void crea(Controller controller, JFrame frameChiamante, JFrame frame) throws CampoNonValido {
         //Prelevamento informazioni
         String nomeArtista = (String) comboBoxArtista.getSelectedItem();

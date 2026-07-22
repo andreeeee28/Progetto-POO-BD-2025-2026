@@ -6,11 +6,17 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
+/**
+ * The type Esempio implementazione postgres dao.
+ */
 public class EsempioImplementazionePostgresDAO implements EsempioDAO {
 
 	private Connection connection;
 
-	public EsempioImplementazionePostgresDAO() {
+    /**
+     * Instantiates a new Esempio implementazione postgres dao.
+     */
+    public EsempioImplementazionePostgresDAO() {
 		try {
 			connection = ConnessioneDatabase.getInstance().connection;
 		} catch (SQLException e) {

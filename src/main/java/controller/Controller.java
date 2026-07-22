@@ -7,6 +7,9 @@ import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * The type Controller.
+ */
 public class Controller {
     private ArrayList<Utente> utentiRegistrati;
     private ArrayList<Album> albumPresenti;
@@ -16,6 +19,9 @@ public class Controller {
     private ArrayList<Proposta> propostePresenti;
     private ArrayList<Recensione> recensioniPresenti;
 
+    /**
+     * Instantiates a new Controller.
+     */
     public Controller() {
         //RICORDA DI FARE TUTTI I TRY E I CATCH PER L ECCEZIONI LANCIATE ALL INTERNO DI QUESTA CLASSE CONTROLLER DAI METODI
         this.utentiRegistrati = new ArrayList<>();
@@ -41,7 +47,15 @@ public class Controller {
 
     }
 
-    // Metodi Class Login
+    /**
+     * Cliccato accedi utente.
+     *
+     * @param campoNomeUtente the campo nome utente
+     * @param campoPassword   the campo password
+     * @return the utente
+     * @throws CampoNonValido the campo non valido
+     */
+// Metodi Class Login
     public Utente cliccatoAccedi(String campoNomeUtente, String campoPassword) throws CampoNonValido {
         for (Utente utente : utentiRegistrati) {
             String passwordUtente = utente.getPassword();
@@ -58,6 +72,15 @@ public class Controller {
 
     // Metodi Class Registrazione
 
+    /**
+     * Cliccato registrati utente.
+     *
+     * @param campoNomeUtente the campo nome utente
+     * @param campoPassword   the campo password
+     * @param nazione         the nazione
+     * @return the utente
+     * @throws CampoNonValido the campo non valido
+     */
     public Utente cliccatoRegistrati(String campoNomeUtente, String campoPassword, Nazione nazione) throws CampoNonValido {
 
         // 1. Controllo base: Verifichiamo subito se ci sono i caratteri vietati
@@ -81,6 +104,12 @@ public class Controller {
 
         return utenteAttuale;
     }
+
+    /**
+     * Scrivi utente data base.
+     *
+     * @param utenteDaScrivere the utente da scrivere
+     */
     public void scriviUtenteDataBase(Utente utenteDaScrivere){
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("DB_fittizzi/utenti.txt", true))) {
             writer.write( utenteDaScrivere.getUsername() + ";;;;" + utenteDaScrivere.getPassword() + ";;;;" +
@@ -94,7 +123,13 @@ public class Controller {
         }
 
     }
-    // Metodi Class CreaProposta
+
+    /**
+     * Scrivi proposta nel data base.
+     *
+     * @param propostaDaAggiungere the proposta da aggiungere
+     */
+// Metodi Class CreaProposta
     public void scriviPropostaNelDataBase(Proposta propostaDaAggiungere)  {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("DB_fittizzi/proposte.txt", true))) {
             String descrizioneSicura = propostaDaAggiungere.getDescrizione().replace("\n", "[ACCAPO]");
@@ -107,6 +142,13 @@ public class Controller {
             System.out.println("Errore: " + e.getMessage());
         }
     }
+
+    /**
+     * Verifica proposta.
+     *
+     * @param proposta the proposta
+     * @throws CampoNonValido the campo non valido
+     */
     public void verificaProposta(Proposta proposta) throws CampoNonValido {
         if (proposta.getTitoloElemento().contains(";;;;")) {
             throw new CampoNonValido("Errore: Il titolo non può contenere ';;;;'");
@@ -120,7 +162,13 @@ public class Controller {
             }
         }
     }
-    // Metodi Class Profilo Album
+
+    /**
+     * Scrivi recensioni data base.
+     *
+     * @param recensioneDaAggiungere the recensione da aggiungere
+     */
+// Metodi Class Profilo Album
     public void scriviRecensioniDataBase(Recensione recensioneDaAggiungere){
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("DB_fittizzi/recensioni.txt", true))) {
@@ -133,6 +181,12 @@ public class Controller {
 
     }
 
+    /**
+     * Verifica recensione.
+     *
+     * @param recensioneDaVerificare the recensione da verificare
+     * @throws CampoNonValido the campo non valido
+     */
     public void verificaRecensione(Recensione recensioneDaVerificare) throws CampoNonValido {
         // Estraiamo l'album e l'utente dalla recensione che stiamo verificando
         Album albumDaRecensire = recensioneDaVerificare.getAlbum();
@@ -152,7 +206,15 @@ public class Controller {
         albumDaRecensire.getRecensioni().add(recensioneDaVerificare);
     }
 
-    // Metodi Class AggiungiBandAdmin
+    /**
+     * Verifica band.
+     *
+     * @param nomeBand      the nome band
+     * @param musicistiBand the musicisti band
+     * @param id            the id
+     * @throws CampoNonValido the campo non valido
+     */
+// Metodi Class AggiungiBandAdmin
     public void verificaBand(String nomeBand, ArrayList<Musicista> musicistiBand, String id) throws CampoNonValido {
 
         // 1. Controllo caratteri illegali
@@ -184,6 +246,14 @@ public class Controller {
     }
     // Metodi Class AggiungiAlbumoAdmin
 
+    /**
+     * Inserisci canzoni array list.
+     *
+     * @param numeroCanzoni  the numero canzoni
+     * @param frameChiamante the frame chiamante
+     * @return the array list
+     * @throws CampoNonValido the campo non valido
+     */
     public ArrayList<Canzone> inserisciCanzoni(int numeroCanzoni, JFrame frameChiamante) throws CampoNonValido {
         ArrayList<Canzone> canzoniAlbum = new ArrayList<>();
         for (int i = 0; i < numeroCanzoni; i++) {
@@ -204,6 +274,14 @@ public class Controller {
         }
         return canzoniAlbum;
     }
+
+    /**
+     * Verifica album.
+     *
+     * @param titoloAlbum the titolo album
+     * @param artista     the artista
+     * @throws CampoNonValido the campo non valido
+     */
     public void verificaAlbum(String titoloAlbum, Artista artista) throws CampoNonValido {
         if (titoloAlbum.contains(";;;;")) {
             throw new CampoNonValido("Errore: Il titolo dell'album non può contenere ';;;;'");
@@ -217,10 +295,21 @@ public class Controller {
         }
     }
 
+    /**
+     * Gets generi presenti.
+     *
+     * @return the generi presenti
+     */
     public ArrayList<Genere> getGeneriPresenti() {
         return generiPresenti;
     }
 
+    /**
+     * Trova album album.
+     *
+     * @param titoloAlbum the titolo album
+     * @return the album
+     */
     public Album trovaAlbum(String titoloAlbum){
         for(Album album : albumPresenti){
             if(album.getTitolo().equals(titoloAlbum)){
@@ -229,6 +318,13 @@ public class Controller {
         }
         return null;
     }
+
+    /**
+     * Trova artista artista.
+     *
+     * @param nomeArt the nome art
+     * @return the artista
+     */
     public Artista trovaArtista(String nomeArt) {
         for (Artista artista : artistiPresenti) {
             if (artista.getNomeArte().equals(nomeArt)) {
@@ -238,6 +334,12 @@ public class Controller {
         return null;
     }
 
+    /**
+     * Trova genere genere.
+     *
+     * @param nomeGenere the nome genere
+     * @return the genere
+     */
     public Genere trovaGenere(String nomeGenere) {
         for (Genere genere : generiPresenti) {
             if (genere.getNome().equals(nomeGenere)) {
@@ -247,6 +349,14 @@ public class Controller {
         return null;
     }
 
+    /**
+     * Inserisci generi array list.
+     *
+     * @param numeroGeneri   the numero generi
+     * @param frameChiamante the frame chiamante
+     * @return the array list
+     * @throws CampoNonValido the campo non valido
+     */
     public ArrayList<Genere> inserisciGeneri(int numeroGeneri, JFrame frameChiamante) throws CampoNonValido {
         ArrayList<Genere> generiAlbum = new ArrayList<>();
 
@@ -265,6 +375,17 @@ public class Controller {
         return generiAlbum;
     }
 
+    /**
+     * Crea album album.
+     *
+     * @param titolo            the titolo
+     * @param dataPubblicazione the data pubblicazione
+     * @param artista           the artista
+     * @param generi            the generi
+     * @param tracklist         the tracklist
+     * @return the album
+     * @throws CampoNonValido the campo non valido
+     */
     public Album creaAlbum(String titolo, LocalDate dataPubblicazione, Artista artista, ArrayList<Genere> generi, ArrayList<Canzone> tracklist) throws CampoNonValido {
         // 1. Crea l'oggetto
         Album nuovoAlbum = new Album(titolo, dataPubblicazione, artista, generi, tracklist);
@@ -281,12 +402,22 @@ public class Controller {
 
     // Metodi Class Catalogo Artisti
 
+    /**
+     * Gets artisti presenti.
+     *
+     * @return the artisti presenti
+     */
     public ArrayList<Artista> getArtistiPresenti() {
         return artistiPresenti;
     }
 
     // Metodo classe AggiungiArtistaAdmin
 
+    /**
+     * Gets band presenti.
+     *
+     * @return the band presenti
+     */
     public ArrayList<Band> getBandPresenti() {
         ArrayList<Band> bandPresenti = new ArrayList<>();
         for (Artista artista : artistiPresenti) {
@@ -297,6 +428,11 @@ public class Controller {
         return bandPresenti;
     }
 
+    /**
+     * Gets musicisti presenti.
+     *
+     * @return the musicisti presenti
+     */
     public ArrayList<Musicista> getMusicistiPresenti() {
         ArrayList<Musicista> musicistiPresenti = new ArrayList<>();
         for (Artista artista : artistiPresenti) {
@@ -307,6 +443,11 @@ public class Controller {
         return musicistiPresenti;
     }
 
+    /**
+     * Scrivi musicista data base.
+     *
+     * @param musicistaAggiunto the musicista aggiunto
+     */
     public void scriviMusicistaDataBase(Musicista musicistaAggiunto) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("DB_fittizzi/musicisti.txt", true))) {
             writer.write(musicistaAggiunto.getNomeArte() + ";;;;" + musicistaAggiunto.getAnnoInizioAttivita() + ";;;;" +
@@ -319,6 +460,11 @@ public class Controller {
         }
     }
 
+    /**
+     * Scrivi membro band data base.
+     *
+     * @param membroBandDaAggiungere the membro band da aggiungere
+     */
     public void scriviMembroBandDataBase(MembroBand membroBandDaAggiungere) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("DB_fittizzi/membroBand.txt", true))) {
             writer.write(membroBandDaAggiungere.getMusicista().getIdArtista() + ";;;;" + membroBandDaAggiungere.getStrumentoPrincipale()
@@ -331,7 +477,12 @@ public class Controller {
         }
     }
 
-    // metodo di class AggiungiGeneriAdmin
+    /**
+     * Scrivi genere data base.
+     *
+     * @param genereDaAggiungere the genere da aggiungere
+     */
+// metodo di class AggiungiGeneriAdmin
     public void scriviGenereDataBase(Genere genereDaAggiungere) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("DB_fittizzi/generi.txt", true))) {
 
@@ -370,6 +521,13 @@ public class Controller {
             System.out.println("Errore: " + e.getMessage());
         }
     }
+
+    /**
+     * Verifica generi.
+     *
+     * @param genereDaVerificare the genere da verificare
+     * @throws CampoNonValido the campo non valido
+     */
     public void verificaGeneri(Genere genereDaVerificare) throws CampoNonValido {
 
         // 1. Controllo dei caratteri illegali
@@ -387,6 +545,12 @@ public class Controller {
 
         // Se arriva fin qui, il genere è perfetto e pronto per essere salvato!
     }
+
+    /**
+     * Scrivi album data base.
+     *
+     * @param albumDaAggiungere the album da aggiungere
+     */
     public void scriviAlbumDataBase(Album albumDaAggiungere) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("DB_fittizzi/album.txt", true))) {
 
@@ -427,7 +591,13 @@ public class Controller {
         }
     }
 
-    // Metodi Class ValutaPropostaAdmin
+    /**
+     * Trova utente per username utente.
+     *
+     * @param username the username
+     * @return the utente
+     */
+// Metodi Class ValutaPropostaAdmin
     public Utente trovaUtentePerUsername (String username){
         for(Utente utente : utentiRegistrati){
             if(utente.getUsername().equals(username)){
@@ -436,7 +606,19 @@ public class Controller {
         }
         return null;
     }
+
+    /**
+     * Get proposte presenti array list.
+     *
+     * @return the array list
+     */
     public ArrayList<Proposta> getPropostePresenti(){return propostePresenti;}
+
+    /**
+     * Crea righe tabella array list.
+     *
+     * @return the array list
+     */
     public ArrayList<Object[]> creaRigheTabella(){
         ArrayList<Object[]> listaRighe = new ArrayList<>();
         for (Proposta proposta : propostePresenti){
@@ -450,6 +632,12 @@ public class Controller {
         }
         return listaRighe;
     }
+
+    /**
+     * Get proposte da valutare array list.
+     *
+     * @return the array list
+     */
     public ArrayList<Proposta> getProposteDaValutare (){
         ArrayList<Proposta> proposteDaValutare = new ArrayList<>();
         for(Proposta proposta : propostePresenti){
@@ -462,6 +650,12 @@ public class Controller {
     }
     // Metodi Class Aggiungi Musicista Admin
 
+    /**
+     * Verifica musicista.
+     *
+     * @param musicista the musicista
+     * @throws CampoNonValido the campo non valido
+     */
     public void verificaMusicista(Musicista musicista) throws CampoNonValido {
         // 1. Controllo caratteri illegali
         if(musicista.getNomeArte().contains(";;;;") || musicista.getNomeVero().contains(";;;;") ||
@@ -479,7 +673,13 @@ public class Controller {
             }
         }
     }
-    // Metodi Classe Verifica Proposta
+
+    /**
+     * Sets proposta accetta data base.
+     *
+     * @param propostaDaAccettare the proposta da accettare
+     */
+// Metodi Classe Verifica Proposta
     public void setPropostaAccettaDataBase(Proposta propostaDaAccettare) {
         String percorsoFile = "DB_fittizzi/proposte.txt";
         ArrayList<String> righeAggiornate = new ArrayList<>();
@@ -533,6 +733,12 @@ public class Controller {
             System.out.println("Errore durante la sovrascrittura del file proposte: " + e.getMessage());
         }
     }
+
+    /**
+     * Sets proposta rifiutata data base.
+     *
+     * @param propostaDaAccettare the proposta da accettare
+     */
     public void setPropostaRifiutataDataBase(Proposta propostaDaAccettare) {
         String percorsoFile = "DB_fittizzi/proposte.txt";
         ArrayList<String> righeAggiornate = new ArrayList<>();
@@ -586,7 +792,13 @@ public class Controller {
             System.out.println("Errore durante la sovrascrittura del file proposte: " + e.getMessage());
         }
     }
-    // --- METODO PER CARICARE GLI UTENTI DAL FILE TXT ---
+
+    /**
+     * Carica utenti da file.
+     *
+     * @throws CampoNonValido the campo non valido
+     */
+// --- METODO PER CARICARE GLI UTENTI DAL FILE TXT ---
     public void caricaUtentiDaFile() throws CampoNonValido{
 
         String percorsoFile = "DB_fittizzi/utenti.txt";
@@ -628,6 +840,12 @@ public class Controller {
             }
         }
     }
+
+    /**
+     * Carica generi da file.
+     *
+     * @throws CampoNonValido the campo non valido
+     */
     public void caricaGeneriDaFile() throws CampoNonValido{
 
         String percorsoFile = "DB_fittizzi/generi.txt";
@@ -684,6 +902,12 @@ public class Controller {
             }
         }
     }
+
+    /**
+     * Carica musicisti da file.
+     *
+     * @throws CampoNonValido the campo non valido
+     */
     public void caricaMusicistiDaFile() throws CampoNonValido{
 
         String percorsoFile = "DB_fittizzi/musicisti.txt";
@@ -721,7 +945,12 @@ public class Controller {
         }
     }
 
-    // --- METODO PER CARICARE LE BAND DAL FILE TXT ---
+    /**
+     * Carica band da file.
+     *
+     * @throws CampoNonValido the campo non valido
+     */
+// --- METODO PER CARICARE LE BAND DAL FILE TXT ---
     public void caricaBandDaFile() throws CampoNonValido {
         String percorsoBand = "DB_fittizzi/band.txt";
         String percorsoMembri = "DB_fittizzi/membroBand.txt";
@@ -819,6 +1048,13 @@ public class Controller {
             }
         }
     }
+
+    /**
+     * Id to artista artista.
+     *
+     * @param idArtista the id artista
+     * @return the artista
+     */
     public Artista idToArtista(String idArtista){
         for (Artista artista : artistiPresenti){
             if (artista.getIdArtista().equals(idArtista)){
@@ -827,7 +1063,13 @@ public class Controller {
         }
         return null;
     }
-    // --- METODO PER CARICARE GLI ALBUM DAL FILE TXT ---
+
+    /**
+     * Carica album da file.
+     *
+     * @throws CampoNonValido the campo non valido
+     */
+// --- METODO PER CARICARE GLI ALBUM DAL FILE TXT ---
     public void caricaAlbumDaFile() throws CampoNonValido {
         String percorsoFile = "DB_fittizzi/album.txt";
         java.io.BufferedReader br = null;
@@ -901,6 +1143,10 @@ public class Controller {
             }
         }
     }
+
+    /**
+     * Carica proposte da file.
+     */
     public void caricaProposteDaFile() {
         String percorsoFile = "DB_fittizzi/proposte.txt";
         java.io.BufferedReader br = null;
@@ -948,6 +1194,11 @@ public class Controller {
     }
 
 
+    /**
+     * Scrivi band data base.
+     *
+     * @param nuovaBand the nuova band
+     */
     public void scriviBandDataBase(Band nuovaBand) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("DB_fittizzi/band.txt", true))) {
             writer.write(nuovaBand.getNomeArte() + ";;;;" + nuovaBand.getAnnoInizioAttivita() + ";;;;" + nuovaBand.getIdArtista() + ";;;;" +nuovaBand.getAnnoScioglimento());
@@ -957,6 +1208,12 @@ public class Controller {
             System.out.println("Errore: " + e.getMessage());
         }
     }
+
+    /**
+     * Carica recensioni da file.
+     *
+     * @throws CampoNonValido the campo non valido
+     */
     public void caricaRecensioniDaFile() throws CampoNonValido{
 
         String percorsoFile = "DB_fittizzi/recensioni.txt";
@@ -997,6 +1254,11 @@ public class Controller {
         }
     }
 
+    /**
+     * Sets recensioni album.
+     *
+     * @throws CampoNonValido the campo non valido
+     */
     public void setRecensioniAlbum() throws CampoNonValido {
         for(Album album : albumPresenti){
             ArrayList<Recensione> recensioniAlbumSingolo = new ArrayList<>();

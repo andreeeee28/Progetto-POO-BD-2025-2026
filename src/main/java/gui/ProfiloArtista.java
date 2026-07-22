@@ -10,6 +10,9 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * The type Profilo artista.
+ */
 public class ProfiloArtista {
     private JFrame frame;
     private JPanel mainPanel;
@@ -45,6 +48,14 @@ public class ProfiloArtista {
     private JSeparator albumSeparator;
     private JButton visualizzaButton;
 
+    /**
+     * Instantiates a new Profilo artista.
+     *
+     * @param controller     the controller
+     * @param frameChiamante the frame chiamante
+     * @param artista        the artista
+     * @param utenteAttuale  the utente attuale
+     */
     public ProfiloArtista(Controller controller, JFrame frameChiamante, Artista artista, Utente utenteAttuale) {
         frame = new JFrame("Profilo Artista - " + artista.getNomeArte());
         frame.setContentPane(mainPanel);

@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * The type Aggiungi band admin.
+ */
 public class AggiungiBandAdmin {
     private JPanel labellNumeroMembri;
     private JTextField textFieldNomeArte;
@@ -24,6 +27,13 @@ public class AggiungiBandAdmin {
     private JButton creaButton;
     private JFrame frame;
 
+    /**
+     * Instantiates a new Aggiungi band admin.
+     *
+     * @param controller     the controller
+     * @param frameChiamante the frame chiamante
+     * @param utente         the utente
+     */
     public AggiungiBandAdmin(Controller controller, JFrame frameChiamante,Utente utente) {
         frame = new JFrame("Aggiungi Band - Dati Base");
         frame.setContentPane(labellNumeroMembri);
@@ -40,35 +50,14 @@ public class AggiungiBandAdmin {
         }
         listaMusicisti.setModel(modelMusicista);
         listaMusicisti.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+
+
         creaButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e)  {
                 try {
-                    ArrayList<Musicista> musicistiSelezionati = new ArrayList<>(listaMusicisti.getSelectedValuesList());
-                    if (musicistiSelezionati.size() < 2) {
-                        JOptionPane.showMessageDialog(null, "Errore: Una band deve essere composta da almeno 2 musicisti!");
-                        return; // Blocca l'esecuzione qui
-                    }
-
-                    // 2. Leggiamo i dati della Band
-                    String nomeBand = textFieldNomeArte.getText();
-                    int annoInizio = Integer.parseInt(textFieldAnnoInizioAttivita.getText());
-                    String idArtista = textFieldIdArtista.getText();
-                    int numMembri = Integer.parseInt(textFieldNumeroMembri.getText());
-
-                    Integer annoScioglimento = null;
-                    if (!textFieldAnnoScioglimento.getText().trim().isEmpty()) {
-                        annoScioglimento = Integer.parseInt(textFieldAnnoScioglimento.getText());
-                    }
-                    if(numMembri != musicistiSelezionati.size()){
-                        JOptionPane.showMessageDialog(null,"I membri selezionati devono essere dello stesso numero del parametro numero membri");
-                        return;
-                    }
-                    controller.verificaBand(nomeBand,musicistiSelezionati,idArtista);
-                    new AssegnaRuoliBandAdmin(controller, frameChiamante, nomeBand, annoInizio, idArtista, numMembri, annoScioglimento, musicistiSelezionati,utente);
-
-                    // 4. Chiudiamo questa finestra (Form 1)
-                    frame.dispose();
+                    cliccatoCreaButton(controller,frameChiamante,utente);
 
                 } catch (CampoNonValido ex) {
                     JOptionPane.showMessageDialog(null,ex.getMessage());
@@ -79,5 +68,42 @@ public class AggiungiBandAdmin {
 
             }
         });
+
+    }
+
+    /**
+     *
+     * @param controller
+     * @param frameChiamante
+     * @param utente
+     * @throws CampoNonValido
+     */
+    private void cliccatoCreaButton(Controller controller, JFrame frameChiamante, Utente utente) throws CampoNonValido{
+        ArrayList<Musicista> musicistiSelezionati = new ArrayList<>(listaMusicisti.getSelectedValuesList());
+        if (musicistiSelezionati.size() < 2) {
+            JOptionPane.showMessageDialog(null, "Errore: Una band deve essere composta da almeno 2 musicisti!");
+            return; // Blocca l'esecuzione qui
+        }
+
+        // 2. Leggiamo i dati della Band
+        String nomeBand = textFieldNomeArte.getText();
+        int annoInizio = Integer.parseInt(textFieldAnnoInizioAttivita.getText());
+        String idArtista = textFieldIdArtista.getText();
+        int numMembri = Integer.parseInt(textFieldNumeroMembri.getText());
+
+        Integer annoScioglimento = null;
+        if (!textFieldAnnoScioglimento.getText().trim().isEmpty()) {
+            annoScioglimento = Integer.parseInt(textFieldAnnoScioglimento.getText());
+        }
+        if(numMembri != musicistiSelezionati.size()){
+            JOptionPane.showMessageDialog(null,"I membri selezionati devono essere dello stesso numero del parametro numero membri");
+            return;
+        }
+        controller.verificaBand(nomeBand,musicistiSelezionati,idArtista);
+        new AssegnaRuoliBandAdmin(controller, frameChiamante, nomeBand, annoInizio, idArtista, numMembri, annoScioglimento, musicistiSelezionati,utente);
+
+        // 4. Chiudiamo questa finestra (Form 1)
+        frame.dispose();
+
     }
 }

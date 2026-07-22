@@ -8,6 +8,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The type Home.
+ */
 public class Home {
     private JPanel mainPanel;
     private JFrame frame;
@@ -27,6 +30,13 @@ public class Home {
     private JButton creaPropostaAdminButton;
     private JLabel labelCreaPropostaAdmin;
 
+    /**
+     * Instantiates a new Home.
+     *
+     * @param controller     the controller
+     * @param frameChiamante the frame chiamante
+     * @param utenteAttuale  the utente attuale
+     */
     public Home(Controller controller, JFrame frameChiamante, Utente utenteAttuale) {
         frame = new JFrame("Home");
         frame.setContentPane(mainPanel);
