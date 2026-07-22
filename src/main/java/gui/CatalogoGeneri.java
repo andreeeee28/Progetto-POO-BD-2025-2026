@@ -1,6 +1,7 @@
 package gui;
 
 import controller.Controller;
+import model.Album;
 import model.Genere;
 import model.Utente;
 
@@ -20,6 +21,7 @@ public class CatalogoGeneri {
     private JTextField campoCerca;
     private JButton visualizzaButton;
     private JButton tornaAllaHomeButton;
+    private ArrayList<Genere> generi;
     private JFrame frame;
 
 
@@ -34,12 +36,44 @@ public class CatalogoGeneri {
         frame = new JFrame("Catalogo Artisti");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
         frame.getRootPane().setDefaultButton(visualizzaButton);
 
 
+        generi = riempiListaGeneri(controller);
+
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+
+        //Tasto torna alla home
+        tornaAllaHomeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                indietro(frameChiamante, frame);
+            }
+        });
+
+        //Filtro textbox
+        campoCerca.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                super.keyReleased(e);
+                generi = filtraLista(controller, campoCerca.getText());
+            }
+        });
+
+        //Tasto visualizza genere
+        visualizzaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                newProfiloGenere(controller, frame, utenteAttuale);
+            }
+        });
+    }
+
+    //Riempimento liste
+    //Generi
+    private ArrayList<Genere> riempiListaGeneri(Controller controller) {
         DefaultListModel<String> modelloLista = new DefaultListModel<>();
 
         ArrayList<Genere> generiNelDataBase = controller.getGeneriPresenti();
@@ -52,51 +86,44 @@ public class CatalogoGeneri {
 
         listaGeneri.setModel(modelloLista);
 
-
-        //Filtro textbox
-        campoCerca.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                super.keyReleased(e);
-                filtraLista(campoCerca.getText(), modelloLista, generiNelDataBase, generiFiltrati);
-            }
-        });
-
-
-        //Tasti
-        //Tasto torna alla home
-        tornaAllaHomeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frameChiamante.setVisible(true);
-                frame.dispose();
-            }
-        });
-
-        //Tasto visualizza artista
-        visualizzaButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new ProfiloGenere(controller, frame, generiFiltrati.get(listaGeneri.getSelectedIndex()), utenteAttuale);
-                frame.setVisible(false);
-            }
-        });
+        return generiFiltrati;
     }
 
-    private void filtraLista(String testoCercato,DefaultListModel<String> modelloDestinazione, ArrayList<Genere> artistiNelDataBase, ArrayList<Genere> generiFiltrati)
-    {
-        modelloDestinazione.clear();
-        generiFiltrati.clear();
+    //Funzioni Listeners
+    //Indietro
+    private void indietro(JFrame frameChiamante, JFrame frame) {
+        frameChiamante.setLocationRelativeTo(null);
+        frameChiamante.setVisible(true);
+        frame.dispose();
+    }
 
-        for(Genere genere : artistiNelDataBase) {
+    //Filtra Lista
+    private ArrayList<Genere> filtraLista(Controller controller, String testoCercato) {
+        DefaultListModel<String> modelloLista = new DefaultListModel<>();
+
+        ArrayList<Genere> generiNelDataBase = controller.getGeneriPresenti();
+        ArrayList<Genere> generiFiltrati = new ArrayList<>();
+
+        for (Genere genere : generiNelDataBase) {
             String nome = genere.getNome().toLowerCase();
 
             if (nome.contains(testoCercato.toLowerCase())) {
-                modelloDestinazione.addElement(genere.getNome());
+                modelloLista.addElement(genere.getNome());
                 generiFiltrati.add(genere);
             }
         }
-        listaGeneri.setModel(modelloDestinazione);
+        listaGeneri.setModel(modelloLista);
+
+        return generiFiltrati;
     }
 
+    //Profilo Genere
+    private void newProfiloGenere(Controller controller, JFrame frame, Utente utenteAttuale) {
+        try {
+            new ProfiloGenere(controller, frame, generi.get(listaGeneri.getSelectedIndex()), utenteAttuale);
+            frame.setVisible(false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Errore nella selezione del genere");
+        }
+    }
 }

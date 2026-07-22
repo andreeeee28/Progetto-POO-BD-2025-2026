@@ -79,6 +79,5 @@ public class Registrazione {
             JOptionPane.showMessageDialog(null, "Registrazione avvenuta con successo");
             new Home(controller, frame, utenteAttuale);
             frame.setVisible(false);
-
     }
 }

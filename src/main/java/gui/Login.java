@@ -54,18 +54,14 @@ public class Login {
         controller = new Controller();
         frame.getRootPane().setDefaultButton(accediButton);
 
-        //Inizializzazione button group a utente standard
-        standardRadioButton.setSelected(true);
-        inserireIdLabel.setVisible(false);
-        campoID.setVisible(false);
+        configuraElementi();
+
 
         //Radio button Admin
         adminRadioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                inserireIdLabel.setVisible(true);
-                campoID.setVisible(true);
-                frame.pack();
+                cliccatoAdminRadioButton();
             }
         });
 
@@ -73,9 +69,7 @@ public class Login {
         standardRadioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                inserireIdLabel.setVisible(false);
-                campoID.setVisible(false);
-                frame.pack();
+                cliccatoStandardRadioButton();
             }
         });
 
@@ -83,18 +77,7 @@ public class Login {
         accediButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String StringaCampoUtente = campoNomeUtente.getText();
-                String StringaCampoPassword = new String(campoPassword.getPassword());
-                try {
-                    Utente utenteAttuale = controller.cliccatoAccedi(StringaCampoUtente, StringaCampoPassword);
-                    new Home(controller, frame, utenteAttuale);
-                    frame.setVisible(false);
-
-                } catch (CampoNonValido ex) {
-                    javax.swing.JOptionPane.showMessageDialog(null, ex.getMessage());
-                } catch (Exception ex) {
-                    javax.swing.JOptionPane.showMessageDialog(null, "Errore imprevisto provare a rinserire i dati");
-                }
+                cliccatoAccedi();
             }
         });
 
@@ -102,9 +85,58 @@ public class Login {
         registrazioneButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Registrazione(controller, frame);
-                frame.setVisible(false);
+                newRegistrazione();
             }
         });
+    }
+
+    //Configurazione
+    private void configuraElementi() {
+        //Inizializzazione button group a utente standard
+        standardRadioButton.setSelected(true);
+        inserireIdLabel.setVisible(false);
+        campoID.setVisible(false);
+
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+    }
+
+
+    //Funzioni Listeners
+    //Radio button Admin
+    public void cliccatoAdminRadioButton() {
+        inserireIdLabel.setVisible(true);
+        campoID.setVisible(true);
+        frame.pack();
+    }
+
+    //Radio button Standard
+    public void cliccatoStandardRadioButton() {
+        inserireIdLabel.setVisible(false);
+        campoID.setVisible(false);
+        frame.pack();
+    }
+
+    //Pulsante accedi
+    public void cliccatoAccedi() {
+        String StringaCampoUtente = campoNomeUtente.getText();
+        String StringaCampoPassword = new String(campoPassword.getPassword());
+        try {
+
+            Utente utenteAttuale = controller.cliccatoAccedi(StringaCampoUtente, StringaCampoPassword);
+            new Home(controller, frame, utenteAttuale);
+            frame.setVisible(false);
+
+        } catch (CampoNonValido ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Errore imprevisto provare a rinserire i dati");
+        }
+    }
+
+    //Registrazione
+    public void newRegistrazione() {
+        new Registrazione(controller, frame);
+        frame.setVisible(false);
     }
 }

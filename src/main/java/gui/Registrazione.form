@@ -13,6 +13,7 @@
           <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="2" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <font style="1"/>
           <text value="Crea Nome Utente"/>
         </properties>
       </component>
@@ -31,6 +32,7 @@
           <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="2" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <font style="1"/>
           <text value="Crea Password"/>
         </properties>
       </component>
@@ -114,6 +116,7 @@
           <grid row="8" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <font style="1"/>
           <text value="Inserisci la tua nazione di provenienza"/>
         </properties>
       </component>

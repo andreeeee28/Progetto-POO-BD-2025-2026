@@ -96,7 +96,6 @@ public class ProfiloAlbum {
                 }
             }
         });
-
         tabbedPane.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
@@ -108,7 +107,7 @@ public class ProfiloAlbum {
         recensioneSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                recensioneVoto.setText(String.valueOf((float) recensioneSlider.getValue() / 10));
+                moveRecensioneSlider();
             }
         });
     }
@@ -132,6 +131,7 @@ public class ProfiloAlbum {
     }
 
     //Riempimento liste
+    //Tracklist
     private void riempiListaTracklist(Album album) {
         String[] columnNames = {"Titolo", "Durata"};
         ArrayList<Canzone> tracklist = album.getTracklist();
@@ -144,6 +144,7 @@ public class ProfiloAlbum {
         tracklistTable.setModel(modelloTabella);
     }
 
+    //Generi
     private ArrayList<Genere> riempiListaGeneri(Album album) {
         DefaultListModel<String> modelloLista = new DefaultListModel<>();
         ArrayList<Genere> generi = album.getGeneri();
@@ -156,6 +157,7 @@ public class ProfiloAlbum {
         return generi;
     }
 
+    //Crediti
     private ArrayList<Artista> riempiListaCrediti(Album album) {
         DefaultListModel<String> modelloLista = new DefaultListModel<>();
 
@@ -179,32 +181,48 @@ public class ProfiloAlbum {
 
 
     //Funzioni Listeners
+    //Indietro
     private void indietro(JFrame frameChiamante, JFrame frame) {
         frameChiamante.setLocationRelativeTo(null);
         frameChiamante.setVisible(true);
         frame.dispose();
     }
 
+    //Visualizza
     private void visualizza(Controller controller, ArrayList<Genere> generi, ArrayList<Artista> crediti, Album album, Utente utenteAttuale) throws CampoNonValido {
         switch (tabbedPane.getSelectedIndex()) {
             case 1:                                 //Generi
-                new ProfiloGenere(controller, frame, generi.get(generiList.getSelectedIndex()), utenteAttuale);
-                frame.setVisible(false);
+                try {
+                    new ProfiloGenere(controller, frame, generi.get(generiList.getSelectedIndex()), utenteAttuale);
+                    frame.setVisible(false);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Errore nella selezione del genere");
+                }
                 break;
             case 2:                                 //Crediti
-                new ProfiloArtista(controller, frame, crediti.get(creditiList.getSelectedIndex()), utenteAttuale);
-                frame.setVisible(false);
+                try {
+                    new ProfiloArtista(controller, frame, crediti.get(creditiList.getSelectedIndex()), utenteAttuale);
+                    frame.setVisible(false);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Errore nella selezione dell'artista");
+                }
                 break;
             case 3:
-                Recensione nuovaRecensione = new Recensione(album, utenteAttuale, (float) recensioneSlider.getValue() / 10, LocalDate.now());
-                controller.verificaRecensione(nuovaRecensione);
-                controller.scriviRecensioniDataBase(nuovaRecensione);
-                JOptionPane.showMessageDialog(null, "Recensione inviata con successo!");
+                try {
+                    Recensione nuovaRecensione = new Recensione(album, utenteAttuale, (float) recensioneSlider.getValue() / 10, LocalDate.now());
+                    controller.verificaRecensione(nuovaRecensione);
+                    controller.scriviRecensioniDataBase(nuovaRecensione);
+                    JOptionPane.showMessageDialog(null, "Recensione inviata con successo!");
+                } catch (CampoNonValido ex) {
+                    javax.swing.JOptionPane.showMessageDialog(null, ex.getMessage());
+                } catch (Exception ex) {
+                    javax.swing.JOptionPane.showMessageDialog(null, "Errore nell'inserimento dei dati");
+                }
                 break;
-
         }
     }
 
+    //Configura pulsante Visualizza
     private void configuraVisualizzaButton() {
         switch (tabbedPane.getSelectedIndex()) {
             case 0:
@@ -219,5 +237,10 @@ public class ProfiloAlbum {
                 visualizzaButton.setVisible(true);
                 visualizzaButton.setText("Invia Recensione");
         }
+    }
+
+    //Configura etichetta Slider
+    private void moveRecensioneSlider() {
+        recensioneVoto.setText(String.valueOf((float) recensioneSlider.getValue() / 10));
     }
 }

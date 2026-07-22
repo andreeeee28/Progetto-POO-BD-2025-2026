@@ -113,25 +113,39 @@ public class ProfiloGenere {
     }
 
     //Funzioni Listeners
+    //Indietro
     private void indietro(JFrame frameChiamante, JFrame frame) {
         frameChiamante.setLocationRelativeTo(null);
         frameChiamante.setVisible(true);
         frame.dispose();
     }
 
+    //Visualizza
     private void visualizza(Controller controller, ArrayList<Genere> generiPadre, ArrayList<Genere> sottogeneri, ArrayList<Album> albums, Utente utenteAttuale) {
         switch (tabbedPane.getSelectedIndex()) {
             case 0:                                 //Generi Padre
-                new ProfiloGenere(controller, frame, generiPadre.get(generiPadreList.getSelectedIndex()), utenteAttuale);
-                frame.setVisible(false);
+                try {
+                    new ProfiloGenere(controller, frame, generiPadre.get(generiPadreList.getSelectedIndex()), utenteAttuale);
+                    frame.setVisible(false);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Errore nella selezione del genere");
+                }
                 break;
             case 1:                                 //Sottogeneri
-                new ProfiloGenere(controller, frame, sottogeneri.get(sottogeneriList.getSelectedIndex()), utenteAttuale);
-                frame.setVisible(false);
+                try {
+                    new ProfiloGenere(controller, frame, sottogeneri.get(sottogeneriList.getSelectedIndex()), utenteAttuale);
+                    frame.setVisible(false);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Errore nella selezione del genere");
+                }
                 break;
             case 2:                                 //Album
-                new ProfiloAlbum(controller, frame, albums.get(albumList.getSelectedIndex()), utenteAttuale);
-                frame.setVisible(false);
+                try {
+                    new ProfiloAlbum(controller, frame, albums.get(albumList.getSelectedIndex()), utenteAttuale);
+                    frame.setVisible(false);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Errore nella selezione dell'album");
+                }
                 break;
         }
     }

@@ -15,7 +15,7 @@
         <properties>
           <horizontalAlignment value="10"/>
           <labelFor value="b92bd"/>
-          <text value="Titolo"/>
+          <text value="Titolo:"/>
         </properties>
       </component>
       <component id="569c9" class="javax.swing.JComboBox" binding="tipoPropostaComboBox" default-binding="true">
@@ -26,13 +26,11 @@
           <model/>
         </properties>
       </component>
-      <component id="d62f2" class="javax.swing.JLabel">
+      <component id="15149" class="javax.swing.JSeparator">
         <constraints>
-          <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="1" hsize-policy="1" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="1" hsize-policy="1" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties>
-          <text value="Descrizione"/>
-        </properties>
+        <properties/>
       </component>
       <component id="b92bd" class="javax.swing.JTextField" binding="titoloTextField">
         <constraints>
@@ -68,17 +66,19 @@
         </constraints>
         <properties>
           <labelFor value="569c9"/>
-          <text value="Tipo Proposta"/>
+          <text value="Tipo Proposta:"/>
         </properties>
       </component>
       <scrollpane id="f3d56">
         <constraints>
-          <grid row="3" column="0" row-span="1" col-span="3" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="0" row-span="1" col-span="3" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="350" height="250"/>
+          </grid>
         </constraints>
         <properties>
           <autoscrolls value="true"/>
         </properties>
-        <border type="none"/>
+        <border type="none" title="Descrizione"/>
         <children>
           <component id="b870e" class="javax.swing.JTextArea" binding="descrzioneTextArea">
             <constraints/>
@@ -91,7 +91,7 @@
               <maximumSize width="-1" height="-1"/>
               <minimumSize width="-1" height="-1"/>
               <opaque value="true"/>
-              <preferredSize width="350" height="270"/>
+              <preferredSize width="240" height="270"/>
               <rows value="15"/>
               <text value=""/>
             </properties>

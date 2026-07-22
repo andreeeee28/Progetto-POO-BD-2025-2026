@@ -15,10 +15,9 @@ import java.util.ArrayList;
  */
 public class AggiungiMusicistaAdmin {
     private JPanel mainPanel;
-    private JLabel labelScelta;
     private JTextField textFieldNomeArte;
     private JLabel labelNomeArte;
-    private JTextField textFieldAnnoInizioAttivita;
+    private JComboBox textFieldAnnoInizioAttivita;
     private JTextField textFieldIdArtista;
     private JTextField textFieldNomeVero;
     private JTextField textFieldCognomeVero;

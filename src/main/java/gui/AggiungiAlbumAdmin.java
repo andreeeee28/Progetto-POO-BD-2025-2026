@@ -4,7 +4,6 @@ import controller.Controller;
 import model.*;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
@@ -18,7 +17,7 @@ public class AggiungiAlbumAdmin {
     private JComboBox tipoElemento;
     private JTextField fieldTitolo;
     private JTextField fieldGeneri;
-    private JTextField fieldCanzoni;
+    private JSpinner canzoniSpinner;
     private JButton creaButton;
     private JPanel mainPanel;
     private JLabel laberlArtista;
@@ -32,7 +31,6 @@ public class AggiungiAlbumAdmin {
     private JComboBox comboBoxArtista;
     private JLabel labelMese;
     private JList listaGeneri;
-    private JLabel labelGeneri;
     private JButton indietroButton;
     private JFrame frame;
 
@@ -47,15 +45,10 @@ public class AggiungiAlbumAdmin {
         frame = new JFrame("Aggiungi Album");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
         frame.getRootPane().setDefaultButton(creaButton);
 
-        //Caricamento ArrayList dal DB
-        ArrayList<Artista> artistiNelDataBase = controller.getArtistiPresenti();
-        ArrayList<Genere> generiPresenti = controller.getGeneriPresenti();
 
-        configuraElementi(artistiNelDataBase, generiPresenti);
+        configuraElementi(controller);
 
         frame.setVisible(true);
 
@@ -78,25 +71,21 @@ public class AggiungiAlbumAdmin {
                 } catch (NumberFormatException ex) {
                     //Eccezione Campo vuoto
                     JOptionPane.showMessageDialog(null, "Attenzione: Inserisci un numero valido nel campo Canzoni!");
-
                 } catch (Exception ex) {
                     //Eccezione crash imprevisti
                     JOptionPane.showMessageDialog(null, "Errore imprevisto: " + ex.getMessage());
-
                 }
 
             }
         });
     }
 
-    /**
-     *
-     * @param artistiNelDataBase
-     * @param generiPresenti
-     */
-    private void configuraElementi(ArrayList<Artista> artistiNelDataBase, ArrayList<Genere> generiPresenti) {
+    private void configuraElementi(Controller controller) {
         //Caricamento informazioni
         //Artisti
+        ArrayList<Artista> artistiNelDataBase = controller.getArtistiPresenti();
+        ArrayList<Genere> generiPresenti = controller.getGeneriPresenti();
+
         for (Artista artistaNelDataBase : artistiNelDataBase) {
             comboBoxArtista.addItem(artistaNelDataBase.getNomeArte());
         }
@@ -119,8 +108,15 @@ public class AggiungiAlbumAdmin {
         }
         listaGeneri.setModel(modelGeneri);
         listaGeneri.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+        canzoniSpinner.setModel(new SpinnerNumberModel(1, 1, null, 1));
+
+        frame.pack();
+        frame.setLocationRelativeTo(null);
     }
 
+
+    //Funzioni Listener
     /**
      *
      * @param frameChiamante
@@ -143,16 +139,18 @@ public class AggiungiAlbumAdmin {
     private void crea(Controller controller, JFrame frameChiamante, JFrame frame) throws CampoNonValido {
         //Prelevamento informazioni
         String nomeArtista = (String) comboBoxArtista.getSelectedItem();
-        int numeroCanzoni = Integer.parseInt(fieldCanzoni.getText());
+        int numeroCanzoni = (int) canzoniSpinner.getValue();
         String titolo = fieldTitolo.getText();
         LocalDate dataPubblicazione = LocalDate.of((Integer) comboBoxAnno.getSelectedItem(), (Integer) comboBoxMese.getSelectedItem(), (Integer) comboBoxGiorno.getSelectedItem());
         ArrayList<Genere> generiSelezionati = new ArrayList<>(listaGeneri.getSelectedValuesList());
+
         //Inserimento canzoni
         Artista artista = controller.trovaArtista(nomeArtista);
-        controller.verificaAlbum(titolo,artista);
+        controller.verificaAlbum(titolo, artista);
         ArrayList<Canzone> canzoniAlbum = controller.inserisciCanzoni(numeroCanzoni, frame);
         Album albumDaAggiungere = controller.creaAlbum(titolo, dataPubblicazione, artista, generiSelezionati, canzoniAlbum);
         controller.scriviAlbumDataBase(albumDaAggiungere);
+
         JOptionPane.showMessageDialog(null, "Album creato con successo!");
         indietro(frameChiamante, frame);
     }

@@ -27,8 +27,6 @@ public class Home {
     private JSeparator valutaProposteSeparator;
     private JSeparator catalogoSeparator;
     private JButton aggiungiAlbumButton;
-    private JButton creaPropostaAdminButton;
-    private JLabel labelCreaPropostaAdmin;
 
     /**
      * Instantiates a new Home.
@@ -49,7 +47,7 @@ public class Home {
         esploraGeneriButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new CatalogoGeneri(controller, frame, utenteAttuale);
+                newCatalogoGeneri(controller, frame, utenteAttuale);
                 frame.setVisible(false);
             }
         });
@@ -58,7 +56,7 @@ public class Home {
         esploraArtistiButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new CatalogoArtisti(controller, frame, utenteAttuale);
+                newCatalogoArtisti(controller, frame, utenteAttuale);
                 frame.setVisible(false);
             }
         });
@@ -68,7 +66,7 @@ public class Home {
         creaPropostaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new CreaProposta(controller, frame, utenteAttuale);
+                newCreaProposta(controller, frame, utenteAttuale);
                 frame.setVisible(false);
             }
         });
@@ -78,7 +76,7 @@ public class Home {
         aggiungiMusicistaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new AggiungiMusicistaAdmin(controller, frame, utenteAttuale);
+                newAggiungiMusicistaAdmin(controller, frame, utenteAttuale);
                 frame.setVisible(false);
             }
         });
@@ -87,7 +85,7 @@ public class Home {
         aggiungiBandButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new AggiungiBandAdmin(controller, frame, utenteAttuale);
+                newAggiungiBandAdmin(controller, frame, utenteAttuale);
                 frame.setVisible(false);
             }
         });
@@ -96,7 +94,7 @@ public class Home {
         aggiungiAlbumButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new AggiungiAlbumAdmin(controller, frame, utenteAttuale);
+                newAggiungiAlbumAdmin(controller, frame, utenteAttuale);
                 frame.setVisible(false);
             }
         });
@@ -105,7 +103,7 @@ public class Home {
         aggiungiGenereButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new AggiungiGeneriAdmin(controller, frame, utenteAttuale);
+                newAggiungiGeneriAdmin(controller, frame, utenteAttuale);
                 frame.setVisible(false);
             }
         });
@@ -115,19 +113,13 @@ public class Home {
         valutaProposteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ValutaProposteAdmin(controller, frame, utenteAttuale);
-                frame.setVisible(false);
-            }
-        });
-        creaPropostaAdminButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new CreaProposta(controller,frame,utenteAttuale);
+                newValutaProposteAdmin(controller, frame, utenteAttuale);
                 frame.setVisible(false);
             }
         });
     }
 
+    //Configurazione
     private void configuraElementi(Utente utenteAttuale) {
         if (utenteAttuale instanceof Admin) {
             //Nascondi elementi non inerenti
@@ -135,8 +127,6 @@ public class Home {
             creaPropostaButton.setVisible(false);
         } else {
             //Nascondi elementi non inerenti
-            creaPropostaAdminButton.setVisible(false);
-            labelCreaPropostaAdmin.setVisible(false);
             aggiungiElementoLabel.setVisible(false);
             valutaProposteLabel.setVisible(false);
             aggiungiMusicistaButton.setVisible(false);
@@ -149,4 +139,56 @@ public class Home {
         frame.pack();
         frame.setLocationRelativeTo(null);
     }
+
+
+    //Funzioni Listeners
+    //Catalogo Generi
+    private void newCatalogoGeneri(Controller controller, JFrame frame, Utente utenteAttuale) {
+        new CatalogoGeneri(controller, frame, utenteAttuale);
+        frame.setVisible(false);
+    }
+
+    //Catalogo Artisti
+    private void newCatalogoArtisti(Controller controller, JFrame frame, Utente utenteAttuale) {
+        new CatalogoArtisti(controller, frame, utenteAttuale);
+        frame.setVisible(false);
+    }
+
+    //Crea Proposta
+    private void newCreaProposta(Controller controller, JFrame frame, Utente utenteAttuale) {
+        new CreaProposta(controller, frame, utenteAttuale);
+        frame.setVisible(false);
+    }
+
+    //Aggiungi Musicista
+    private void newAggiungiMusicistaAdmin(Controller controller, JFrame frame, Utente utenteAttuale) {
+        new AggiungiMusicistaAdmin(controller, frame, utenteAttuale);
+        frame.setVisible(false);
+    }
+
+    //Aggiungi Band
+    private void newAggiungiBandAdmin(Controller controller, JFrame frame, Utente utenteAttuale) {
+        new AggiungiBandAdmin(controller, frame, utenteAttuale);
+        frame.setVisible(false);
+    }
+
+    //Aggiungi Album
+    private void newAggiungiAlbumAdmin(Controller controller, JFrame frame, Utente utenteAttuale) {
+        new AggiungiAlbumAdmin(controller, frame, utenteAttuale);
+        frame.setVisible(false);
+    }
+
+    //Aggiungi Generi
+    private void newAggiungiGeneriAdmin(Controller controller, JFrame frame, Utente utenteAttuale) {
+        new AggiungiGeneriAdmin(controller, frame, utenteAttuale);
+        frame.setVisible(false);
+    }
+
+    //Valuta Proposte
+    private void newValutaProposteAdmin(Controller controller, JFrame frame, Utente utenteAttuale) {
+        new ValutaProposteAdmin(controller, frame, utenteAttuale);
+        frame.setVisible(false);
+    }
+
+
 }

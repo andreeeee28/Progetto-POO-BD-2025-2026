@@ -5,3 +5,6 @@ Live at the Regal;;;;mario99;;;;4.8;;;;2024-04-05
 All Eyez on Me;;;;admin_root;;;;5.0;;;;2024-05-12
 Abbey Road;;;;hans_berlin;;;;5.0;;;;2024-06-18
 Ramones;;;;mario99;;;;4.2;;;;2024-07-22
+Abbey Road;;;;mario99;;;;10.0;;;;2026-07-22
+Abbey Road;;;;mario99;;;;7.8;;;;2026-07-22
+All Eyez on Me;;;;mario99;;;;7.2;;;;2026-07-22

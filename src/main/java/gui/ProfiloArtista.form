@@ -220,7 +220,7 @@
               <tabbedpane title="Discografia"/>
             </constraints>
             <properties/>
-            <border type="none"/>
+            <border type="bevel-lowered"/>
             <children>
               <component id="7c81e" class="javax.swing.JList" binding="discografiaList">
                 <constraints/>
@@ -233,7 +233,7 @@
               <tabbedpane title="Membri - Partecipazioni"/>
             </constraints>
             <properties/>
-            <border type="none"/>
+            <border type="bevel-lowered"/>
             <children>
               <component id="dacad" class="javax.swing.JList" binding="partecipazioniMembriList">
                 <constraints/>

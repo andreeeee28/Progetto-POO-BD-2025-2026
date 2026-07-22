@@ -17,9 +17,10 @@ public class AggiungiGeneriAdmin {
     private JPanel mainPanel;
     private JTextField textFieldNomeGenere;
     private JTextArea textAreaDescrizione;
-    private JList listGeneriPadre;
-    private JList listGeneriFigli;
-    private JButton creaGenereButton;
+    private JList generiPadreList;
+    private JList sottoGeneriList;
+    private JButton creaButton;
+    private JButton indietroButton;
     /**
      * The Frame.
      */
@@ -36,24 +37,29 @@ public class AggiungiGeneriAdmin {
         frame = new JFrame("AggiungiGeneriAdmin");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-        ArrayList<Genere> generiPresenti = controller.getGeneriPresenti();
-        DefaultListModel<Genere> modelGenere = new DefaultListModel<>();
-        for(Genere genere : generiPresenti){
-            modelGenere.addElement(genere);
-        }
-        listGeneriFigli.setModel(modelGenere);
-        listGeneriPadre.setModel(modelGenere);
-        listGeneriFigli.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        listGeneriPadre.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        frame.getRootPane().setDefaultButton(creaButton);
 
-        creaGenereButton.addActionListener(new ActionListener() {
+
+        riempiListeGeneri(controller);
+
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+
+
+        //Tasto indietro
+        indietroButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                indietro(frameChiamante, frame);
+            }
+        });
+
+        creaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     cliccatoCreaGenereButton(controller,frameChiamante,utente);
-
                 } catch (CampoNonValido ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 } catch (Exception ex) {
@@ -64,6 +70,28 @@ public class AggiungiGeneriAdmin {
         });
     }
 
+    private void riempiListeGeneri(Controller controller){
+        DefaultListModel<Genere> modelGenere = new DefaultListModel<>();
+        ArrayList<Genere> generiPresenti = controller.getGeneriPresenti();
+
+        for(Genere genere : generiPresenti){
+            modelGenere.addElement(genere);
+        }
+        sottoGeneriList.setModel(modelGenere);
+        generiPadreList.setModel(modelGenere);
+        sottoGeneriList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        generiPadreList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+    }
+
+
+    //Funzioni Listeners
+    //Indietro
+    private void indietro(JFrame frameChiamante, JFrame frame) {
+        frameChiamante.setLocationRelativeTo(null);
+        frameChiamante.setVisible(true);
+        frame.dispose();
+    }
+
     /**
      *
      * @param controller
@@ -72,11 +100,14 @@ public class AggiungiGeneriAdmin {
      * @throws CampoNonValido
      */
     private void  cliccatoCreaGenereButton(Controller controller,JFrame frameChiamante, Utente utente) throws CampoNonValido{
+        //Prelevamento informazioni
         String nomeGenere = textFieldNomeGenere.getText();
         String descrizioneGenere = textAreaDescrizione.getText();
         Genere nuovoGenere = new Genere(nomeGenere,descrizioneGenere);
-        ArrayList<Genere> generiPadriSelezionati = new ArrayList<>(listGeneriPadre.getSelectedValuesList());
-        ArrayList<Genere> generiFigliSelezionati = new ArrayList<>(listGeneriFigli.getSelectedValuesList());
+
+        //Inserimento generi
+        ArrayList<Genere> generiPadriSelezionati = new ArrayList<>(generiPadreList.getSelectedValuesList());
+        ArrayList<Genere> generiFigliSelezionati = new ArrayList<>(sottoGeneriList.getSelectedValuesList());
         if(!generiFigliSelezionati.isEmpty()){
             for(Genere genere : generiFigliSelezionati){
                 genere.addGeneriPadre(nuovoGenere);
@@ -91,10 +122,9 @@ public class AggiungiGeneriAdmin {
         }
         controller.verificaGeneri(nuovoGenere);
         controller.scriviGenereDataBase(nuovoGenere);
-        JOptionPane.showMessageDialog(null, "Genere creato con successo!");
-        frame.dispose();
-        new Home(controller,frame,utente);
 
+        JOptionPane.showMessageDialog(null, "Genere creato con successo!");
+        indietro(frameChiamante, frame);
     }
 
 }
