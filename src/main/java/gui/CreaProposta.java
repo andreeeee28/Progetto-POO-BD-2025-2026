@@ -56,7 +56,7 @@ public class CreaProposta {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    cliccatoInviaPropostaButton(controller,frameChiamante,utenteAttuale);
+                    cliccatoInviaPropostaButton(controller, frameChiamante, utenteAttuale);
                 } catch (CampoNonValido ex) {
                     javax.swing.JOptionPane.showMessageDialog(null, ex.getMessage());
                 } catch (Exception ex) {

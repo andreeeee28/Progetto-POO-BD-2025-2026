@@ -32,10 +32,10 @@ public class VerificaProposta {
     /**
      * Istanzia e inizializza la finestra per la verifica, popolando i campi testuali con i dettagli della proposta selezionata.
      *
-     * @param controller L'istanza del Controller per aggiornare lo stato della proposta nel database.
+     * @param controller     L'istanza del Controller per aggiornare lo stato della proposta nel database.
      * @param frameChiamante La finestra precedente (solitamente la lista delle proposte da valutare).
-     * @param proposta L'oggetto Proposta contenente le informazioni che l'admin deve esaminare.
-     * @param utente L'admin attualmente connesso al sistema.
+     * @param proposta       L'oggetto Proposta contenente le informazioni che l'admin deve esaminare.
+     * @param utente         L'admin attualmente connesso al sistema.
      */
     public VerificaProposta(Controller controller, JFrame frameChiamante, Proposta proposta, Utente utente) {
         frame = new JFrame("Dettagli Proposta");
@@ -109,7 +109,7 @@ public class VerificaProposta {
      * Gestisce la chiusura della finestra attuale e il ripristino della visibilità della finestra chiamante.
      *
      * @param frameChiamante La finestra chiamante da mostrare nuovamente.
-     * @param frame La finestra corrente da chiudere (dispose).
+     * @param frame          La finestra corrente da chiudere (dispose).
      */
     private void indietro(JFrame frameChiamante, JFrame frame) {
         frameChiamante.setLocationRelativeTo(null);
@@ -120,13 +120,13 @@ public class VerificaProposta {
     /**
      * Gestisce l'accettazione della proposta, aggiorna il database tramite il controller e riporta l'admin alla schermata precedente.
      *
-     * @param controller L'istanza del Controller per avviare il salvataggio del nuovo stato accettato.
-     * @param frameChiamante La finestra precedente di riferimento da ripristinare.
-     * @param utente L'admin loggato che compie l'operazione.
+     * @param controller         L'istanza del Controller per avviare il salvataggio del nuovo stato accettato.
+     * @param frameChiamante     La finestra precedente di riferimento da ripristinare.
+     * @param utente             L'admin loggato che compie l'operazione.
      * @param propostaDaValutare La proposta specifica che è stata approvata.
      * @throws CampoNonValido Se si verifica un errore durante l'aggiornamento dello stato o l'interazione col database.
      */
-    public void cliccatoAccettaButton(Controller controller, JFrame frameChiamante, Utente utente,Proposta propostaDaValutare) throws CampoNonValido {
+    public void cliccatoAccettaButton(Controller controller, JFrame frameChiamante, Utente utente, Proposta propostaDaValutare) throws CampoNonValido {
         controller.setPropostaAccettaDataBase(propostaDaValutare);
         JOptionPane.showMessageDialog(null, "Proposta aggiornata con Successo");
 
@@ -136,13 +136,13 @@ public class VerificaProposta {
     /**
      * Gestisce il rifiuto della proposta, aggiorna il database tramite il controller e riporta l'admin alla schermata precedente.
      *
-     * @param controller L'istanza del Controller per avviare il salvataggio del nuovo stato rifiutato.
-     * @param frameChiamante La finestra precedente di riferimento da ripristinare.
-     * @param utente L'admin loggato che compie l'operazione.
+     * @param controller         L'istanza del Controller per avviare il salvataggio del nuovo stato rifiutato.
+     * @param frameChiamante     La finestra precedente di riferimento da ripristinare.
+     * @param utente             L'admin loggato che compie l'operazione.
      * @param propostaDaValutare La proposta specifica che è stata respinta.
      * @throws CampoNonValido Se si verifica un errore durante l'aggiornamento dello stato o l'interazione col database.
      */
-    public void cliccatoRifiutaButton(Controller controller,JFrame frameChiamante,Utente utente,Proposta propostaDaValutare) throws CampoNonValido{
+    public void cliccatoRifiutaButton(Controller controller, JFrame frameChiamante, Utente utente, Proposta propostaDaValutare) throws CampoNonValido {
         controller.setPropostaRifiutataDataBase(propostaDaValutare);
         JOptionPane.showMessageDialog(null, "Proposta aggiornata con Successo");
 

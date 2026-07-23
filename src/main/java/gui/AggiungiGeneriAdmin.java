@@ -19,41 +19,46 @@ public class AggiungiGeneriAdmin {
     private JPanel mainPanel;
     private JTextField textFieldNomeGenere;
     private JTextArea textAreaDescrizione;
-    private JList listGeneriPadre;
-    private JList listGeneriFigli;
-    private JButton creaGenereButton;
+    private JList generiPadreList;
+    private JList sottoGeneriList;
+    private JButton creaButton;
     private JButton indietroButton;
     private JFrame frame;
 
     /**
      * Istanzia e inizializza la schermata per la creazione di un nuovo genere, popolando le liste di selezione.
      *
-     * @param controller L'istanza del Controller per interrogare il database fittizio e gestire la logica.
+     * @param controller     L'istanza del Controller per interrogare il database fittizio e gestire la logica.
      * @param frameChiamante La finestra precedente da cui è stata aperta questa schermata.
-     * @param utente L'utente (admin) attualmente loggato nel sistema.
+     * @param utente         L'utente (admin) attualmente loggato nel sistema.
      */
     public AggiungiGeneriAdmin(Controller controller, JFrame frameChiamante, Utente utente) {
-        frame = new JFrame("AggiungiGeneriAdmin");
+        frame = new JFrame("Aggiungi Genere");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-        ArrayList<Genere> generiPresenti = controller.getGeneriPresenti();
-        DefaultListModel<Genere> modelGenere = new DefaultListModel<>();
-        for(Genere genere : generiPresenti){
-            modelGenere.addElement(genere);
-        }
-        listGeneriFigli.setModel(modelGenere);
-        listGeneriPadre.setModel(modelGenere);
-        listGeneriFigli.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        listGeneriPadre.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        frame.getRootPane().setDefaultButton(creaButton);
 
-        creaGenereButton.addActionListener(new ActionListener() {
+
+        riempiListeGeneri(controller);
+
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+
+
+        //Tasto indietro
+        indietroButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                indietro(frameChiamante, frame);
+            }
+        });
+
+        creaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    cliccatoCreaGenereButton(controller,frameChiamante,utente);
-
+                    cliccatoCreaGenereButton(controller, frameChiamante, utente);
                 } catch (CampoNonValido ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 } catch (Exception ex) {
@@ -62,49 +67,63 @@ public class AggiungiGeneriAdmin {
                 }
             }
         });
-        indietroButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {indietro(frameChiamante,frame);}
-        });
+    }
+
+    private void riempiListeGeneri(Controller controller) {
+        DefaultListModel<Genere> modelGenere = new DefaultListModel<>();
+        ArrayList<Genere> generiPresenti = controller.getGeneriPresenti();
+
+        for (Genere genere : generiPresenti) {
+            modelGenere.addElement(genere);
+        }
+        sottoGeneriList.setModel(modelGenere);
+        generiPadreList.setModel(modelGenere);
+        sottoGeneriList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        generiPadreList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+    }
+
+
+    //Funzioni Listeners
+    //Indietro
+    private void indietro(JFrame frameChiamante, JFrame frame) {
+        frameChiamante.setLocationRelativeTo(null);
+        frameChiamante.setVisible(true);
+        frame.dispose();
     }
 
     /**
      * Raccoglie i dati del form, istanzia il nuovo genere, imposta le relazioni bidirezionali con padri e figli e lo salva.
      *
-     * @param controller L'istanza del Controller per la validazione, la scrittura sul database e la gestione della logica.
+     * @param controller     L'istanza del Controller per la validazione, la scrittura sul database e la gestione della logica.
      * @param frameChiamante La finestra originaria passata nel costruttore.
-     * @param utente L'admin loggato per il ritorno alla schermata Home.
+     * @param utente         L'admin loggato per il ritorno alla schermata Home.
      * @throws CampoNonValido Se i campi di testo non rispettano i vincoli di validazione o se la verifica del dominio fallisce.
      */
-    private void  cliccatoCreaGenereButton(Controller controller,JFrame frameChiamante, Utente utente) throws CampoNonValido{
+    private void cliccatoCreaGenereButton(Controller controller, JFrame frameChiamante, Utente utente) throws CampoNonValido {
         String nomeGenere = textFieldNomeGenere.getText();
         String descrizioneGenere = textAreaDescrizione.getText();
-        Genere nuovoGenere = new Genere(nomeGenere,descrizioneGenere);
-        ArrayList<Genere> generiPadriSelezionati = new ArrayList<>(listGeneriPadre.getSelectedValuesList());
-        ArrayList<Genere> generiFigliSelezionati = new ArrayList<>(listGeneriFigli.getSelectedValuesList());
-        if(!generiFigliSelezionati.isEmpty()){
-            for(Genere genere : generiFigliSelezionati){
+        Genere nuovoGenere = new Genere(nomeGenere, descrizioneGenere);
+
+        //Inserimento generi
+        ArrayList<Genere> generiPadriSelezionati = new ArrayList<>(generiPadreList.getSelectedValuesList());
+        ArrayList<Genere> generiFigliSelezionati = new ArrayList<>(sottoGeneriList.getSelectedValuesList());
+        if (!generiFigliSelezionati.isEmpty()) {
+            for (Genere genere : generiFigliSelezionati) {
                 genere.addGeneriPadre(nuovoGenere);
                 nuovoGenere.addSottogeneri(genere);
             }
         }
-        if(!generiPadriSelezionati.isEmpty()){
-            for(Genere genere : generiPadriSelezionati){
+        if (!generiPadriSelezionati.isEmpty()) {
+            for (Genere genere : generiPadriSelezionati) {
                 genere.addSottogeneri(nuovoGenere);
                 nuovoGenere.addGeneriPadre(genere);
             }
         }
         controller.verificaGeneri(nuovoGenere);
         controller.scriviGenereDataBase(nuovoGenere);
-        JOptionPane.showMessageDialog(null, "Genere creato con successo!");
-        frame.dispose();
-        new Home(controller,frame,utente);
 
-    }
-    private void indietro(JFrame frameChiamante, JFrame frame) {
-        frameChiamante.setLocationRelativeTo(null);
-        frameChiamante.setVisible(true);
-        frame.dispose();
+        JOptionPane.showMessageDialog(null, "Genere creato con successo!");
+        indietro(frameChiamante, frame);
     }
 
 }

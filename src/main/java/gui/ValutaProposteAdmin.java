@@ -29,9 +29,9 @@ public class ValutaProposteAdmin {
     /**
      * Istanzia e inizializza la schermata per la valutazione delle proposte, popolando la tabella e la lista.
      *
-     * @param controller L'istanza del Controller per recuperare i dati dal database e gestire la logica.
+     * @param controller     L'istanza del Controller per recuperare i dati dal database e gestire la logica.
      * @param frameChiamante La finestra precedente (Home) da riattivare premendo il tasto indietro.
-     * @param utente L'admin attualmente connesso.
+     * @param utente         L'admin attualmente connesso.
      */
     public ValutaProposteAdmin(Controller controller, JFrame frameChiamante, Utente utente) {
         frame = new JFrame("Proposte");
@@ -108,7 +108,7 @@ public class ValutaProposteAdmin {
      * Gestisce la chiusura della finestra attuale e il ripristino della visibilità della finestra chiamante.
      *
      * @param frameChiamante La finestra chiamante da mostrare nuovamente.
-     * @param frame La finestra corrente da chiudere (dispose).
+     * @param frame          La finestra corrente da chiudere (dispose).
      */
     private void indietro(JFrame frameChiamante, JFrame frame) {
         frameChiamante.setLocationRelativeTo(null);
@@ -121,7 +121,7 @@ public class ValutaProposteAdmin {
     /**
      * Apre la schermata di dettaglio per la proposta selezionata, permettendo all'admin di accettarla o rifiutarla.
      *
-     * @param controller L'istanza del Controller da passare alla finestra successiva.
+     * @param controller    L'istanza del Controller da passare alla finestra successiva.
      * @param utenteAttuale L'admin loggato che sta eseguendo la valutazione e di cui si deve mantenere la sessione.
      */
     private void cliccatoVisualizza(Controller controller, Utente utenteAttuale) {

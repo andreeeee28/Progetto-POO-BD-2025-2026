@@ -65,11 +65,12 @@ public class Registrazione {
     }
 
     //Funzioni Listeners
+
     /**
      * Gestisce il ritorno alla schermata di login chiudendo la finestra attuale e ripristinando quella precedente.
      *
      * @param frameChiamante La finestra di login da rendere nuovamente visibile.
-     * @param frame La finestra di registrazione attuale da chiudere.
+     * @param frame          La finestra di registrazione attuale da chiudere.
      */
     private void indietro(JFrame frameChiamante, JFrame frame) {
         frameChiamante.setLocationRelativeTo(null);
