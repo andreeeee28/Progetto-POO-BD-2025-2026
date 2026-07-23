@@ -81,9 +81,9 @@ public class AggiungiAlbumAdmin {
     }
 
     /**
-     * Popola gli elementi grafici della finestra (ComboBox e liste) con i dati attualmente presenti a sistema.
+     * Popola gli elementi grafici della finestra (ComboBox e liste) interrogando direttamente il controller per ottenere i dati necessari.
      *
-     * @param controller La lista dei generi musicali caricati in memoria da mostrare nella lista a selezione multipla.
+     * @param controller L'istanza del Controller utilizzata per recuperare dal database fittizio gli artisti e i generi presenti.
      */
     private void configuraElementi(Controller controller) {
         //Caricamento informazioni

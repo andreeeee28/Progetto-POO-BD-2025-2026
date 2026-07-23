@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * The type Profilo genere.
@@ -104,11 +105,16 @@ public class ProfiloGenere {
     }
 
     private void riempiListaAlbum(ArrayList<Album> albums) {
+        ArrayList<Album> albumOrdinati = new ArrayList<>(albums);
+
+        albumOrdinati.sort(Comparator.comparing(Album::getRating).reversed());
+
         DefaultListModel<String> modelloLista = new DefaultListModel<>();
 
-        for (Album a : albums) {
-            modelloLista.addElement(a.getTitolo());
+        for (Album a : albumOrdinati) {
+            modelloLista.addElement(a.getTitolo() + " - Voto medio: " + a.getRating());
         }
+
         albumList.setModel(modelloLista);
     }
 

@@ -35,7 +35,7 @@ public class VerificaProposta {
      * @param controller L'istanza del Controller per aggiornare lo stato della proposta nel database.
      * @param frameChiamante La finestra precedente (solitamente la lista delle proposte da valutare).
      * @param proposta L'oggetto Proposta contenente le informazioni che l'admin deve esaminare.
-     * @param utente L'admin attualmente connesso al sistema, passato alla Home in caso di ritorno.
+     * @param utente L'admin attualmente connesso al sistema.
      */
     public VerificaProposta(Controller controller, JFrame frameChiamante, Proposta proposta, Utente utente) {
         frame = new JFrame("Dettagli Proposta");
@@ -84,6 +84,12 @@ public class VerificaProposta {
     }
 
     //Configurazione
+
+    /**
+     * Configura e popola i campi testuali della finestra con le informazioni estratte dalla proposta selezionata.
+     *
+     * @param proposta La proposta specifica da cui prelevare i dati (tipo, titolo, data, autore, descrizione).
+     */
     private void configuraElementi(Proposta proposta) {
         tipoLabel.setText(proposta.getTipoElemento().toString());
         titoloLabel.setText(proposta.getTitoloElemento());
@@ -98,6 +104,13 @@ public class VerificaProposta {
 
     //Funzioni Listeners
     //Indietro
+
+    /**
+     * Gestisce la chiusura della finestra attuale e il ripristino della visibilità della finestra chiamante.
+     *
+     * @param frameChiamante La finestra chiamante da mostrare nuovamente.
+     * @param frame La finestra corrente da chiudere (dispose).
+     */
     private void indietro(JFrame frameChiamante, JFrame frame) {
         frameChiamante.setLocationRelativeTo(null);
         frameChiamante.setVisible(true);
@@ -105,11 +118,11 @@ public class VerificaProposta {
     }
 
     /**
-     * Gestisce l'accettazione della proposta, aggiorna il database tramite il controller e riporta l'admin alla schermata Home.
+     * Gestisce l'accettazione della proposta, aggiorna il database tramite il controller e riporta l'admin alla schermata precedente.
      *
      * @param controller L'istanza del Controller per avviare il salvataggio del nuovo stato accettato.
-     * @param frameChiamante La finestra precedente di riferimento.
-     * @param utente L'admin loggato per ripristinare correttamente la sua sessione nella Home.
+     * @param frameChiamante La finestra precedente di riferimento da ripristinare.
+     * @param utente L'admin loggato che compie l'operazione.
      * @param propostaDaValutare La proposta specifica che è stata approvata.
      * @throws CampoNonValido Se si verifica un errore durante l'aggiornamento dello stato o l'interazione col database.
      */
@@ -121,11 +134,11 @@ public class VerificaProposta {
     }
 
     /**
-     * Gestisce il rifiuto della proposta, aggiorna il database tramite il controller e riporta l'admin alla schermata Home.
+     * Gestisce il rifiuto della proposta, aggiorna il database tramite il controller e riporta l'admin alla schermata precedente.
      *
      * @param controller L'istanza del Controller per avviare il salvataggio del nuovo stato rifiutato.
-     * @param frameChiamante La finestra precedente di riferimento.
-     * @param utente L'admin loggato per ripristinare correttamente la sua sessione nella Home.
+     * @param frameChiamante La finestra precedente di riferimento da ripristinare.
+     * @param utente L'admin loggato che compie l'operazione.
      * @param propostaDaValutare La proposta specifica che è stata respinta.
      * @throws CampoNonValido Se si verifica un errore durante l'aggiornamento dello stato o l'interazione col database.
      */

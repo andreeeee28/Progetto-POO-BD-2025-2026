@@ -17,7 +17,7 @@
           <text value="Inserire nome genere:"/>
         </properties>
       </component>
-      <component id="cec4a" class="javax.swing.JButton" binding="creaButton">
+      <component id="cec4a" class="javax.swing.JButton" binding="creaGenereButton">
         <constraints>
           <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -34,7 +34,7 @@
         <properties/>
         <border type="bevel-lowered" title="Selezionare eventuali Sottogeneri"/>
         <children>
-          <component id="90412" class="javax.swing.JList" binding="sottoGeneriList">
+          <component id="90412" class="javax.swing.JList" binding="listGeneriFigli">
             <constraints/>
             <properties>
               <model/>
@@ -51,7 +51,7 @@
         <properties/>
         <border type="bevel-lowered" title="Selezionare eventuali Generi Padre"/>
         <children>
-          <component id="dfe52" class="javax.swing.JList" binding="generiPadreList">
+          <component id="dfe52" class="javax.swing.JList" binding="listGeneriPadre">
             <constraints/>
             <properties/>
           </component>

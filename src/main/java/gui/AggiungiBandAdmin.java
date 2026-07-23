@@ -33,9 +33,9 @@ public class AggiungiBandAdmin {
     /**
      * Istanzia e inizializza la prima schermata per la creazione di una nuova band, popolando la lista dei musicisti disponibili.
      *
-     * @param controller     L'istanza del Controller per interrogare il database fittizio e gestire la logica.
+     * @param controller L'istanza del Controller per interrogare il database fittizio e gestire la logica.
      * @param frameChiamante La finestra genitore da cui è stata aperta questa schermata.
-     * @param utente         L'oggetto Utente (Admin) attualmente loggato nel sistema.
+     * @param utente L'oggetto Utente (Admin) attualmente loggato nel sistema.
      */
     public AggiungiBandAdmin(Controller controller, JFrame frameChiamante, Utente utente) {
         frame = new JFrame("Aggiungi Band - Dati Base");
@@ -72,7 +72,11 @@ public class AggiungiBandAdmin {
         });
     }
 
-
+    /**
+     * Popola gli elementi grafici della finestra interrogando direttamente il controller per ottenere i musicisti disponibili.
+     *
+     * @param controller L'istanza del Controller utilizzata per recuperare i musicisti dal database fittizio.
+     */
     private void configuraElementi(Controller controller) {
         //Caricamento informazioni
         ArrayList<Musicista> musicistiPresenti = controller.getMusicistiPresenti();
@@ -98,6 +102,13 @@ public class AggiungiBandAdmin {
     }
 
     //Funzioni Listener
+
+    /**
+     * Gestisce il ritorno alla schermata precedente ripristinando la visibilità della finestra genitore.
+     *
+     * @param frameChiamante La finestra precedente da mostrare nuovamente.
+     * @param frame La finestra corrente da chiudere.
+     */
     private void indietro(JFrame frameChiamante, JFrame frame) {
         frameChiamante.setLocationRelativeTo(null);
         frameChiamante.setVisible(true);
@@ -108,9 +119,9 @@ public class AggiungiBandAdmin {
      * Raccoglie i dati inseriti nel form, esegue i controlli di validità sui campi testuali e sul numero di membri selezionati,
      * e in caso di successo avvia la seconda finestra (AssegnaRuoliBandAdmin) chiudendo quella attuale.
      *
-     * @param controller     L'istanza del Controller per effettuare le validazioni finali, controllare la presenza di duplicati e gestire la logica
+     * @param controller L'istanza del Controller per effettuare le validazioni finali, controllare la presenza di duplicati e gestire la logica.
      * @param frameChiamante La finestra principale originaria da passare alla schermata successiva.
-     * @param utente         L'amministratore che sta compiendo l'operazione.
+     * @param utente L'admin che sta compiendo l'operazione.
      * @throws CampoNonValido Se i campi inseriti non rispettano le regole di validazione del dominio o contengono caratteri illegali.
      */
     private void cliccatoCreaButton(Controller controller, JFrame frameChiamante, Utente utente) throws CampoNonValido {

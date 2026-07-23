@@ -148,49 +148,98 @@ public class Home {
 
 
     //Funzioni Listeners
-    //Catalogo Generi
+
+    /**
+     * Apre la schermata del catalogo dei generi musicali e nasconde la dashboard corrente.
+     *
+     * @param controller Il Controller per gestire la comunicazione con i dati.
+     * @param frame La finestra Home da nascondere.
+     * @param utenteAttuale L'utente attualmente connesso.
+     */
     private void newCatalogoGeneri(Controller controller, JFrame frame, Utente utenteAttuale) {
         new CatalogoGeneri(controller, frame, utenteAttuale);
         frame.setVisible(false);
     }
 
-    //Catalogo Artisti
+    /**
+     * Apre la schermata del catalogo degli artisti e nasconde la dashboard corrente.
+     *
+     * @param controller Il Controller per gestire la comunicazione con i dati.
+     * @param frame La finestra Home da nascondere.
+     * @param utenteAttuale L'utente attualmente connesso.
+     */
     private void newCatalogoArtisti(Controller controller, JFrame frame, Utente utenteAttuale) {
         new CatalogoArtisti(controller, frame, utenteAttuale);
         frame.setVisible(false);
     }
 
-    //Crea Proposta
+    /**
+     * Apre la schermata per la creazione di una nuova proposta (riservata agli utenti standard) e nasconde la dashboard corrente.
+     *
+     * @param controller Il Controller per gestire la comunicazione con i dati.
+     * @param frame La finestra Home da nascondere.
+     * @param utenteAttuale L'utente attualmente connesso.
+     */
     private void newCreaProposta(Controller controller, JFrame frame, Utente utenteAttuale) {
         new CreaProposta(controller, frame, utenteAttuale);
         frame.setVisible(false);
     }
 
-    //Aggiungi Musicista
+    /**
+     * Apre la schermata per l'inserimento di un nuovo musicista (riservata agli admin) e nasconde la dashboard corrente.
+     *
+     * @param controller Il Controller per gestire la comunicazione con i dati.
+     * @param frame La finestra Home da nascondere.
+     * @param utenteAttuale L'admin attualmente connesso.
+     */
     private void newAggiungiMusicistaAdmin(Controller controller, JFrame frame, Utente utenteAttuale) {
         new AggiungiMusicistaAdmin(controller, frame, utenteAttuale);
         frame.setVisible(false);
     }
 
-    //Aggiungi Band
+    /**
+     * Apre la schermata per l'inserimento di una nuova band (riservata agli admin) e nasconde la dashboard corrente.
+     *
+     * @param controller Il Controller per gestire la comunicazione con i dati.
+     * @param frame La finestra Home da nascondere.
+     * @param utenteAttuale L'admin attualmente connesso.
+     */
     private void newAggiungiBandAdmin(Controller controller, JFrame frame, Utente utenteAttuale) {
         new AggiungiBandAdmin(controller, frame, utenteAttuale);
         frame.setVisible(false);
     }
 
-    //Aggiungi Album
+    /**
+     * Apre la schermata per l'inserimento di un nuovo album (riservata agli admin) e nasconde la dashboard corrente.
+     *
+     * @param controller Il Controller per gestire la comunicazione con i dati.
+     * @param frame La finestra Home da nascondere.
+     * @param utenteAttuale L'admin attualmente connesso.
+     */
     private void newAggiungiAlbumAdmin(Controller controller, JFrame frame, Utente utenteAttuale) {
         new AggiungiAlbumAdmin(controller, frame, utenteAttuale);
         frame.setVisible(false);
     }
 
-    //Aggiungi Generi
+    /**
+     * Apre la schermata per l'inserimento di un nuovo genere (riservata agli admin) e nasconde la dashboard corrente.
+     *
+     * @param controller Il Controller per gestire la comunicazione con i dati.
+     * @param frame La finestra Home da nascondere.
+     * @param utenteAttuale L'admin attualmente connesso.
+     */
     private void newAggiungiGeneriAdmin(Controller controller, JFrame frame, Utente utenteAttuale) {
         new AggiungiGeneriAdmin(controller, frame, utenteAttuale);
         frame.setVisible(false);
     }
 
-    //Valuta Proposte
+    /**
+     * Apre la schermata per la valutazione delle proposte in sospeso (riservata agli admin) e nasconde la dashboard corrente.
+     *
+     * @param controller Il Controller per gestire la comunicazione con i dati.
+     * @param frame La finestra Home da nascondere.
+     * @param utenteAttuale L'admin attualmente connesso.
+     */
     private void newValutaProposteAdmin(Controller controller, JFrame frame, Utente utenteAttuale) {
         new ValutaProposteAdmin(controller, frame, utenteAttuale);
         frame.setVisible(false);

@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
- * Rappresenta l'interfaccia grafica (GUI) riservata agli amministratori per l'aggiunta di un nuovo genere musicale.
+ * Rappresenta l'interfaccia grafica (GUI) riservata agli admin per l'aggiunta di un nuovo genere musicale.
  * Permette di definire il nome e la descrizione del genere, e di stabilire eventuali relazioni gerarchiche
  * selezionando i generi padre e i generi figli (sottogeneri) già presenti nel sistema.
  */
@@ -22,17 +22,15 @@ public class AggiungiGeneriAdmin {
     private JList listGeneriPadre;
     private JList listGeneriFigli;
     private JButton creaGenereButton;
-    /**
-     * The Frame.
-     */
-    JFrame frame;
+    private JButton indietroButton;
+    private JFrame frame;
 
     /**
      * Istanzia e inizializza la schermata per la creazione di un nuovo genere, popolando le liste di selezione.
      *
      * @param controller L'istanza del Controller per interrogare il database fittizio e gestire la logica.
      * @param frameChiamante La finestra precedente da cui è stata aperta questa schermata.
-     * @param utente L'utente (Admin) attualmente loggato nel sistema.
+     * @param utente L'utente (admin) attualmente loggato nel sistema.
      */
     public AggiungiGeneriAdmin(Controller controller, JFrame frameChiamante, Utente utente) {
         frame = new JFrame("AggiungiGeneriAdmin");
@@ -64,6 +62,10 @@ public class AggiungiGeneriAdmin {
                 }
             }
         });
+        indietroButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {indietro(frameChiamante,frame);}
+        });
     }
 
     /**
@@ -71,7 +73,7 @@ public class AggiungiGeneriAdmin {
      *
      * @param controller L'istanza del Controller per la validazione, la scrittura sul database e la gestione della logica.
      * @param frameChiamante La finestra originaria passata nel costruttore.
-     * @param utente L'amministratore loggato per il ritorno alla schermata Home.
+     * @param utente L'admin loggato per il ritorno alla schermata Home.
      * @throws CampoNonValido Se i campi di testo non rispettano i vincoli di validazione o se la verifica del dominio fallisce.
      */
     private void  cliccatoCreaGenereButton(Controller controller,JFrame frameChiamante, Utente utente) throws CampoNonValido{
@@ -98,6 +100,11 @@ public class AggiungiGeneriAdmin {
         frame.dispose();
         new Home(controller,frame,utente);
 
+    }
+    private void indietro(JFrame frameChiamante, JFrame frame) {
+        frameChiamante.setLocationRelativeTo(null);
+        frameChiamante.setVisible(true);
+        frame.dispose();
     }
 
 }

@@ -93,6 +93,10 @@ public class Login {
     }
 
     //Configurazione
+
+    /**
+     * Configura lo stato iniziale degli elementi grafici, impostando di default l'accesso standard e nascondendo i campi riservati all'admin.
+     */
     private void configuraElementi() {
         //Inizializzazione button group a utente standard
         standardRadioButton.setSelected(true);
@@ -105,21 +109,28 @@ public class Login {
 
 
     //Funzioni Listeners
-    //Radio button Admin
+
+    /**
+     * Rende visibili i campi aggiuntivi necessari per l'autenticazione come admin.
+     */
     public void cliccatoAdminRadioButton() {
         inserireIdLabel.setVisible(true);
         campoID.setVisible(true);
         frame.pack();
     }
 
-    //Radio button Standard
+    /**
+     * Nasconde i campi aggiuntivi, ripristinando la visualizzazione per l'accesso standard.
+     */
     public void cliccatoStandardRadioButton() {
         inserireIdLabel.setVisible(false);
         campoID.setVisible(false);
         frame.pack();
     }
 
-    //Pulsante accedi
+    /**
+     * Preleva le credenziali inserite e tenta l'accesso tramite il controller, aprendo la Home in caso di successo.
+     */
     public void cliccatoAccedi() {
         String StringaCampoUtente = campoNomeUtente.getText();
         String StringaCampoPassword = new String(campoPassword.getPassword());
@@ -136,7 +147,9 @@ public class Login {
         }
     }
 
-    //Registrazione
+    /**
+     * Apre la finestra dedicata alla registrazione di un nuovo utente e nasconde la schermata di login.
+     */
     public void newRegistrazione() {
         new Registrazione(controller, frame);
         frame.setVisible(false);

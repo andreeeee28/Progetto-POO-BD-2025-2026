@@ -62,13 +62,14 @@ public class ValutaProposteAdmin {
         });
     }
 
-    /**
-     * Popola la tabella con lo storico delle proposte già valutate e la lista con quelle in attesa di valutazione.
-     *
-     * @param controller L'istanza del Controller per ottenere le righe della tabella e l'elenco delle proposte.
-     */
     //Riempimento Liste e Tabelle
     //Valutate
+
+    /**
+     * Popola la tabella visiva con lo storico delle proposte che sono già state valutate in passato.
+     *
+     * @param controller L'istanza del Controller per ottenere le righe formattate da inserire nella tabella.
+     */
     private void riempiTabellaValutate(Controller controller) {
         String[] nomiColonne = {"Tipo Elemento", "Titolo Elemento", "Stato Proposta", "Utente"};
         DefaultTableModel modelloTabella = new DefaultTableModel(nomiColonne, 0);
@@ -82,6 +83,12 @@ public class ValutaProposteAdmin {
     }
 
     //Da Valutare
+
+    /**
+     * Popola la lista visiva con le proposte ancora in attesa di valutazione da parte di un admin.
+     *
+     * @param controller L'istanza del Controller per recuperare dal database l'elenco delle proposte pendenti.
+     */
     private void riempiListaDaValutare(Controller controller) {
         DefaultListModel modelloLista = new DefaultListModel<>();
         ArrayList<Proposta> proposteDaValutare = controller.getProposteDaValutare();
@@ -96,6 +103,13 @@ public class ValutaProposteAdmin {
 
     //Funzioni Listeners
     //Indietro
+
+    /**
+     * Gestisce la chiusura della finestra attuale e il ripristino della visibilità della finestra chiamante.
+     *
+     * @param frameChiamante La finestra chiamante da mostrare nuovamente.
+     * @param frame La finestra corrente da chiudere (dispose).
+     */
     private void indietro(JFrame frameChiamante, JFrame frame) {
         frameChiamante.setLocationRelativeTo(null);
         frameChiamante.setVisible(true);
@@ -103,6 +117,13 @@ public class ValutaProposteAdmin {
     }
 
     //Visualizza
+
+    /**
+     * Apre la schermata di dettaglio per la proposta selezionata, permettendo all'admin di accettarla o rifiutarla.
+     *
+     * @param controller L'istanza del Controller da passare alla finestra successiva.
+     * @param utenteAttuale L'admin loggato che sta eseguendo la valutazione e di cui si deve mantenere la sessione.
+     */
     private void cliccatoVisualizza(Controller controller, Utente utenteAttuale) {
         try {
             Proposta propostaDaValutare = (Proposta) proposteList.getSelectedValue();

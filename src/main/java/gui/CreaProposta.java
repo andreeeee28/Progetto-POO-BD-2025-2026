@@ -68,7 +68,12 @@ public class CreaProposta {
     }
 
     //Funzioni Listeners
-    //Indietro
+    /**
+     * Gestisce la chiusura della finestra attuale e il ripristino della visibilità della finestra chiamante.
+     *
+     * @param frameChiamante La finestra chiamante da mostrare nuovamente.
+     * @param frame La finestra corrente da chiudere (dispose).
+     */
     private void indietro(JFrame frameChiamante, JFrame frame) {
         frameChiamante.setLocationRelativeTo(null);
         frameChiamante.setVisible(true);

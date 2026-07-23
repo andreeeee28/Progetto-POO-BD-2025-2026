@@ -65,12 +65,24 @@ public class Registrazione {
     }
 
     //Funzioni Listeners
+    /**
+     * Gestisce il ritorno alla schermata di login chiudendo la finestra attuale e ripristinando quella precedente.
+     *
+     * @param frameChiamante La finestra di login da rendere nuovamente visibile.
+     * @param frame La finestra di registrazione attuale da chiudere.
+     */
     private void indietro(JFrame frameChiamante, JFrame frame) {
         frameChiamante.setLocationRelativeTo(null);
         frameChiamante.setVisible(true);
         frame.dispose();
     }
 
+    /**
+     * Raccoglie i dati inseriti nel form, tenta la creazione del nuovo utente tramite il controller e, in caso di successo, apre la Home.
+     *
+     * @param controller L'istanza del Controller per effettuare la validazione e la registrazione nel database.
+     * @throws CampoNonValido Se username o password non rispettano i vincoli di lunghezza o formato.
+     */
     private void registrati(Controller controller) throws CampoNonValido {
         //Creazione utente
         String stringaCampoUtente = campoUtente.getText();
