@@ -11,7 +11,9 @@ import java.time.Year;
 import java.util.ArrayList;
 
 /**
- * The type Aggiungi musicista admin.
+ * Rappresenta l'interfaccia grafica riservata all'admin per l'inserimento di un nuovo musicista.
+ * Consente di registrare i dati anagrafici e artistici del musicista e, opzionalmente, di assegnargli
+ * in modo sequenziale i ruoli (strumento e periodo di permanenza) per le band precedentemente selezionate.
  */
 public class AggiungiMusicistaAdmin {
     private JPanel mainPanel;
@@ -42,11 +44,11 @@ public class AggiungiMusicistaAdmin {
     private int indiceBandAttuale = 0;
 
     /**
-     * Instantiates a new Aggiungi musicista admin.
+     * Istanzia e inizializza la finestra per la creazione del musicista, popolando i menu a tendina e le liste.
      *
-     * @param controller     the controller
-     * @param frameChiamante the frame chiamante
-     * @param utente         the utente
+     * @param controller L'istanza del Controller per gestire la comunicazione con il database e la logica.
+     * @param frameChiamante La finestra originaria che ha invocato l'apertura di questa schermata.
+     * @param utente L'amministratore attualmente loggato che sta eseguendo l'operazione.
      */
     public AggiungiMusicistaAdmin(Controller controller, JFrame frameChiamante, Utente utente) {
         frame = new JFrame("Aggiungi Musicista");
@@ -58,8 +60,6 @@ public class AggiungiMusicistaAdmin {
 
         creaMembroBandMusicistaButton.setVisible(false);
 
-        // --- INIZIALIZZAZIONE AUTOMATICA ---
-        // Avviene subito appena si apre la form (prima era nel RadioButton)
         ArrayList<Band> bandPresenti = controller.getBandPresenti();
         DefaultListModel<Band> modelBand = new DefaultListModel<>();
         for (Band band : bandPresenti) {
@@ -111,7 +111,8 @@ public class AggiungiMusicistaAdmin {
     }
 
     /**
-     * Prepara interfaccia.
+     * Riconfigura e riadatta i componenti dell'interfaccia grafica per trasformare la schermata
+     * affinché sia possibile l'inserimento dei dati di ruolo (strumento, anno ingresso, anno uscita) nelle band.
      */
     private void preparaInterfaccia() {
         comboBoxGiorno.setVisible(false);
@@ -140,11 +141,13 @@ public class AggiungiMusicistaAdmin {
     }
 
     /**
+     * Valida i dati anagrafici e artistici del musicista inseriti dall'utente. Se corretti, salva il musicista
+     * e prepara l'interfaccia per l'eventuale assegnazione alle band selezionate; altrimenti conclude l'operazione.
      *
-     * @param controller
-     * @param frameChiamante
-     * @param utente
-     * @throws CampoNonValido
+     * @param controller L'istanza del Controller per effettuare le validazioni e il salvataggio sul database.
+     * @param frameChiamante La finestra padre da cui si è originata l'azione.
+     * @param utente L'amministratore che sta compiendo l'operazione per gestire i ritorni alle schermate precedenti.
+     * @throws CampoNonValido Se la validazione del musicista fallisce o se c'è incongruenza tra età e inizio attività.
      */
     private void cliccatoCreaButton(Controller controller, JFrame frameChiamante, Utente utente) throws CampoNonValido{
         String nomeArte = textFieldNomeArte.getText();
@@ -180,11 +183,13 @@ public class AggiungiMusicistaAdmin {
     }
 
     /**
+     * Raccoglie i dati del ruolo (strumento, date) per la band corrente processata, salva l'associazione nel database
+     * e aggiorna l'interfaccia per la band successiva, chiudendo la finestra al termine della lista.
      *
-     * @param controller
-     * @param frameChiamante
-     * @param utente
-     * @throws CampoNonValido
+     * @param controller L'istanza del Controller per avviare la scrittura del ruolo sul file corrispondente e gestire la logica.
+     * @param frameChiamante La finestra precedente da riattivare in caso di conclusione.
+     * @param utente L'admin che sta compiendo l'operazione.
+     * @throws CampoNonValido Se gli anni inseriti non sono coerenti o se il form temporale è errato.
      */
     private void cliccatoCreaMembroBandMusicistaButton(Controller controller, JFrame frameChiamante, Utente utente) throws CampoNonValido{
         Band bandAttuale = bandSelezionate.get(indiceBandAttuale);

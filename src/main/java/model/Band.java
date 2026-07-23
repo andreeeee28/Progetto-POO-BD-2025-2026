@@ -4,7 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
- * The type Band.
+ * Rappresenta un gruppo musicale (Band) all'interno del sistema.
+ * Estende la classe astratta Artista aggiungendo le caratteristiche specifiche di una band,
+ * come il numero totale dei componenti, l'eventuale anno di scioglimento e la lista dei membri (MembroBand).
  */
 public class Band extends Artista {
     private int numeroMembri;
@@ -12,15 +14,15 @@ public class Band extends Artista {
     private ArrayList<MembroBand> membriBand;
 
     /**
-     * Instantiates a new Band.
+     * Istanzia un nuovo oggetto Band assegnando i parametri specifici e passando quelli base alla superclasse Artista.
      *
-     * @param nomeArte           the nome arte
-     * @param annoInizioAttivita the anno inizio attivita
-     * @param idArtista          the id artista
-     * @param numeroMembri       the numero membri
-     * @param annoScioglimento   the anno scioglimento
-     * @param membriband         the membriband
-     * @throws CampoNonValido the campo non valido
+     * @param nomeArte Il nome d'arte della band (tra 1 e 30 caratteri).
+     * @param annoInizioAttivita L'anno di fondazione della band.
+     * @param idArtista L'identificativo alfanumerico univoco associato alla band.
+     * @param numeroMembri Il numero totale dei componenti della band (deve essere almeno 2).
+     * @param annoScioglimento L'eventuale anno di scioglimento della band (null se ancora in attività).
+     * @param membriband La lista iniziale dei membri che compongono la band.
+     * @throws CampoNonValido Se uno dei parametri non rispetta i vincoli di validazione (es. meno di 2 membri o anno incoerente).
      */
     public Band(String nomeArte, int annoInizioAttivita, String idArtista, int numeroMembri, Integer annoScioglimento,ArrayList<MembroBand> membriband) throws CampoNonValido {
         super(nomeArte, annoInizioAttivita, idArtista);
@@ -33,27 +35,27 @@ public class Band extends Artista {
     // Getter
 
     /**
-     * Gets numero membri.
+     * Restituisce il numero totale dei componenti della band.
      *
-     * @return the numero membri
+     * @return Il numero dei membri.
      */
     public int getNumeroMembri() {
         return numeroMembri;
     }
 
     /**
-     * Gets anno scioglimento.
+     * Restituisce l'anno in cui la band si è sciolta.
      *
-     * @return the anno scioglimento
+     * @return L'anno di scioglimento, oppure null se la band è ancora attiva.
      */
     public Integer getAnnoScioglimento() {
         return annoScioglimento;
     }
 
     /**
-     * Gets membri band.
+     * Restituisce la lista dei membri che fanno o hanno fatto parte della band.
      *
-     * @return the membri band
+     * @return L'ArrayList contenente gli oggetti MembroBand.
      */
     public ArrayList<MembroBand> getMembriBand() {
         return membriBand;
@@ -62,10 +64,10 @@ public class Band extends Artista {
     // Setter
 
     /**
-     * Sets numero membri.
+     * Imposta o modifica il numero totale dei componenti della band.
      *
-     * @param numeroMembri the numero membri
-     * @throws CampoNonValido the campo non valido
+     * @param numeroMembri Il nuovo numero di membri da assegnare.
+     * @throws CampoNonValido Se il numero inserito è inferiore a 2.
      */
     public void setNumeroMembri(int numeroMembri) throws CampoNonValido {
         // Logicamente, una band deve avere più di un membro
@@ -76,10 +78,10 @@ public class Band extends Artista {
     }
 
     /**
-     * Sets anno scioglimento.
+     * Imposta o modifica l'anno di scioglimento della band.
      *
-     * @param annoScioglimento the anno scioglimento
-     * @throws CampoNonValido the campo non valido
+     * @param annoScioglimento L'anno di scioglimento da assegnare (può essere null se ancora attivi).
+     * @throws CampoNonValido Se l'anno è successivo a quello corrente o precedente all'anno di inizio attività.
      */
     public void setAnnoScioglimento(Integer annoScioglimento) throws CampoNonValido {
         // Se è null, la band è ancora in attività, quindi saltiamo i controlli
@@ -97,10 +99,10 @@ public class Band extends Artista {
 
 
     /**
-     * Sets membri band.
+     * Sostituisce l'intera lista dei componenti della band con quella fornita.
      *
-     * @param membriBand the membri band
-     * @throws CampoNonValido the campo non valido
+     * @param membriBand L'ArrayList di oggetti MembroBand da impostare.
+     * @throws CampoNonValido Se la lista fornita è nulla o contiene meno di 2 membri.
      */
     public  void setMembriBand(ArrayList<MembroBand> membriBand) throws CampoNonValido{
         if (membriBand == null) {
@@ -116,10 +118,10 @@ public class Band extends Artista {
     //Altri metodi
 
     /**
-     * Add membro band.
+     * Aggiunge un singolo componente alla lista dei membri della band, verificando che non sia un duplicato.
      *
-     * @param membroBand the membro band
-     * @throws CampoNonValido the campo non valido
+     * @param membroBand L'oggetto MembroBand da aggiungere.
+     * @throws CampoNonValido Se il membro passato è nullo o è già presente nella lista.
      */
     public void addMembroBand(MembroBand membroBand) throws CampoNonValido {
         // Aggiunto il controllo di sicurezza anche qui
@@ -132,11 +134,14 @@ public class Band extends Artista {
             throw new CampoNonValido("Membro della band già presente nella lista dei membri");
         }
     }
+
+    /**
+     * Restituisce una rappresentazione testuale della band.
+     *
+     * @return Il nome d'arte della band.
+     */
     @Override
     public String toString() {
         return this.getNomeArte();
     }
-
-
-    }
-
+}

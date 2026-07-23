@@ -11,7 +11,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
- * The type Valuta proposte admin.
+ * Rappresenta l'interfaccia grafica riservata agli admin per visualizzare e valutare le proposte inviate dagli utenti.
+ * Mostra uno storico delle proposte già valutate tramite una tabella e una lista di quelle ancora in attesa di giudizio.
  */
 public class ValutaProposteAdmin {
     private JPanel mainPanel;
@@ -19,18 +20,14 @@ public class ValutaProposteAdmin {
     private JList proposteList;
     private JButton visualizzaButton;
     private JButton indietroButton;
-    /**
-     * The Frame.
-     */
     JFrame frame;
 
-
     /**
-     * Instantiates a new Valuta proposte admin.
+     * Istanzia e inizializza la schermata per la valutazione delle proposte, popolando la tabella e la lista.
      *
-     * @param controller     the controller
-     * @param frameChiamante the frame chiamante
-     * @param utente         the utente
+     * @param controller L'istanza del Controller per recuperare i dati dal database e gestire la logica.
+     * @param frameChiamante La finestra precedente (Home) da riattivare premendo il tasto indietro.
+     * @param utente L'admin attualmente connesso.
      */
     public ValutaProposteAdmin(Controller controller, JFrame frameChiamante, Utente utente) {
         frame = new JFrame("Proposte");
@@ -67,7 +64,11 @@ public class ValutaProposteAdmin {
         });
     }
 
-    //Configurazione
+    /**
+     * Popola la tabella con lo storico delle proposte già valutate e la lista con quelle in attesa di valutazione.
+     *
+     * @param controller L'istanza del Controller per ottenere le righe della tabella e l'elenco delle proposte.
+     */
     private void configuraElementi(Controller controller) {
         //Configurazione tabella Valutate
         String[] nomiColonne = {"Tipo Elemento", "Titolo Elemento", "Stato Proposta", "Utente"};
@@ -91,8 +92,6 @@ public class ValutaProposteAdmin {
         frame.setLocationRelativeTo(null);
     }
 
-
-    //Funzioni Listeners
     private void indietro(JFrame frameChiamante, JFrame frame) {
         frameChiamante.setLocationRelativeTo(null);
         frameChiamante.setVisible(true);

@@ -3,7 +3,9 @@ package model;
 import java.time.LocalDate;
 
 /**
- * The type Proposta.
+ * Rappresenta una proposta di inserimento inviata da un utente standard.
+ * Contiene le informazioni necessarie all'amministratore per valutare l'aggiunta
+ * di un nuovo elemento (es. Album, Artista, Genere) al database del sistema.
  */
 public class Proposta {
     private TipoProposta tipoElemento;
@@ -14,13 +16,14 @@ public class Proposta {
     private Utente autoreProposta;
 
     /**
-     * Instantiates a new Proposta.
+     * Istanzia un nuovo oggetto Proposta con i dati forniti dall'utente.
+     * La data della richiesta e lo stato iniziale vengono impostati automaticamente.
      *
-     * @param tipoElemento   the tipo elemento
-     * @param descrizione    the descrizione
-     * @param titoloElemento the titolo elemento
-     * @param autoreProposta the autore proposta
-     * @throws CampoNonValido the campo non valido
+     * @param tipoElemento Il tipo di elemento che si vuole proporre (valore Enum TipoProposta).
+     * @param descrizione Le motivazioni o i dettagli aggiuntivi forniti dall'utente (tra 100 e 300 caratteri).
+     * @param titoloElemento Il titolo o nome dell'elemento proposto (tra 1 e 30 caratteri).
+     * @param autoreProposta L'oggetto Utente che ha generato e inviato la proposta.
+     * @throws CampoNonValido Se uno dei parametri non rispetta i vincoli di validazione dei relativi setter.
      */
     public Proposta(TipoProposta tipoElemento, String descrizione, String titoloElemento, Utente autoreProposta) throws CampoNonValido{
         setTipoElemento(tipoElemento);
@@ -31,56 +34,57 @@ public class Proposta {
         setAutoreProposta(autoreProposta);
     }
 
+    //Getter
+
     /**
-     * Gets tipo elemento.
+     * Restituisce la categoria dell'elemento proposto.
      *
-     * @return the tipo elemento
+     * @return L'enum TipoProposta corrispondente all'elemento.
      */
-//Getter
     public TipoProposta getTipoElemento() {
         return tipoElemento;
     }
 
     /**
-     * Gets titolo elemento.
+     * Restituisce il nome o titolo dell'elemento proposto.
      *
-     * @return the titolo elemento
+     * @return La stringa contenente il titolo dell'elemento.
      */
     public String getTitoloElemento() {
         return titoloElemento;
     }
 
     /**
-     * Gets descrizione.
+     * Restituisce la descrizione o motivazione allegata alla proposta.
      *
-     * @return the descrizione
+     * @return La stringa contenente la descrizione.
      */
     public String getDescrizione() {
         return descrizione;
     }
 
     /**
-     * Gets stato proposta.
+     * Restituisce lo stato attuale di valutazione della proposta.
      *
-     * @return the stato proposta
+     * @return L'enum StatoProposta (es. in valutazione, accettata, rifiutata).
      */
     public StatoProposta getStatoProposta() {
         return statoProposta;
     }
 
     /**
-     * Gets data richiesta.
+     * Restituisce la data in cui la proposta è stata generata e inviata.
      *
-     * @return the data richiesta
+     * @return L'oggetto LocalDate rappresentante la data di richiesta.
      */
     public LocalDate getDataRichiesta() {
         return dataRichiesta;
     }
 
     /**
-     * Gets autore proposta.
+     * Restituisce l'utente che ha creato la proposta.
      *
-     * @return the autore proposta
+     * @return L'oggetto Utente autore della proposta.
      */
     public Utente getAutoreProposta() {
         return autoreProposta;
@@ -89,10 +93,10 @@ public class Proposta {
     //Setter
 
     /**
-     * Sets tipo elemento.
+     * Imposta o modifica la categoria dell'elemento proposto.
      *
-     * @param tipoElemento the tipo elemento
-     * @throws CampoNonValido the campo non valido
+     * @param tipoElemento Il nuovo tipo di elemento da assegnare.
+     * @throws CampoNonValido Se il parametro passato risulta nullo.
      */
     public void setTipoElemento(TipoProposta tipoElemento) throws CampoNonValido{
         if(tipoElemento == null){
@@ -102,17 +106,17 @@ public class Proposta {
     }
 
     /**
-     * Sets stato proposta default.
+     * Inizializza lo stato della proposta al valore di default (VALUTAZIONE_IN_CORSO).
      */
     public void setStatoPropostaDefault() {
         this.statoProposta = StatoProposta.VALUTAZIONE_IN_CORSO;
     }
 
     /**
-     * Sets stato proposta.
+     * Imposta o aggiorna l'esito della valutazione per la proposta.
      *
-     * @param giudizio the giudizio
-     * @throws CampoNonValido the campo non valido
+     * @param giudizio Il nuovo stato da assegnare alla proposta.
+     * @throws CampoNonValido Se il parametro giudizio passato risulta nullo.
      */
     public void setStatoProposta(StatoProposta giudizio) throws CampoNonValido {
         if (giudizio == null) {
@@ -123,17 +127,17 @@ public class Proposta {
 
 
     /**
-     * Sets data richiesta default.
+     * Inizializza la data della proposta assegnando automaticamente la data odierna.
      */
     public void setDataRichiestaDefault() {
         this.dataRichiesta = LocalDate.now();
     }
 
     /**
-     * Sets data richiesta.
+     * Imposta o sovrascrive la data in cui è stata effettuata la proposta.
      *
-     * @param dataRichiesta the data richiesta
-     * @throws CampoNonValido the campo non valido
+     * @param dataRichiesta La nuova data da assegnare alla richiesta.
+     * @throws CampoNonValido Se la data è nulla, successiva a quella odierna o precedente al 1900.
      */
     public void setDataRichiesta(LocalDate dataRichiesta) throws CampoNonValido{
         if (dataRichiesta == null){
@@ -150,10 +154,10 @@ public class Proposta {
 
 
     /**
-     * Sets descrizione.
+     * Imposta o modifica la descrizione allegata alla proposta.
      *
-     * @param descrizione the descrizione
-     * @throws CampoNonValido the campo non valido
+     * @param descrizione La nuova stringa descrittiva da assegnare.
+     * @throws CampoNonValido Se la descrizione è nulla, vuota, o non è compresa tra 100 e 300 caratteri.
      */
     public void setDescrizione(String descrizione) throws CampoNonValido {
         if(descrizione == null ||  descrizione.trim().length()<100 || descrizione.trim().length()>300){
@@ -164,10 +168,10 @@ public class Proposta {
 
 
     /**
-     * Sets titolo elemento.
+     * Imposta o modifica il titolo o nome dell'elemento proposto.
      *
-     * @param titoloElemento the titolo elemento
-     * @throws CampoNonValido the campo non valido
+     * @param titoloElemento Il nuovo titolo da assegnare all'elemento.
+     * @throws CampoNonValido Se il titolo è nullo, vuoto o supera i 30 caratteri di lunghezza.
      */
     public void setTitoloElemento(String titoloElemento) throws CampoNonValido {
         if(titoloElemento == null ||  titoloElemento.trim().length()<1 || titoloElemento.trim().length()>30){
@@ -178,10 +182,10 @@ public class Proposta {
 
 
     /**
-     * Sets autore proposta.
+     * Imposta o modifica l'utente autore della proposta.
      *
-     * @param autoreProposta the autore proposta
-     * @throws CampoNonValido the campo non valido
+     * @param autoreProposta L'oggetto Utente da collegare come autore.
+     * @throws CampoNonValido Se l'utente passato risulta nullo.
      */
     public void setAutoreProposta(Utente autoreProposta) throws CampoNonValido {
         if(autoreProposta == null){
@@ -190,9 +194,13 @@ public class Proposta {
         this.autoreProposta = autoreProposta;
     }
 
+    /**
+     * Restituisce una rappresentazione testuale sintetica della proposta.
+     *
+     * @return La concatenazione del tipo di elemento e del suo titolo.
+     */
     @Override
     public String toString() {
         return  tipoElemento + " " + titoloElemento;
-
     }
 }

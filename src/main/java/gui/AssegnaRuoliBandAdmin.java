@@ -9,7 +9,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
- * The type Assegna ruoli band admin.
+ * Rappresenta la seconda schermata dell'interfaccia grafica per la creazione di una band da parte dell'admin.
+ * Gestisce l'assegnazione sequenziale dei ruoli (strumento, anno di ingresso, anno di uscita)
+ * per ogni singolo musicista selezionato nella finestra precedente, finalizzando poi il salvataggio nel database.
  */
 public class AssegnaRuoliBandAdmin {
     private JPanel mainPanel;
@@ -22,23 +24,21 @@ public class AssegnaRuoliBandAdmin {
     private JLabel labelStrumento;
     private JLabel labelIdentificazioneMusicista;
     private JFrame frame;
-
-    // Aggiungiamo solo queste due variabili per gestire il flusso dei click
     private int contatoreMusicisti = 0;
     private ArrayList<MembroBand> membriBandDaCreare = new ArrayList<>();
 
     /**
-     * Instantiates a new Assegna ruoli band admin.
+     * Istanzia e inizializza la finestra per l'assegnazione dei ruoli, ricevendo in input i dati base della band e la lista dei musicisti.
      *
-     * @param controller           the controller
-     * @param frameChiamante       the frame chiamante
-     * @param nomeBand             the nome band
-     * @param annoInizioAttivita   the anno inizio attivita
-     * @param idArtista            the id artista
-     * @param numeroMembri         the numero membri
-     * @param annoScioglimento     the anno scioglimento
-     * @param musicistiSelezionati the musicisti selezionati
-     * @param utente               the utente
+     * @param controller L'istanza del Controller per gestire la logica e il salvataggio finale su file.
+     * @param frameChiamante La finestra precedente da cui si proviene (AggiungiBandAdmin).
+     * @param nomeBand Il nome d'arte della band in fase di creazione.
+     * @param annoInizioAttivita L'anno di fondazione della band.
+     * @param idArtista L'identificativo alfanumerico univoco della band.
+     * @param numeroMembri Il numero totale dei componenti del gruppo.
+     * @param annoScioglimento L'eventuale anno di scioglimento della band (null se ancora attiva).
+     * @param musicistiSelezionati La lista dei musicisti scelti a cui bisogna assegnare strumento e date.
+     * @param utente L'utente admin attualmente loggato nel sistema.
      */
     public AssegnaRuoliBandAdmin (Controller controller, JFrame frameChiamante, String nomeBand, int annoInizioAttivita, String idArtista, int numeroMembri, Integer annoScioglimento, ArrayList<Musicista> musicistiSelezionati, Utente utente) {
 
@@ -68,23 +68,25 @@ public class AssegnaRuoliBandAdmin {
     }
 
     /**
+     * Elabora i dati inseriti per il musicista corrente, crea il ruolo temporaneo e, se tutti i musicisti sono stati processati,
+     * finalizza la creazione della band collegando i membri e salvando tutto nel database.
      *
-     * @param controller
-     * @param frameChiamante
-     * @param nomeBand
-     * @param annoInizioAttivita
-     * @param idArtista
-     * @param numeroMembri
-     * @param annoScioglimento
-     * @param musicistiSelezionati
-     * @param utente
-     * @throws CampoNonValido
+     * @param controller L'istanza del Controller per avviare la scrittura dei dati finali nel DB.
+     * @param frameChiamante La finestra originaria passata nel costruttore.
+     * @param nomeBand Il nome della band da creare alla fine del ciclo.
+     * @param annoInizioAttivita L'anno di inizio attività della band.
+     * @param idArtista L'ID univoco della band.
+     * @param numeroMembri Il numero di membri totali.
+     * @param annoScioglimento L'anno di scioglimento della band (o null).
+     * @param musicistiSelezionati La lista dei musicisti per estrarre quello corrispondente al contatore attuale.
+     * @param utente L'amministratore loggato per il ritorno alla schermata Home.
+     * @throws CampoNonValido Se l'anno di ingresso o di uscita non sono validi o violano i controlli temporali.
      */
     private void cliccatoCreaMembroBandButtonController(Controller controller, JFrame frameChiamante, String nomeBand, int annoInizioAttivita, String idArtista, int numeroMembri, Integer annoScioglimento, ArrayList<Musicista> musicistiSelezionati, Utente utente) throws CampoNonValido{
-        // 1. Peschiamo il musicista attuale usando il contatore
+        // Peschiamo il musicista attuale usando il contatore
         Musicista musicistaAttuale = musicistiSelezionati.get(contatoreMusicisti);
 
-        // 2. Leggiamo i dati dai campi di QUESTA form
+        // Leggiamo i dati dai campi di QUESTA form
         int annoIngresso = Integer.parseInt(textFieldAnnoIngresso.getText());
 
         Integer annoUscita = null;
@@ -94,27 +96,24 @@ public class AssegnaRuoliBandAdmin {
         }
 
         Strumento strumentoScelto = (Strumento) comboBox1.getSelectedItem();
-
-        // 3. Creiamo il ruolo (senza assegnare la band per ora)
+        // Creiamo il ruolo (senza assegnare la band per ora)
         MembroBand nuovoMembro = new MembroBand(strumentoScelto, annoIngresso, annoUscita, musicistaAttuale);
         membriBandDaCreare.add(nuovoMembro);
 
         // Andiamo avanti al prossimo musicista
         contatoreMusicisti++;
 
-        // 4. Controlliamo se abbiamo finito
+        //  Controlliamo se abbiamo finito
         if (contatoreMusicisti < musicistiSelezionati.size()) {
-            // Puliamo i campi per il prossimo musicista
             textFieldAnnoIngresso.setText("");
             textFieldAnnoUscita.setText("");
-            // Aggiorniamo il titolo della finestra col nuovo nome
             labelIdentificazioneMusicista.setText("il musicista attuale di cui inserire i dati è " +musicistiSelezionati.get(contatoreMusicisti));
 
         } else {
 
             Band nuovaBand = new Band(nomeBand, annoInizioAttivita, idArtista, numeroMembri, annoScioglimento, membriBandDaCreare);
 
-            // Salviamo la Band nel Database
+            // Se abbiamo finito salviamo la Band nel Database
             controller.scriviBandDataBase(nuovaBand);
 
             // Ora colleghiamo la band ai membri e salviamo anche loro
@@ -124,8 +123,6 @@ public class AssegnaRuoliBandAdmin {
             }
 
             JOptionPane.showMessageDialog(null, "Band e ruoli creati con successo!");
-
-            // Torniamo al menu principale
             new Home(controller,frame,utente);
             frame.dispose();
         }

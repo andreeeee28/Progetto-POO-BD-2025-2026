@@ -1,7 +1,10 @@
 package model;
 
 /**
- * The type Canzone.
+ * Rappresenta un singolo brano musicale (Canzone) all'interno del sistema.
+ * Contiene le informazioni di base come il titolo, la durata in secondi e
+ * un riferimento diretto all'album (Album) in cui la traccia è inclusa.
+ * Questa classe è ideata come
  */
 public class Canzone {
     private String titolo;
@@ -9,22 +12,24 @@ public class Canzone {
     private Album albumDiAppartenenza;
 
     /**
-     * Instantiates a new Canzone.
+     * Istanzia un nuovo oggetto Canzone assegnando il titolo e la durata.
+     * Il riferimento all'album verrà impostato in automatico successivamente, quando la canzone verrà inserita in una tracklist.
      *
-     * @param titolo        the titolo
-     * @param durataSecondi the durata secondi
-     * @throws CampoNonValido the campo non valido
+     * @param titolo Il titolo del brano musicale (tra 1 e 50 caratteri).
+     * @param durataSecondi La durata della canzone espressa in secondi (deve essere maggiore di 0).
+     * @throws CampoNonValido Se il titolo o la durata non rispettano i vincoli di validazione dei relativi setter.
      */
     public Canzone (String titolo, int durataSecondi) throws CampoNonValido{
         setTitolo(titolo);
         setDurataSecondi(durataSecondi);
     }
+
     // Getter
 
     /**
-     * Gets durata minuti secondi.
+     * Converte e restituisce la durata della canzone nel formato classico minuti:secondi (es. 3:05).
      *
-     * @return the durata minuti secondi
+     * @return La stringa formattata rappresentante la durata (MM:SS).
      */
     public String getDurataMinutiSecondi() {
         int minuti =   durataSecondi / 60;
@@ -33,37 +38,37 @@ public class Canzone {
     }
 
     /**
-     * Get durata secondi int.
+     * Restituisce la durata totale della canzone espressa esclusivamente in secondi.
      *
-     * @return the int
+     * @return La durata esatta in secondi.
      */
     public int getDurataSecondi(){
         return durataSecondi;
     }
 
     /**
-     * Gets titolo.
+     * Restituisce il titolo della canzone.
      *
-     * @return the titolo
+     * @return La stringa contenente il titolo del brano.
      */
     public String getTitolo() {
         return titolo;
     }
 
     /**
-     * Gets album di appartenenza.
+     * Restituisce l'oggetto Album a cui appartiene questa specifica canzone.
      *
-     * @return the album di appartenenza
+     * @return L'album di appartenenza, oppure null se la canzone non è ancora stata agganciata a una tracklist.
      */
     public Album getAlbumDiAppartenenza() {return albumDiAppartenenza;}
 
     // Setter
 
     /**
-     * Sets durata secondi.
+     * Imposta o modifica la durata della canzone in secondi.
      *
-     * @param durataSecondi the durata secondi
-     * @throws CampoNonValido the campo non valido
+     * @param durataSecondi La nuova durata in secondi da assegnare.
+     * @throws CampoNonValido Se la durata inserita è inferiore a 1 secondo.
      */
     public void setDurataSecondi(int durataSecondi) throws CampoNonValido{
         if(durataSecondi<1){
@@ -73,10 +78,10 @@ public class Canzone {
     }
 
     /**
-     * Sets titolo.
+     * Imposta o modifica il titolo della canzone.
      *
-     * @param titolo the titolo
-     * @throws CampoNonValido the campo non valido
+     * @param titolo Il nuovo titolo da assegnare al brano.
+     * @throws CampoNonValido Se il titolo è nullo, vuoto o supera i 50 caratteri di lunghezza.
      */
     public void setTitolo(String titolo) throws CampoNonValido {
         if(titolo == null ||  titolo.trim().length()<1 || titolo.trim().length()>50){
@@ -86,10 +91,10 @@ public class Canzone {
     }
 
     /**
-     * Sets album di appartenenza.
+     * Collega la canzone all'album in cui è contenuta.
      *
-     * @param albumDiAppartenenza the album di appartenenza
-     * @throws CampoNonValido the campo non valido
+     * @param albumDiAppartenenza L'oggetto Album a cui associare il brano.
+     * @throws CampoNonValido Se il parametro album passato risulta nullo.
      */
     public void setAlbumDiAppartenenza(Album albumDiAppartenenza) throws CampoNonValido {
         if(albumDiAppartenenza == null ){
