@@ -22,6 +22,9 @@ public class AggiungiGeneriAdmin {
     private JList listGeneriPadre;
     private JList listGeneriFigli;
     private JButton creaGenereButton;
+    /**
+     * The Frame.
+     */
     JFrame frame;
 
     /**

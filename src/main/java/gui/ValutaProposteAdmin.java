@@ -22,6 +22,7 @@ public class ValutaProposteAdmin {
     private JButton indietroButton;
     JFrame frame;
 
+
     /**
      * Istanzia e inizializza la schermata per la valutazione delle proposte, popolando la tabella e la lista.
      *
@@ -92,6 +93,8 @@ public class ValutaProposteAdmin {
         frame.setLocationRelativeTo(null);
     }
 
+
+    //Funzioni Listeners
     private void indietro(JFrame frameChiamante, JFrame frame) {
         frameChiamante.setLocationRelativeTo(null);
         frameChiamante.setVisible(true);

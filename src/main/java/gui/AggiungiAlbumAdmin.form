@@ -21,6 +21,7 @@
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <font style="1"/>
           <text value="Inserire Titolo Album:"/>
         </properties>
       </component>
@@ -29,6 +30,7 @@
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <font style="1"/>
           <text value="Inserire Artista Album:"/>
         </properties>
       </component>
@@ -37,6 +39,7 @@
           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <font style="1"/>
           <text value="Inserire Anno di pubblicazione:"/>
         </properties>
       </component>
@@ -53,6 +56,7 @@
           <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <font style="1"/>
           <text value="Inserire Giorno di pubblicazione:"/>
         </properties>
       </component>
@@ -85,6 +89,7 @@
           <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <font style="1"/>
           <text value="Inserire Mese di pubblicazione:"/>
         </properties>
       </component>
@@ -93,31 +98,18 @@
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Inserire numero Canzoni:"/>
-        </properties>
-      </component>
-      <component id="6a15" class="javax.swing.JTextField" binding="fieldCanzoni">
-        <constraints>
-          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties/>
-      </component>
-      <component id="e180c" class="javax.swing.JLabel" binding="labelGeneri">
-        <constraints>
-          <grid row="7" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Selezionare i Generi dell'Album"/>
+          <font style="1"/>
+          <text value="Inserire n° Canzoni:"/>
         </properties>
       </component>
       <scrollpane id="77fec">
         <constraints>
-          <grid row="8" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="8" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="350" height="200"/>
+          </grid>
         </constraints>
         <properties/>
-        <border type="none"/>
+        <border type="bevel-lowered" title="Selezionare i Generi dell'Album"/>
         <children>
           <component id="9468a" class="javax.swing.JList" binding="listaGeneri">
             <constraints/>
@@ -136,6 +128,20 @@
       <component id="662a5" class="javax.swing.JSeparator">
         <constraints>
           <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="d2967" class="javax.swing.JSeparator">
+        <constraints>
+          <grid row="7" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="6df2f" class="javax.swing.JSpinner" binding="canzoniSpinner">
+        <constraints>
+          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="4" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="60" height="30"/>
+          </grid>
         </constraints>
         <properties/>
       </component>

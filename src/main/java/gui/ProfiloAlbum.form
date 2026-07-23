@@ -214,7 +214,7 @@
               <tabbedpane title="Generi"/>
             </constraints>
             <properties/>
-            <border type="none"/>
+            <border type="bevel-lowered"/>
             <children>
               <component id="dacad" class="javax.swing.JList" binding="generiList">
                 <constraints/>
@@ -229,7 +229,7 @@
               <tabbedpane title="Crediti"/>
             </constraints>
             <properties/>
-            <border type="none"/>
+            <border type="bevel-lowered"/>
             <children>
               <component id="672a1" class="javax.swing.JList" binding="creditiList">
                 <constraints/>
@@ -243,7 +243,7 @@
               <tabbedpane title="Recensisci"/>
             </constraints>
             <properties/>
-            <border type="none"/>
+            <border type="bevel-lowered"/>
             <children>
               <component id="acdb3" class="javax.swing.JLabel">
                 <constraints>
@@ -272,7 +272,7 @@
                   <inverted value="false"/>
                   <maximum value="100"/>
                   <minimum value="10"/>
-                  <value value="50"/>
+                  <value value="55"/>
                   <valueIsAdjusting value="false"/>
                 </properties>
               </component>

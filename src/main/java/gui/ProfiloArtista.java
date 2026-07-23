@@ -171,6 +171,7 @@ public class ProfiloArtista {
     }
 
     //Riempimento lista Membri/Partecipazioni
+    //Band
     private ArrayList<MembroBand> riempiListaMembriBand(Artista artista) {
         DefaultListModel<String> modelloLista = new DefaultListModel<>();
         ArrayList<MembroBand> partecipazioniMembri = ((Band) artista).getMembriBand();
@@ -183,6 +184,7 @@ public class ProfiloArtista {
         return partecipazioniMembri;
     }
 
+    //Musicista
     private ArrayList<MembroBand> riempiListaMembriMusicista(Artista artista) {
         DefaultListModel<String> modelloLista = new DefaultListModel<>();
         ArrayList<MembroBand> partecipazioniMembri = ((Musicista) artista).getPartecipazioniBand();
@@ -210,29 +212,38 @@ public class ProfiloArtista {
 
 
     //Funzioni Listeners
+    //Indietro
     private void indietro(JFrame frameChiamante, JFrame frame) {
         frameChiamante.setLocationRelativeTo(null);
         frameChiamante.setVisible(true);
         frame.dispose();
     }
 
+    //Visualizza
     private void visualizza(Controller controller, ArrayList<MembroBand> partecipazioniMembri, ArrayList<Album> discografia, Artista artista, Utente utenteAttuale) {
         switch (tabbedPane.getSelectedIndex()) {
             case 0:                                 //Discografia
-
-                new ProfiloAlbum(controller, frame, discografia.get(discografiaList.getSelectedIndex()), utenteAttuale);
+                try {
+                    new ProfiloAlbum(controller, frame, discografia.get(discografiaList.getSelectedIndex()), utenteAttuale);
                 frame.setVisible(false);
-                break;
-
-            case 1:                                 //Crediti
-
-                if (artista.getClass() == Band.class) {
-                    new ProfiloArtista(controller, frame, partecipazioniMembri.get(partecipazioniMembriList.getSelectedIndex()).getMusicista(), utenteAttuale);
-                    frame.setVisible(false);
-                } else if (artista.getClass() == Musicista.class) {
-                    new ProfiloArtista(controller, frame, partecipazioniMembri.get(partecipazioniMembriList.getSelectedIndex()).getBand(), utenteAttuale);
-                    frame.setVisible(false);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Errore nella selezione dell'album");
                 }
+
+                break;
+            case 1:                                 //Crediti
+                try {
+                    if (artista.getClass() == Band.class) {
+                        new ProfiloArtista(controller, frame, partecipazioniMembri.get(partecipazioniMembriList.getSelectedIndex()).getMusicista(), utenteAttuale);
+                        frame.setVisible(false);
+                    } else if (artista.getClass() == Musicista.class) {
+                        new ProfiloArtista(controller, frame, partecipazioniMembri.get(partecipazioniMembriList.getSelectedIndex()).getBand(), utenteAttuale);
+                        frame.setVisible(false);
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Errore nella selezione dell'artista");
+                }
+
 
                 break;
         }

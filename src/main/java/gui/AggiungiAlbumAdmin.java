@@ -20,7 +20,7 @@ public class AggiungiAlbumAdmin {
     private JComboBox tipoElemento;
     private JTextField fieldTitolo;
     private JTextField fieldGeneri;
-    private JTextField fieldCanzoni;
+    private JSpinner canzoniSpinner;
     private JButton creaButton;
     private JPanel mainPanel;
     private JLabel laberlArtista;
@@ -34,7 +34,6 @@ public class AggiungiAlbumAdmin {
     private JComboBox comboBoxArtista;
     private JLabel labelMese;
     private JList listaGeneri;
-    private JLabel labelGeneri;
     private JButton indietroButton;
     private JFrame frame;
 
@@ -49,13 +48,8 @@ public class AggiungiAlbumAdmin {
         frame = new JFrame("Aggiungi Album");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
         frame.getRootPane().setDefaultButton(creaButton);
 
-        //Caricamento ArrayList dal DB
-        ArrayList<Artista> artistiNelDataBase = controller.getArtistiPresenti();
-        ArrayList<Genere> generiPresenti = controller.getGeneriPresenti();
 
         configuraElementi(artistiNelDataBase, generiPresenti);
 
@@ -80,11 +74,9 @@ public class AggiungiAlbumAdmin {
                 } catch (NumberFormatException ex) {
                     //Eccezione Campo vuoto
                     JOptionPane.showMessageDialog(null, "Attenzione: Inserisci un numero valido nel campo Canzoni!");
-
                 } catch (Exception ex) {
                     //Eccezione crash imprevisti
                     JOptionPane.showMessageDialog(null, "Errore imprevisto: " + ex.getMessage());
-
                 }
 
             }
@@ -98,6 +90,12 @@ public class AggiungiAlbumAdmin {
      * @param generiPresenti La lista dei generi musicali caricati in memoria da mostrare nella lista a selezione multipla.
      */
     private void configuraElementi(ArrayList<Artista> artistiNelDataBase, ArrayList<Genere> generiPresenti) {
+    private void configuraElementi(Controller controller) {
+        //Caricamento informazioni
+        //Artisti
+        ArrayList<Artista> artistiNelDataBase = controller.getArtistiPresenti();
+        ArrayList<Genere> generiPresenti = controller.getGeneriPresenti();
+
         for (Artista artistaNelDataBase : artistiNelDataBase) {
             comboBoxArtista.addItem(artistaNelDataBase.getNomeArte());
         }
@@ -146,10 +144,14 @@ public class AggiungiAlbumAdmin {
     private void crea(Controller controller, JFrame frameChiamante, JFrame frame) throws CampoNonValido {
         //Prelevamento informazioni
         String nomeArtista = (String) comboBoxArtista.getSelectedItem();
-        int numeroCanzoni = Integer.parseInt(fieldCanzoni.getText());
+        int numeroCanzoni = (int) canzoniSpinner.getValue();
         String titolo = fieldTitolo.getText();
         LocalDate dataPubblicazione = LocalDate.of((Integer) comboBoxAnno.getSelectedItem(), (Integer) comboBoxMese.getSelectedItem(), (Integer) comboBoxGiorno.getSelectedItem());
         ArrayList<Genere> generiSelezionati = new ArrayList<>(listaGeneri.getSelectedValuesList());
+
+        //Inserimento canzoni
+        Artista artista = controller.trovaArtista(nomeArtista);
+        controller.verificaAlbum(titolo, artista);
         Artista artista = controller.trovaArtistaDaNomeArte(nomeArtista);
         controller.verificaAlbum(titolo,artista);
         ArrayList<Canzone> canzoniAlbum = controller.inserisciCanzoni(numeroCanzoni, frame);

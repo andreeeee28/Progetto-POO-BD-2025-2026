@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="gui.AggiungiBandAdmin">
-  <grid id="27dc6" binding="labellNumeroMembri" layout-manager="GridLayoutManager" row-count="7" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-    <margin top="0" left="0" bottom="0" right="0"/>
+  <grid id="27dc6" binding="labellNumeroMembri" layout-manager="GridLayoutManager" row-count="10" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="5" left="5" bottom="5" right="5"/>
     <constraints>
-      <xy x="20" y="20" width="565" height="400"/>
+      <xy x="20" y="20" width="515" height="438"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -13,7 +13,8 @@
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Inserire Nome d'arte"/>
+          <font style="1"/>
+          <text value="Inserire Nome d'arte:"/>
         </properties>
       </component>
       <component id="9e729" class="javax.swing.JLabel" binding="labelScioglimento">
@@ -21,39 +22,9 @@
           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="inserire anno scioglimento (lasciare vuoto se non si sono sciolti)"/>
-        </properties>
-      </component>
-      <component id="c536e" class="javax.swing.JLabel" binding="labelAnnoInizioAttivita">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Inserire anno d'inizio Attività"/>
-        </properties>
-      </component>
-      <component id="40d9a" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Inserire numero membri"/>
-        </properties>
-      </component>
-      <component id="69a9" class="javax.swing.JLabel" binding="labelListaMusicisti">
-        <constraints>
-          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Selezionare i musicisti da cui è formata"/>
-        </properties>
-      </component>
-      <component id="6b4d0" class="javax.swing.JLabel" binding="labelIdArtista">
-        <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Creare id Artista"/>
+          <font style="1"/>
+          <text value="Inserire Anno scioglimento:"/>
+          <toolTipText value=""/>
         </properties>
       </component>
       <component id="f6d4b" class="javax.swing.JTextField" binding="textFieldNomeArte">
@@ -64,31 +35,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="93d9" class="javax.swing.JTextField" binding="textFieldAnnoInizioAttivita">
-        <constraints>
-          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties/>
-      </component>
-      <component id="faa3e" class="javax.swing.JTextField" binding="textFieldIdArtista">
-        <constraints>
-          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties/>
-      </component>
-      <component id="d399f" class="javax.swing.JTextField" binding="textFieldNumeroMembri">
-        <constraints>
-          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties/>
-      </component>
-      <component id="5c536" class="javax.swing.JTextField" binding="textFieldAnnoScioglimento">
+      <component id="4a664" class="javax.swing.JComboBox" binding="annoScioglimentoComboBox">
         <constraints>
           <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -98,10 +45,12 @@
       </component>
       <scrollpane id="c37b9">
         <constraints>
-          <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="8" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="350" height="200"/>
+          </grid>
         </constraints>
         <properties/>
-        <border type="none"/>
+        <border type="bevel-lowered" title="Selezionare i Membri della Band"/>
         <children>
           <component id="5f13d" class="javax.swing.JList" binding="listaMusicisti">
             <constraints/>
@@ -111,10 +60,87 @@
       </scrollpane>
       <component id="dd931" class="javax.swing.JButton" binding="creaButton" default-binding="true">
         <constraints>
-          <grid row="6" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Passa alla schermata successiva per creare i MembroBand e completare"/>
+          <text value="Crea"/>
+        </properties>
+      </component>
+      <component id="40d9a" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font style="1"/>
+          <text value="Inserire n° Membri:"/>
+        </properties>
+      </component>
+      <component id="c536e" class="javax.swing.JLabel" binding="labelAnnoInizioAttivita">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font style="1"/>
+          <text value="Inserire Anno d'inizio Attività:"/>
+        </properties>
+      </component>
+      <component id="6b4d0" class="javax.swing.JLabel" binding="labelIdArtista">
+        <constraints>
+          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font style="1"/>
+          <text value="Assegnare ID Artista:"/>
+        </properties>
+      </component>
+      <component id="faa3e" class="javax.swing.JTextField" binding="textFieldIdArtista">
+        <constraints>
+          <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="7c608" class="javax.swing.JSpinner" binding="numeroMembriSpinner">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="4" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="60" height="30"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="e4f4d" class="javax.swing.JComboBox" binding="annoInizioComboBox">
+        <constraints>
+          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="5f7be" class="javax.swing.JSeparator">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="2bac7" class="javax.swing.JSeparator">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="7425e" class="javax.swing.JSeparator">
+        <constraints>
+          <grid row="7" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="cd7ce" class="javax.swing.JButton" binding="indietroButton" default-binding="true">
+        <constraints>
+          <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Indietro"/>
         </properties>
       </component>
     </children>
