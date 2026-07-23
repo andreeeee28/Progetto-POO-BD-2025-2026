@@ -11,9 +11,13 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
- * The type Valuta proposte admin.
+ * Rappresenta l'interfaccia grafica riservata agli admin per visualizzare e valutare le proposte inviate dagli utenti.
+ * Mostra uno storico delle proposte già valutate tramite una tabella e una lista di quelle ancora in attesa di giudizio.
  */
 public class ValutaProposteAdmin {
+    /**
+     * The Frame.
+     */
     private JFrame frame;
     private JPanel mainPanel;
     private JTable valutateTable;
@@ -23,13 +27,13 @@ public class ValutaProposteAdmin {
 
 
     /**
-     * Instantiates a new Valuta proposte admin.
+     * Istanzia e inizializza la schermata per la valutazione delle proposte, popolando la tabella e la lista.
      *
-     * @param controller     the controller
-     * @param frameChiamante the frame chiamante
-     * @param utenteAttuale  the utenteAttuale
+     * @param controller L'istanza del Controller per recuperare i dati dal database e gestire la logica.
+     * @param frameChiamante La finestra precedente (Home) da riattivare premendo il tasto indietro.
+     * @param utente L'admin attualmente connesso.
      */
-    public ValutaProposteAdmin(Controller controller, JFrame frameChiamante, Utente utenteAttuale) {
+    public ValutaProposteAdmin(Controller controller, JFrame frameChiamante, Utente utente) {
         frame = new JFrame("Proposte");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -53,11 +57,16 @@ public class ValutaProposteAdmin {
         visualizzaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cliccatoVisualizza(controller, utenteAttuale);
+                cliccatoVisualizza(controller, utente);
             }
         });
     }
 
+    /**
+     * Popola la tabella con lo storico delle proposte già valutate e la lista con quelle in attesa di valutazione.
+     *
+     * @param controller L'istanza del Controller per ottenere le righe della tabella e l'elenco delle proposte.
+     */
     //Riempimento Liste e Tabelle
     //Valutate
     private void riempiTabellaValutate(Controller controller) {

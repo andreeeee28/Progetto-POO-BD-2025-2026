@@ -3,9 +3,10 @@ package model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-
 /**
- * The type Musicista.
+ * Rappresenta un singolo musicista (artista solista o componente di un gruppo) all'interno del sistema.
+ * Estende la classe astratta Artista aggiungendo dati anagrafici specifici come il vero nome,
+ * il vero cognome, la data di nascita e uno storico di tutte le sue partecipazioni nelle varie band.
  */
 public class Musicista extends Artista {
     private String nomeVero;
@@ -13,17 +14,16 @@ public class Musicista extends Artista {
     private LocalDate dataDiNascita;
     private ArrayList<MembroBand> partecipazioniBand;
 
-
     /**
-     * Instantiates a new Musicista.
+     * Istanzia un nuovo oggetto Musicista assegnando i parametri anagrafici e artistici, passando quelli base alla superclasse Artista.
      *
-     * @param nomeArte           the nome arte
-     * @param annoInizioAttivita the anno inizio attivita
-     * @param idArtista          the id artista
-     * @param nomeVero           the nome vero
-     * @param cognomeVero        the cognome vero
-     * @param dataDiNascita      the data di nascita
-     * @throws CampoNonValido the campo non valido
+     * @param nomeArte Il nome d'arte del musicista (tra 1 e 30 caratteri).
+     * @param annoInizioAttivita L'anno in cui il musicista ha iniziato la sua carriera.
+     * @param idArtista L'identificativo alfanumerico univoco associato al musicista.
+     * @param nomeVero Il vero nome di battesimo del musicista (tra 1 e 15 caratteri).
+     * @param cognomeVero Il vero cognome del musicista (tra 1 e 30 caratteri).
+     * @param dataDiNascita La data di nascita del musicista.
+     * @throws CampoNonValido Se uno dei parametri non rispetta i vincoli di validazione dei relativi setter.
      */
     public Musicista(String nomeArte, int annoInizioAttivita, String idArtista, String nomeVero, String cognomeVero, LocalDate dataDiNascita) throws CampoNonValido {
         super(nomeArte, annoInizioAttivita, idArtista);
@@ -32,39 +32,40 @@ public class Musicista extends Artista {
         setDataDiNascita(dataDiNascita);
         partecipazioniBand = new ArrayList<>();
     }
+
     //Getter
 
     /**
-     * Gets nome vero.
+     * Restituisce il vero nome di battesimo del musicista.
      *
-     * @return the nome vero
+     * @return La stringa contenente il nome vero.
      */
     public String getNomeVero() {
         return nomeVero;
     }
 
     /**
-     * Gets cognonome vero.
+     * Restituisce il vero cognome del musicista.
      *
-     * @return the cognonome vero
+     * @return La stringa contenente il cognome vero.
      */
     public String getCognonomeVero() {
         return cognonomeVero;
     }
 
     /**
-     * Gets data di nascita.
+     * Restituisce la data di nascita del musicista.
      *
-     * @return the data di nascita
+     * @return L'oggetto LocalDate con la data di nascita.
      */
     public LocalDate getDataDiNascita() {
         return dataDiNascita;
     }
 
     /**
-     * Gets partecipazioni band.
+     * Restituisce lo storico di tutte le band in cui il musicista suona o ha suonato.
      *
-     * @return the partecipazioni band
+     * @return L'ArrayList contenente gli oggetti MembroBand associati a questo musicista.
      */
     public ArrayList<MembroBand> getPartecipazioniBand() {
         return partecipazioniBand;
@@ -73,10 +74,10 @@ public class Musicista extends Artista {
     // Setter
 
     /**
-     * Sets nome vero.
+     * Imposta o modifica il vero nome di battesimo del musicista.
      *
-     * @param nomeVero the nome vero
-     * @throws CampoNonValido the campo non valido
+     * @param nomeVero Il nuovo nome vero da assegnare.
+     * @throws CampoNonValido Se il nome è nullo, vuoto o supera i 15 caratteri di lunghezza.
      */
     public void setNomeVero(String nomeVero) throws CampoNonValido {
         if(nomeVero == null ||  nomeVero.trim().length()<1 || nomeVero.trim().length()>15){
@@ -85,12 +86,11 @@ public class Musicista extends Artista {
         this.nomeVero = nomeVero;
     }
 
-
     /**
-     * Sets cognonome vero.
+     * Imposta o modifica il vero cognome del musicista.
      *
-     * @param cognonomeVero the cognonome vero
-     * @throws CampoNonValido the campo non valido
+     * @param cognonomeVero Il nuovo cognome vero da assegnare.
+     * @throws CampoNonValido Se il cognome è nullo, vuoto o supera i 30 caratteri di lunghezza.
      */
     public void setCognonomeVero(String cognonomeVero) throws CampoNonValido {
         if(cognonomeVero == null ||  cognonomeVero.trim().length()<1 || cognonomeVero.trim().length()>30){
@@ -99,12 +99,11 @@ public class Musicista extends Artista {
         this.cognonomeVero = cognonomeVero;
     }
 
-
     /**
-     * Sets data di nascita.
+     * Imposta o modifica la data di nascita del musicista.
      *
-     * @param dataDiNascita the data di nascita
-     * @throws CampoNonValido the campo non valido
+     * @param dataDiNascita La nuova data di nascita da assegnare.
+     * @throws CampoNonValido Se l'anno di nascita è successivo a quello in corso o precedente al 1900.
      */
     public void setDataDiNascita(LocalDate dataDiNascita) throws CampoNonValido {
         if (dataDiNascita.getYear() > LocalDate.now().getYear()){
@@ -117,10 +116,10 @@ public class Musicista extends Artista {
     }
 
     /**
-     * Sets partecipazioni band.
+     * Sostituisce l'intero storico delle partecipazioni alle band del musicista con la lista fornita.
      *
-     * @param partecipazioniBand the partecipazioni band
-     * @throws CampoNonValido the campo non valido
+     * @param partecipazioniBand L'ArrayList di oggetti MembroBand da impostare.
+     * @throws CampoNonValido Se la lista fornita risulta nulla.
      */
     public void setPartecipazioniBand(ArrayList<MembroBand> partecipazioniBand) throws CampoNonValido {
         if(partecipazioniBand == null){
@@ -132,10 +131,10 @@ public class Musicista extends Artista {
     // Altri Metodi
 
     /**
-     * Add partecipazione band.
+     * Aggiunge una nuova partecipazione a una band per questo musicista, verificando che non sia un duplicato.
      *
-     * @param partecipazioneBand the partecipazione band
-     * @throws CampoNonValido the campo non valido
+     * @param partecipazioneBand L'oggetto MembroBand da inserire nello storico.
+     * @throws CampoNonValido Se la partecipazione passata è nulla o è già presente nella lista.
      */
     public void addPartecipazioneBand(MembroBand partecipazioneBand) throws CampoNonValido{
         if(partecipazioneBand == null){
@@ -148,6 +147,11 @@ public class Musicista extends Artista {
         }
     }
 
+    /**
+     * Restituisce una rappresentazione testuale del musicista unendo nome e cognome.
+     *
+     * @return La concatenazione di nome vero e cognome vero.
+     */
     @Override
     public String toString() {
         return nomeVero + cognonomeVero;

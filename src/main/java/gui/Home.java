@@ -9,7 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * The type Home.
+ * Rappresenta l'interfaccia grafica principale (dashboard) del sistema.
+ * Gestisce la navigazione verso le varie sezioni (cataloghi, proposte, inserimenti) e adatta
+ * dinamicamente i menu e i pulsanti visibili in base ai permessi dell'utente (standard o admin).
  */
 public class Home {
     private JPanel mainPanel;
@@ -29,11 +31,11 @@ public class Home {
     private JButton aggiungiAlbumButton;
 
     /**
-     * Instantiates a new Home.
+     * Istanzia e inizializza la schermata principale, configurando le azioni dei pulsanti di navigazione.
      *
-     * @param controller     the controller
-     * @param frameChiamante the frame chiamante
-     * @param utenteAttuale  the utente attuale
+     * @param controller Il Controller per la gestione della logica di business.
+     * @param frameChiamante La finestra precedente (solitamente il Login) da cui si è effettuato l'accesso.
+     * @param utenteAttuale L'utente (standard o admin) attualmente connesso al sistema.
      */
     public Home(Controller controller, JFrame frameChiamante, Utente utenteAttuale) {
         frame = new JFrame("Home");
@@ -119,7 +121,11 @@ public class Home {
         });
     }
 
-    //Configurazione
+    /**
+     * Adatta la visibilità dei componenti grafici della dashboard in base al ruolo dell'utente loggato.
+     *
+     * @param utenteAttuale L'utente di cui verificare il ruolo per nascondere o mostrare i pannelli da admin.
+     */
     private void configuraElementi(Utente utenteAttuale) {
         if (utenteAttuale instanceof Admin) {
             //Nascondi elementi non inerenti
@@ -189,6 +195,4 @@ public class Home {
         new ValutaProposteAdmin(controller, frame, utenteAttuale);
         frame.setVisible(false);
     }
-
-
 }

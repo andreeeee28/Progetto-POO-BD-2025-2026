@@ -11,7 +11,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
- * The type Aggiungi generi admin.
+ * Rappresenta l'interfaccia grafica (GUI) riservata agli amministratori per l'aggiunta di un nuovo genere musicale.
+ * Permette di definire il nome e la descrizione del genere, e di stabilire eventuali relazioni gerarchiche
+ * selezionando i generi padre e i generi figli (sottogeneri) già presenti nel sistema.
  */
 public class AggiungiGeneriAdmin {
     private JPanel mainPanel;
@@ -27,11 +29,11 @@ public class AggiungiGeneriAdmin {
     JFrame frame;
 
     /**
-     * Instantiates a new Aggiungi generi admin.
+     * Istanzia e inizializza la schermata per la creazione di un nuovo genere, popolando le liste di selezione.
      *
-     * @param controller     the controller
-     * @param frameChiamante the frame chiamante
-     * @param utente         the utente
+     * @param controller L'istanza del Controller per interrogare il database fittizio e gestire la logica.
+     * @param frameChiamante La finestra precedente da cui è stata aperta questa schermata.
+     * @param utente L'utente (Admin) attualmente loggato nel sistema.
      */
     public AggiungiGeneriAdmin(Controller controller, JFrame frameChiamante, Utente utente) {
         frame = new JFrame("AggiungiGeneriAdmin");
@@ -93,11 +95,12 @@ public class AggiungiGeneriAdmin {
     }
 
     /**
+     * Raccoglie i dati del form, istanzia il nuovo genere, imposta le relazioni bidirezionali con padri e figli e lo salva.
      *
-     * @param controller
-     * @param frameChiamante
-     * @param utente
-     * @throws CampoNonValido
+     * @param controller L'istanza del Controller per la validazione, la scrittura sul database e la gestione della logica.
+     * @param frameChiamante La finestra originaria passata nel costruttore.
+     * @param utente L'amministratore loggato per il ritorno alla schermata Home.
+     * @throws CampoNonValido Se i campi di testo non rispettano i vincoli di validazione o se la verifica del dominio fallisce.
      */
     private void  cliccatoCreaGenereButton(Controller controller,JFrame frameChiamante, Utente utente) throws CampoNonValido{
         //Prelevamento informazioni

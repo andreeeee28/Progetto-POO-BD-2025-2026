@@ -11,19 +11,20 @@ import java.time.Year;
 import java.util.ArrayList;
 
 /**
- * The type Aggiungi musicista admin.
+ * Rappresenta l'interfaccia grafica riservata all'admin per l'inserimento di un nuovo musicista.
+ * Consente di registrare i dati anagrafici e artistici del musicista e, opzionalmente, di assegnargli
+ * in modo sequenziale i ruoli (strumento e periodo di permanenza) per le band precedentemente selezionate.
  */
 public class AggiungiMusicistaAdmin {
     private JPanel mainPanel;
     private JTextField textFieldNomeArte;
     private JLabel labelNomeArte;
-    private JComboBox textFieldAnnoInizioAttivita;
+    private JComboBox annoInizioAttivitaComboBox;
     private JTextField textFieldIdArtista;
     private JTextField textFieldNomeVero;
     private JTextField textFieldCognomeVero;
-    private JButton creaButton;
+    private JButton creaMusicistaButton;
     private JList listaBand;
-    private JLabel labelBand;
     private JComboBox comboBoxAnno;
     private JComboBox comboBoxMese;
     private JComboBox comboBoxGiorno;
@@ -34,40 +35,75 @@ public class AggiungiMusicistaAdmin {
     private JLabel labelAnnoNascita;
     private JLabel labelMeseNascita;
     private JLabel labelGiornoNascita;
-    private JButton creaMembroBandMusicistaButton;
+    private JButton creaMembroBandButton;
+    private JButton indietroButton;
+    private JComboBox strumentoComboBox;
+    private JLabel strumentoLabel;
+    private JComboBox annoIngressoComboBox;
+    private JLabel annoIngressoLabel;
+    private JComboBox annoUscitaComboBox;
+    private JLabel annoUscitaLabel;
+    private JScrollPane listaBandScrollPane;
+    private JSeparator idArtistaSeparator;
+    private JSeparator dataNascitaSeparator;
+    private JLabel bandLabel;
+    private JSeparator bandSeparator;
     private JFrame frame;
     private Musicista nuovoMusicista;
     private ArrayList<Band> bandSelezionate;
     private int indiceBandAttuale = 0;
 
     /**
-     * Instantiates a new Aggiungi musicista admin.
+     * Istanzia e inizializza la finestra per la creazione del musicista, popolando i menu a tendina e le liste.
      *
-     * @param controller     the controller
-     * @param frameChiamante the frame chiamante
-     * @param utente         the utente
+     * @param controller     L'istanza del Controller per gestire la comunicazione con il database e la logica.
+     * @param frameChiamante La finestra originaria che ha invocato l'apertura di questa schermata.
+     * @param utente         L'amministratore attualmente loggato che sta eseguendo l'operazione.
      */
     public AggiungiMusicistaAdmin(Controller controller, JFrame frameChiamante, Utente utente) {
         frame = new JFrame("Aggiungi Musicista");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null); // Centriamo la finestra (come avevamo detto prima!)
+
+
+        configuraElementi();
+        riempiLista(controller);
+
         frame.setVisible(true);
 
-        creaMembroBandMusicistaButton.setVisible(false);
 
-        // --- INIZIALIZZAZIONE AUTOMATICA ---
-        // Avviene subito appena si apre la form (prima era nel RadioButton)
-        ArrayList<Band> bandPresenti = controller.getBandPresenti();
-        DefaultListModel<Band> modelBand = new DefaultListModel<>();
-        for (Band band : bandPresenti) {
-            modelBand.addElement(band);
-        }
-        listaBand.setModel(modelBand);
-        listaBand.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        creaMusicistaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    cliccatoCreaButton(controller, frameChiamante, utente);
+                } catch (CampoNonValido ex) {
+                    javax.swing.JOptionPane.showMessageDialog(null, ex.getMessage());
+                } catch (Exception ex) {
+                    javax.swing.JOptionPane.showMessageDialog(null, "Errore nell'inserimento dei dati");
+                }
+            }
+        });
 
+        creaMembroBandButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    cliccatoCreaMembroBandMusicistaButton(controller, frameChiamante, utente);
+                } catch (CampoNonValido ex) {
+                    javax.swing.JOptionPane.showMessageDialog(null, ex.getMessage());
+                } catch (Exception ex) {
+                    javax.swing.JOptionPane.showMessageDialog(null, "Errore: controlla di aver inserito numeri validi per gli anni.");
+                }
+            }
+        });
+
+
+    }
+
+    private void configuraElementi() {
         for (int i = 1900; i < Year.now().getValue() + 1; i++) {
+            annoInizioAttivitaComboBox.addItem(i);
             comboBoxAnno.addItem(i);
         }
         for (int i = 1; i < 13; i++) {
@@ -77,143 +113,186 @@ public class AggiungiMusicistaAdmin {
             comboBoxGiorno.addItem(i);
         }
 
-        creaButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    cliccatoCreaButton(controller,frameChiamante,utente);
+        strumentoComboBox.setModel(new DefaultComboBoxModel<>(Strumento.values()));
 
-                } catch (CampoNonValido ex) {
-                    javax.swing.JOptionPane.showMessageDialog(null, ex.getMessage());
-                } catch (Exception ex) {
-                    javax.swing.JOptionPane.showMessageDialog(null, "Errore nell'inserimento dei dati");
-                }
-            }
-        });
+        bandLabel.setVisible(false);
+        bandSeparator.setVisible(false);
 
-        creaMembroBandMusicistaButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    cliccatoCreaMembroBandMusicistaButton(controller,frameChiamante,utente);
+        strumentoLabel.setVisible(false);
+        strumentoComboBox.setVisible(false);
+        annoIngressoLabel.setVisible(false);
+        annoIngressoComboBox.setVisible(false);
+        annoUscitaLabel.setVisible(false);
+        annoUscitaComboBox.setVisible(false);
 
-                } catch (CampoNonValido ex) {
-                    javax.swing.JOptionPane.showMessageDialog(null,ex.getMessage());
-                }
-                catch (Exception ex) {
-                    javax.swing.JOptionPane.showMessageDialog(null, "Errore: controlla di aver inserito numeri validi per gli anni.");
-                }
-            }
-        });
+        creaMembroBandButton.setVisible(false);
 
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+    }
 
+    private void riempiLista(Controller controller) {
+        ArrayList<Band> bandPresenti = controller.getBandPresenti();
+        DefaultListModel<Band> modelBand = new DefaultListModel<>();
+        for (Band band : bandPresenti) {
+            modelBand.addElement(band);
+        }
+        listaBand.setModel(modelBand);
+        listaBand.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     }
 
     /**
-     * Prepara interfaccia.
+     * Riconfigura e riadatta i componenti dell'interfaccia grafica per trasformare la schermata
+     * affinché sia possibile l'inserimento dei dati di ruolo (strumento, anno ingresso, anno uscita) nelle band.
      */
-    private void preparaInterfaccia() {
-        comboBoxGiorno.setVisible(false);
-        comboBoxMese.setVisible(false);
-        textFieldNomeVero.setVisible(false);
-        textFieldCognomeVero.setVisible(false);
-        textFieldIdArtista.setVisible(false);
-        comboBoxAnno.removeAllItems();
-        comboBoxAnno.setModel(new DefaultComboBoxModel<>(Strumento.values()));
-        textFieldNomeArte.setText("");
-        textFieldAnnoInizioAttivita.setText("");
-        labelAnnoNascita.setText("Selezionare lo strumento suonato");
-        labelGiornoNascita.setVisible(false);
-        labelMeseNascita.setVisible(false);
-        labelIdArtista.setVisible(false);
-        labelCognome.setVisible(false);
+    private void configuraElementiMembroBand(Band band) {
+        labelNomeArte.setVisible(false);
+        textFieldNomeArte.setVisible(false);
+        labelInizioAttivita.setVisible(false);
+        annoInizioAttivitaComboBox.setVisible(false);
+
         labelNome.setVisible(false);
-        labelInizioAttivita.setText("Inserire anno Ingresso");
-        labelNomeArte.setText("Inserire anno Uscita, se è ancora nella band lasciare vuoto");
-        labelScelta.setVisible(false);
+        textFieldNomeVero.setVisible(false);
+        labelCognome.setVisible(false);
+        textFieldCognomeVero.setVisible(false);
+
+        labelAnnoNascita.setVisible(false);
+        labelMeseNascita.setVisible(false);
+        labelGiornoNascita.setVisible(false);
+        comboBoxAnno.setVisible(false);
+        comboBoxMese.setVisible(false);
+        comboBoxGiorno.setVisible(false);
+        dataNascitaSeparator.setVisible(false);
+
+        labelIdArtista.setVisible(false);
+        textFieldIdArtista.setVisible(false);
+        idArtistaSeparator.setVisible(false);
+
+        listaBandScrollPane.setVisible(false);
         listaBand.setVisible(false);
-        labelBand.setVisible(false);
-        creaButton.setVisible(false);
-        creaMembroBandMusicistaButton.setVisible(true);
-        creaButton.setVisible(false);
+
+        creaMusicistaButton.setVisible(false);
+        indietroButton.setVisible(false);
+
+        annoIngressoComboBox.setModel(new DefaultComboBoxModel());
+        annoUscitaComboBox.setModel(new DefaultComboBoxModel());
+        if (band.getAnnoScioglimento() == null) {
+            for (int i = band.getAnnoInizioAttivita(); i < Year.now().getValue() + 1; i++) {
+                annoIngressoComboBox.addItem(i);
+                annoUscitaComboBox.addItem(i);
+            }
+        } else {
+            for (int i = band.getAnnoInizioAttivita(); i < band.getAnnoScioglimento() + 1; i++) {
+                annoIngressoComboBox.addItem(i);
+                annoUscitaComboBox.addItem(i);
+            }
+        }
+
+        bandLabel.setText("Inserire informazioni in: " + band.getNomeArte());
+        bandLabel.setVisible(true);
+        bandSeparator.setVisible(true);
+
+        strumentoLabel.setVisible(true);
+        strumentoComboBox.setVisible(true);
+        annoIngressoLabel.setVisible(true);
+        annoIngressoComboBox.setVisible(true);
+        annoUscitaLabel.setVisible(true);
+        annoUscitaComboBox.setVisible(true);
+
+        creaMembroBandButton.setVisible(true);
+
+        frame.pack();
+        frame.setLocationRelativeTo(null);
     }
 
     /**
+     * Gestisce la chiusura della finestra attuale e il ripristino della visibilità della finestra chiamante.
      *
-     * @param controller
-     * @param frameChiamante
-     * @param utente
-     * @throws CampoNonValido
+     * @param frameChiamante La finestra chiamante da mostrare nuovamente.
+     * @param frame          La finestra corrente da chiudere (dispose).
      */
-    private void cliccatoCreaButton(Controller controller, JFrame frameChiamante, Utente utente) throws CampoNonValido{
+    private void indietro(JFrame frameChiamante, JFrame frame) {
+        frameChiamante.setLocationRelativeTo(null);
+        frameChiamante.setVisible(true);
+        frame.dispose();
+    }
+
+
+    /**
+     * Valida i dati anagrafici e artistici del musicista inseriti dall'utente. Se corretti, salva il musicista
+     * e prepara l'interfaccia per l'eventuale assegnazione alle band selezionate; altrimenti conclude l'operazione.
+     *
+     * @param controller     L'istanza del Controller per effettuare le validazioni e il salvataggio sul database.
+     * @param frameChiamante La finestra padre da cui si è originata l'azione.
+     * @param utente         L'amministratore che sta compiendo l'operazione per gestire i ritorni alle schermate precedenti.
+     * @throws CampoNonValido Se la validazione del musicista fallisce o se c'è incongruenza tra età e inizio attività.
+     */
+    private void cliccatoCreaButton(Controller controller, JFrame frameChiamante, Utente utente) throws CampoNonValido {
+        //Prelievo informazioni
         String nomeArte = textFieldNomeArte.getText();
-        int annoInizioAttivita = Integer.parseInt(textFieldAnnoInizioAttivita.getText());
-        String idArtista = textFieldIdArtista.getText();
+        int annoInizioAttivita = (int) annoInizioAttivitaComboBox.getSelectedItem();
+
         String nomeVero = textFieldNomeVero.getText();
         String cognomeVero = textFieldCognomeVero.getText();
-        bandSelezionate = new ArrayList<>(listaBand.getSelectedValuesList());
-        indiceBandAttuale = 0;
-        int giorno = (Integer) comboBoxGiorno.getSelectedItem();
-        int mese = (Integer) comboBoxMese.getSelectedItem();
-        int anno = (Integer) comboBoxAnno.getSelectedItem();
-        LocalDate dataNascita = LocalDate.of(anno, mese, giorno);
-        if (anno + 14 > annoInizioAttivita) {
-            JOptionPane.showMessageDialog(null, "Errore! dissonanza tra l' anno di nascita del musicista e quello di inizio attività. In questo programma in particolare un musicista può iniziare la attività musicale minimo a 14 anni");
+
+        int giorno = (int) comboBoxGiorno.getSelectedItem();
+        int mese = (int) comboBoxMese.getSelectedItem();
+        int anno = (int) comboBoxAnno.getSelectedItem();
+
+        if (anno > annoInizioAttivita) {
+            JOptionPane.showMessageDialog(null, "Errore! dissonanza tra l' anno di nascita del musicista e quello di inizio attività");
             return;
         }
+
+        LocalDate dataNascita = LocalDate.of(anno, mese, giorno);
+
+        String idArtista = textFieldIdArtista.getText();
+        bandSelezionate = new ArrayList<>(listaBand.getSelectedValuesList());
+        indiceBandAttuale = 0;
+
+
         nuovoMusicista = new Musicista(nomeArte, annoInizioAttivita, idArtista, nomeVero, cognomeVero, dataNascita);
         controller.verificaMusicista(nuovoMusicista);
         controller.scriviMusicistaDataBase(nuovoMusicista);
         javax.swing.JOptionPane.showMessageDialog(null, "Musicista creato con successo");
 
         if (!bandSelezionate.isEmpty()) {
-            preparaInterfaccia();
-            labelScelta.setText("Aggiungi ruolo per: " + bandSelezionate.get(indiceBandAttuale).getNomeArte());
-            labelScelta.setVisible(true);
+            configuraElementiMembroBand(bandSelezionate.get(indiceBandAttuale));
+            frame.setTitle("Aggiungi ruolo per: " + bandSelezionate.get(indiceBandAttuale).getNomeArte());
         } else {
             JOptionPane.showMessageDialog(null, "Operazione avvenuta con successo");
-            new Home(controller, frame, utente);
-            frame.dispose();
-
+            indietro(frameChiamante, frame);
         }
     }
 
     /**
+     * Raccoglie i dati del ruolo (strumento, date) per la band corrente processata, salva l'associazione nel database
+     * e aggiorna l'interfaccia per la band successiva, chiudendo la finestra al termine della lista.
      *
-     * @param controller
-     * @param frameChiamante
-     * @param utente
-     * @throws CampoNonValido
+     * @param controller     L'istanza del Controller per avviare la scrittura del ruolo sul file corrispondente e gestire la logica.
+     * @param frameChiamante La finestra precedente da riattivare in caso di conclusione.
+     * @param utente         L'admin che sta compiendo l'operazione.
+     * @throws CampoNonValido Se gli anni inseriti non sono coerenti o se il form temporale è errato.
      */
-    private void cliccatoCreaMembroBandMusicistaButton(Controller controller, JFrame frameChiamante, Utente utente) throws CampoNonValido{
+    private void cliccatoCreaMembroBandMusicistaButton(Controller controller, JFrame frameChiamante, Utente utente) throws CampoNonValido {
         Band bandAttuale = bandSelezionate.get(indiceBandAttuale);
 
-        int annoIngresso = Integer.parseInt(textFieldAnnoInizioAttivita.getText());
-
-        // Correzione: usiamo textFieldNomeArte per l'uscita, come da te impostato in preparaInterfaccia
-        Integer annoUscita = null;
-        String testoUscita = textFieldNomeArte.getText();
-        if (!testoUscita.trim().isEmpty()) {
-            annoUscita = Integer.parseInt(testoUscita);
-        }
-
-        Strumento strumentoMusicista = (Strumento) comboBoxAnno.getSelectedItem();
+        Strumento strumentoMusicista = (Strumento) strumentoComboBox.getSelectedItem();
+        int annoIngresso = (int) annoIngressoComboBox.getSelectedItem();
+        Integer annoUscita = (Integer) annoUscitaComboBox.getSelectedItem();
 
         MembroBand nuovoMembroBand = new MembroBand(strumentoMusicista, annoIngresso, annoUscita, nuovoMusicista);
         nuovoMembroBand.setBand(bandAttuale);
         controller.scriviMembroBandDataBase(nuovoMembroBand);
+
         indiceBandAttuale++;
 
         if (indiceBandAttuale < bandSelezionate.size()) {
-            textFieldAnnoInizioAttivita.setText("");
-            textFieldNomeArte.setText("");
-            labelScelta.setText("Aggiungi ruolo per: " + bandSelezionate.get(indiceBandAttuale).getNomeArte());
-            labelScelta.setVisible(true);
+            configuraElementiMembroBand(bandSelezionate.get(indiceBandAttuale));
+            frame.setTitle("Aggiungi ruolo per: " + bandSelezionate.get(indiceBandAttuale).getNomeArte());
         } else {
             javax.swing.JOptionPane.showMessageDialog(null, "Tutti i ruoli nelle band sono stati salvati con successo!");
             frame.dispose();
         }
-
     }
-
 }

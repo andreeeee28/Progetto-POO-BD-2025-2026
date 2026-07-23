@@ -10,7 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * The type Registrazione.
+ * Rappresenta l'interfaccia grafica per la registrazione di un nuovo utente standard nel sistema.
+ * Permette all'utente di inserire username, password e selezionare la propria nazione,
+ * gestendo sia la creazione del profilo sia il ritorno alla schermata di accesso.
  */
 public class Registrazione {
     private JPanel mainPanel;
@@ -18,17 +20,17 @@ public class Registrazione {
     private JButton registratiButton;
     private JFrame frame;
     private JTextField campoPassword;
-    private JComboBox <Nazione> campoNazione;
+    private JComboBox<Nazione> campoNazione;
     private JButton tornaAlLoginButton;
 
 
     /**
-     * Instantiates a new Registrazione.
+     * Istanzia e inizializza i componenti grafici della schermata di registrazione, popolando il menu a tendina delle nazioni.
      *
-     * @param controller     the controller
-     * @param frameChiamante the frame chiamante
+     * @param controller     L'istanza del Controller per gestire la logica di registrazione e il salvataggio dei dati.
+     * @param frameChiamante La finestra di Login da cui si è aperta questa schermata, usata per poter tornare indietro.
      */
-    public Registrazione(Controller controller, JFrame frameChiamante){
+    public Registrazione(Controller controller, JFrame frameChiamante) {
         frame = new JFrame("Registrazione");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,13 +73,13 @@ public class Registrazione {
 
     private void registrati(Controller controller) throws CampoNonValido {
         //Creazione utente
-            String stringaCampoUtente = campoUtente.getText();
-            String stringaCampoPassword = campoPassword.getText();
-            Nazione enumCampoNazione = (Nazione) campoNazione.getSelectedItem();
-            Utente utenteAttuale = controller.cliccatoRegistrati(stringaCampoUtente, stringaCampoPassword, enumCampoNazione);
-            //Apertura Home
-            JOptionPane.showMessageDialog(null, "Registrazione avvenuta con successo");
-            new Home(controller, frame, utenteAttuale);
-            frame.setVisible(false);
+        String stringaCampoUtente = campoUtente.getText();
+        String stringaCampoPassword = campoPassword.getText();
+        Nazione enumCampoNazione = (Nazione) campoNazione.getSelectedItem();
+        Utente utenteAttuale = controller.cliccatoRegistrati(stringaCampoUtente, stringaCampoPassword, enumCampoNazione);
+        //Apertura Home
+        JOptionPane.showMessageDialog(null, "Registrazione avvenuta con successo");
+        new Home(controller, frame, utenteAttuale);
+        frame.setVisible(false);
     }
 }

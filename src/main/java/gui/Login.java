@@ -12,7 +12,9 @@ import java.awt.event.KeyEvent;
 import java.util.Arrays;
 
 /**
- * The type Login.
+ * Rappresenta la finestra iniziale di autenticazione (Login) dell'applicazione.
+ * Consente l'accesso agli utenti standard e agli admin, gestendo dinamicamente
+ * i campi visibili e permettendo di navigare verso la schermata di registrazione.
  */
 public class Login {
     private JPanel mainPanel;
@@ -29,13 +31,13 @@ public class Login {
     private static JFrame frame;
 
     /**
-     * The entry point of application.
+     * Punto di ingresso principale dell'applicazione grafica.
      *
-     * @param args the input arguments
-     * @throws UnsupportedLookAndFeelException the unsupported look and feel exception
-     * @throws ClassNotFoundException          the class not found exception
-     * @throws InstantiationException          the instantiation exception
-     * @throws IllegalAccessException          the illegal access exception
+     * @param args Gli argomenti passati da riga di comando.
+     * @throws UnsupportedLookAndFeelException
+     * @throws ClassNotFoundException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
      */
     public static void main(String[] args) throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
@@ -48,7 +50,7 @@ public class Login {
     }
 
     /**
-     * Instantiates a new Login.
+     * Istanzia e inizializza i componenti grafici della schermata di login, definendo le azioni dei pulsanti e dei radio button.
      */
     public Login() {
         controller = new Controller();

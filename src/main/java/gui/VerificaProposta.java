@@ -10,7 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * The type Verifica proposta.
+ * Rappresenta l'interfaccia grafica che permette a un admin di visualizzare i dettagli di una specifica proposta
+ * e di prendere una decisione finale (accettarla o rifiutarla), aggiornando così lo stato del database.
  */
 public class VerificaProposta {
     private JPanel mainPanel;
@@ -29,12 +30,12 @@ public class VerificaProposta {
     private JFrame frame;
 
     /**
-     * Instantiates a new Verifica proposta.
+     * Istanzia e inizializza la finestra per la verifica, popolando i campi testuali con i dettagli della proposta selezionata.
      *
-     * @param controller     the controller
-     * @param frameChiamante the frame chiamante
-     * @param proposta       the proposta da valutare
-     * @param utente         the utente
+     * @param controller L'istanza del Controller per aggiornare lo stato della proposta nel database.
+     * @param frameChiamante La finestra precedente (solitamente la lista delle proposte da valutare).
+     * @param proposta L'oggetto Proposta contenente le informazioni che l'admin deve esaminare.
+     * @param utente L'admin attualmente connesso al sistema, passato alla Home in caso di ritorno.
      */
     public VerificaProposta(Controller controller, JFrame frameChiamante, Proposta proposta, Utente utente) {
         frame = new JFrame("Dettagli Proposta");
@@ -103,16 +104,32 @@ public class VerificaProposta {
         frame.dispose();
     }
 
-    //Accetta
-    public void cliccatoAccettaButton(Controller controller, JFrame frameChiamante, Utente utente, Proposta propostaDaValutare) throws CampoNonValido {
+    /**
+     * Gestisce l'accettazione della proposta, aggiorna il database tramite il controller e riporta l'admin alla schermata Home.
+     *
+     * @param controller L'istanza del Controller per avviare il salvataggio del nuovo stato accettato.
+     * @param frameChiamante La finestra precedente di riferimento.
+     * @param utente L'admin loggato per ripristinare correttamente la sua sessione nella Home.
+     * @param propostaDaValutare La proposta specifica che è stata approvata.
+     * @throws CampoNonValido Se si verifica un errore durante l'aggiornamento dello stato o l'interazione col database.
+     */
+    public void cliccatoAccettaButton(Controller controller, JFrame frameChiamante, Utente utente,Proposta propostaDaValutare) throws CampoNonValido {
         controller.setPropostaAccettaDataBase(propostaDaValutare);
         JOptionPane.showMessageDialog(null, "Proposta aggiornata con Successo");
 
         indietro(frameChiamante, frame);
     }
 
-    //Rifiuta
-    public void cliccatoRifiutaButton(Controller controller, JFrame frameChiamante, Utente utente, Proposta propostaDaValutare) throws CampoNonValido {
+    /**
+     * Gestisce il rifiuto della proposta, aggiorna il database tramite il controller e riporta l'admin alla schermata Home.
+     *
+     * @param controller L'istanza del Controller per avviare il salvataggio del nuovo stato rifiutato.
+     * @param frameChiamante La finestra precedente di riferimento.
+     * @param utente L'admin loggato per ripristinare correttamente la sua sessione nella Home.
+     * @param propostaDaValutare La proposta specifica che è stata respinta.
+     * @throws CampoNonValido Se si verifica un errore durante l'aggiornamento dello stato o l'interazione col database.
+     */
+    public void cliccatoRifiutaButton(Controller controller,JFrame frameChiamante,Utente utente,Proposta propostaDaValutare) throws CampoNonValido{
         controller.setPropostaRifiutataDataBase(propostaDaValutare);
         JOptionPane.showMessageDialog(null, "Proposta aggiornata con Successo");
 
