@@ -11,3 +11,7 @@ Joey Ramone;;;;1974;;;;MB-23;;;;Jeffrey;;;;Hyman;;;;1951-05-19
 Johnny Ramone;;;;1974;;;;MB-24;;;;John;;;;Cummings;;;;1948-10-08
 Dee Dee Ramone;;;;1974;;;;MB-25;;;;Douglas;;;;Colvin;;;;1951-09-18
 Tommy Ramone;;;;1974;;;;MB-26;;;;Tamas;;;;Erdelyi;;;;1949-01-29
+Caparezza;;;;2000;;;;MUS-29743;;;;Michele;;;;Savemini;;;;1973-10-09
+Eva Poles;;;;1996;;;;MUS-817957;;;;Eva;;;;Poles;;;;1971-09-22
+Gian Maria Accusani;;;;1983;;;;MUS-54567;;;;Gian Maria;;;;Accusani;;;;1967-08-29
+Boom Girl;;;;1995;;;;MUS-89742;;;;Elisabetta;;;;Imelio;;;;1975-11-22

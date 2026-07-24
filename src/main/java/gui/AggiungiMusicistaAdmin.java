@@ -294,7 +294,7 @@ public class AggiungiMusicistaAdmin {
             frame.setTitle("Aggiungi ruolo per: " + bandSelezionate.get(indiceBandAttuale).getNomeArte());
         } else {
             javax.swing.JOptionPane.showMessageDialog(null, "Tutti i ruoli nelle band sono stati salvati con successo!");
-            frame.dispose();
+            indietro(frameChiamante, frame);
         }
     }
 }
