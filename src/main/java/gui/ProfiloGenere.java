@@ -31,12 +31,12 @@ public class ProfiloGenere {
     private JList albumList;
 
     /**
-     * Instantiates a new Profilo genere.
+     * Istanzia e inizializza la finestra grafica per il Profilo Genere.
      *
-     * @param controller     the controller
-     * @param frameChiamante the frame chiamante
-     * @param genere         the genere
-     * @param utenteAttuale  the utente attuale
+     * @param controller     L'istanza del Controller per gestire l'interazione con il database.
+     * @param frameChiamante La finestra precedente da cui si è effettuato l'accesso.
+     * @param genere         L'artista di cui mostrare le informazioni.
+     * @param utenteAttuale  L'utente attualmente connesso al sistema.
      */
     public ProfiloGenere(Controller controller, JFrame frameChiamante, Genere genere, Utente utenteAttuale) {
         frame = new JFrame("Profilo Genere - " + genere.getNome());
@@ -44,7 +44,6 @@ public class ProfiloGenere {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getRootPane().setDefaultButton(visualizzaButton);
 
-        //Caricamento ArrayList
         ArrayList<Genere> generiPadre = genere.getGeneriPadre();
         ArrayList<Genere> sottogeneri = genere.getSottogeneri();
         ArrayList<Album> albums = genere.getListaAlbum();
@@ -75,6 +74,12 @@ public class ProfiloGenere {
     }
 
     //Configurazione
+
+    /**
+     * Adatta la visibilità dei componenti grafici della form in base alle informazioni della Band.
+     *
+     * @param genere Il genere di cui mostrare le informazioni.
+     */
     private void configuraElementi(Genere genere) {
         //Caricamento informazioni
         nomeLabel.setText(genere.getNome());
@@ -86,6 +91,12 @@ public class ProfiloGenere {
     }
 
     //Riempimento liste
+
+    /**
+     * Riempe la JList dei Generi Padre.
+     *
+     * @param generiPadre ArrayList da cui prelevare i generi.
+     */
     private void riempiListaGeneriPadre(ArrayList<Genere> generiPadre) {
         DefaultListModel<String> modelloLista = new DefaultListModel<>();
 
@@ -95,6 +106,11 @@ public class ProfiloGenere {
         generiPadreList.setModel(modelloLista);
     }
 
+    /**
+     * Riempe la JList dei Sottogeneri.
+     *
+     * @param sottogeneri ArrayList da cui prelevare i generi.
+     */
     private void riempiListaSottogeneri(ArrayList<Genere> sottogeneri) {
         DefaultListModel<String> modelloLista = new DefaultListModel<>();
 
@@ -104,6 +120,11 @@ public class ProfiloGenere {
         sottogeneriList.setModel(modelloLista);
     }
 
+    /**
+     * Riempe la JList degli Album.
+     *
+     * @param albums ArrayList da cui prelevare i generi.
+     */
     private void riempiListaAlbum(ArrayList<Album> albums) {
 
 
@@ -119,14 +140,28 @@ public class ProfiloGenere {
     }
 
     //Funzioni Listeners
-    //Indietro
+
+    /**
+     * Gestisce la chiusura della finestra attuale e il ripristino della visibilità della finestra chiamante.
+     *
+     * @param frameChiamante La finestra chiamante da mostrare nuovamente.
+     * @param frame          La finestra corrente da chiudere (dispose).
+     */
     private void indietro(JFrame frameChiamante, JFrame frame) {
         frameChiamante.setLocationRelativeTo(null);
         frameChiamante.setVisible(true);
         frame.dispose();
     }
 
-    //Visualizza
+    /**
+     * Gestisce le operazioni legate al tasto visualizza, scegliendole in base alla tab selezionata.
+     *
+     * @param controller    L'istanza del Controller per gestire l'interazione con il database.
+     * @param generiPadre   ArrayList di Generi Padre dal quale prelevare l'Artista da visualizzare
+     * @param sottogeneri   ArrayList di Sotto Generi dal quale prelevare l'Album da visualizzare.
+     * @param albums        ArrayList di Album dal quale prelevare l'Album da visualizzare
+     * @param utenteAttuale L'utente attualmente connesso al sistema.
+     */
     private void visualizza(Controller controller, ArrayList<Genere> generiPadre, ArrayList<Genere> sottogeneri, ArrayList<Album> albums, Utente utenteAttuale) {
         switch (tabbedPane.getSelectedIndex()) {
             case 0:                                 //Generi Padre

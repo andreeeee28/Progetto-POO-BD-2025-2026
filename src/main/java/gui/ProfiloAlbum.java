@@ -52,12 +52,12 @@ public class ProfiloAlbum {
     private JLabel recensioneVoto;
 
     /**
-     * Istanzia e inizializza la finestra grafica per il Catalogo Generi.
+     * Istanzia e inizializza la finestra grafica per il Profilo Album.
      *
-     * @param controller     the controller
-     * @param frameChiamante the frame chiamante
-     * @param album          the album
-     * @param utenteAttuale  the utente attuale
+     * @param controller     L'istanza del Controller per gestire l'interazione con il database.
+     * @param frameChiamante La finestra precedente da cui si è effettuato l'accesso.
+     * @param album          L'album di cui mostrare le informazioni.
+     * @param utenteAttuale  L'utente attualmente connesso al sistema.
      */
     public ProfiloAlbum(Controller controller, JFrame frameChiamante, Album album, Utente utenteAttuale) {
         frame = new JFrame("Profilo Album - " + album.getTitolo());
@@ -65,7 +65,6 @@ public class ProfiloAlbum {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getRootPane().setDefaultButton(visualizzaButton);
 
-        //Caricamento ArrayList
         ArrayList<Genere> generi;
         ArrayList<Artista> crediti;
 
@@ -112,7 +111,11 @@ public class ProfiloAlbum {
         });
     }
 
-    //Configurazione
+    /**
+     * Adatta la visibilità dei componenti grafici della form in base alle informazioni dell'Album.
+     *
+     * @param album L'album di cui mostrare le informazioni.
+     */
     private void configuraElementi(Album album) {
         //Caricamento informazioni
         titoloLabel.setText(album.getTitolo());
@@ -121,7 +124,7 @@ public class ProfiloAlbum {
         numeroTracceLabel.setText(String.valueOf(album.getTracklist().size()));
         dataPubblicazioneLabel.setText(String.valueOf(album.getDataPubblicazione()));
         numeroRecensioniLabel.setText(String.valueOf(album.getRecensioni().size()));
-        mediaVotiLabel.setText(String.format("%.2f",album.getRating()));
+        mediaVotiLabel.setText(String.format("%.2f", album.getRating()));
         numeroGeneriLabel.setText(String.valueOf(album.getGeneri().size()));
         visualizzaButton.setVisible(false);
         recensioneVoto.setText(String.valueOf((float) recensioneSlider.getValue() / 10));
@@ -131,7 +134,12 @@ public class ProfiloAlbum {
     }
 
     //Riempimento liste
-    //Tracklist
+
+    /**
+     * Riempe la JTable di Canzoni appartenenti all'album.
+     *
+     * @param album L'album di cui mostrare le informazioni.
+     */
     private void riempiListaTracklist(Album album) {
         String[] columnNames = {"Titolo", "Durata"};
         ArrayList<Canzone> tracklist = album.getTracklist();
@@ -144,7 +152,11 @@ public class ProfiloAlbum {
         tracklistTable.setModel(modelloTabella);
     }
 
-    //Generi
+    /**
+     * Riempe la JList di Generi appartenenti all'album.
+     *
+     * @param album L'album di cui mostrare le informazioni.
+     */
     private ArrayList<Genere> riempiListaGeneri(Album album) {
         DefaultListModel<String> modelloLista = new DefaultListModel<>();
         ArrayList<Genere> generi = album.getGeneri();
@@ -157,7 +169,11 @@ public class ProfiloAlbum {
         return generi;
     }
 
-    //Crediti
+    /**
+     * Riempe la JList di Artisti che hanno partecipato all'album.
+     *
+     * @param album L'album di cui mostrare le informazioni.
+     */
     private ArrayList<Artista> riempiListaCrediti(Album album) {
         DefaultListModel<String> modelloLista = new DefaultListModel<>();
 
@@ -181,14 +197,29 @@ public class ProfiloAlbum {
 
 
     //Funzioni Listeners
-    //Indietro
+
+    /**
+     * Gestisce la chiusura della finestra attuale e il ripristino della visibilità della finestra chiamante.
+     *
+     * @param frameChiamante La finestra chiamante da mostrare nuovamente.
+     * @param frame          La finestra corrente da chiudere (dispose).
+     */
     private void indietro(JFrame frameChiamante, JFrame frame) {
         frameChiamante.setLocationRelativeTo(null);
         frameChiamante.setVisible(true);
         frame.dispose();
     }
 
-    //Visualizza
+    /**
+     * Gestisce le operazioni legate al tasto visualizza, che viene modificato in base alla tab selezionata
+     *
+     * @param controller    L'istanza del Controller per gestire l'interazione con il database.
+     * @param generi        ArrayList di Generi necessario all'apertura del Profilo del genere selezionato.
+     * @param crediti       ArrayList di Artisti necessario all'apertura del Profilo dell'artista selezionato.
+     * @param album         ArrayList di Album necessario all'apertura del Profilo dell'album selezionato.
+     * @param utenteAttuale L'utente attualmente connesso al sistema.
+     * @throws CampoNonValido
+     */
     private void visualizza(Controller controller, ArrayList<Genere> generi, ArrayList<Artista> crediti, Album album, Utente utenteAttuale) throws CampoNonValido {
         switch (tabbedPane.getSelectedIndex()) {
             case 1:                                 //Generi
@@ -222,7 +253,9 @@ public class ProfiloAlbum {
         }
     }
 
-    //Configura pulsante Visualizza
+    /**
+     * Gestisce il cambio di configurazione del tasto visualizza in base alla tab selezionata.
+     */
     private void configuraVisualizzaButton() {
         switch (tabbedPane.getSelectedIndex()) {
             case 0:
@@ -239,7 +272,9 @@ public class ProfiloAlbum {
         }
     }
 
-    //Configura etichetta Slider
+    /**
+     * Gestisce il cambio di testo dello slider in tempo reale
+     */
     private void moveRecensioneSlider() {
         recensioneVoto.setText(String.valueOf((float) recensioneSlider.getValue() / 10));
     }
