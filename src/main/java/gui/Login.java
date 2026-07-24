@@ -144,6 +144,7 @@ public class Login {
             } catch (CampoNonValido ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             } catch (Exception ex) {
+                ex.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Errore imprevisto provare a rinserire i dati");
             }
         } else if (adminRadioButton.isSelected() && !standardRadioButton.isSelected()){
@@ -159,6 +160,7 @@ public class Login {
             } catch (CampoNonValido ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             } catch (Exception ex) {
+                ex.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Errore imprevisto provare a rinserire i dati");
             }
         }

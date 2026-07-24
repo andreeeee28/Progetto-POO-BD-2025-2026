@@ -504,6 +504,11 @@ public class Controller {
             String linea;
 
             while ((linea = br.readLine()) != null) {
+
+                if (linea.trim().isEmpty() || !linea.contains(";;;;")) {
+                    continue;
+                }
+
                 String[] dati = linea.split(";;;;");
 
                 String username = dati[0];
@@ -619,6 +624,11 @@ public class Controller {
             String linea;
 
             while ((linea = br.readLine()) != null) {
+
+                if (linea.trim().isEmpty() || !linea.contains(";;;;")) {
+                    continue;
+                }
+
                 String[] dati = linea.split(";;;;");
 
                 String nomeArte = dati[0];
@@ -761,6 +771,9 @@ public class Controller {
             String linea;
 
             while ((linea = br.readLine()) != null) {
+                if (linea.trim().isEmpty() || !linea.contains(";;;;")) {
+                    continue;
+                }
                 // 1. Tagliamo i dati principali dell'album
                 String[] dati = linea.split(";;;;");
 
@@ -840,6 +853,10 @@ public class Controller {
             String linea;
 
             while ((linea = br.readLine()) != null) {
+
+                if (linea.trim().isEmpty() || !linea.contains(";;;;")) {
+                    continue;
+                }
                 String[] dati = linea.split(";;;;");
 
                 TipoProposta tipo = TipoProposta.valueOf(dati[0]);
@@ -1148,7 +1165,7 @@ public class Controller {
 
             if (passwordUtente.equals(campoPassword) && nomeUtente.equals(campoNomeUtente)) {
                 if (utente instanceof Admin) {
-                    throw new CampoNonValido("ERRORE! Tipologia di Utente errata");
+                    throw new CampoNonValido("ERRORE! Crendenziale non valide");
                 }
                 return utente;
             }
@@ -1170,16 +1187,15 @@ public class Controller {
      */
     public Utente cliccatoAccedi(String campoNomeUtente, String campoPassword, String campoID) throws CampoNonValido {
         for (Utente utente : utentiRegistrati) {
-            String passwordUtente = utente.getPassword();
-            String nomeUtente = utente.getUsername();
-            String idAdmin = ((Admin) utente).getIdAdmin();
+            if(utente instanceof Admin){
+                String idAdmin = ((Admin) utente).getIdAdmin();
+                String passwordUtente = utente.getPassword();
+                String nomeUtente = utente.getUsername();
+                if (passwordUtente.equals(campoPassword) && nomeUtente.equals(campoNomeUtente) && idAdmin.equals(campoID)) {
+                    return utente;
 
-            if (passwordUtente.equals(campoPassword) && nomeUtente.equals(campoNomeUtente) && idAdmin.equals(campoID)) {
-
-                return utente;
-
+                }
             }
-
         }
         throw new CampoNonValido("ERRORE! Credenziali non valide");
     }
