@@ -130,7 +130,8 @@ public class VerificaProposta {
         controller.setPropostaAccettaDataBase(propostaDaValutare);
         JOptionPane.showMessageDialog(null, "Proposta aggiornata con Successo");
 
-        indietro(frameChiamante, frame);
+        new Home(controller,frame,utente);
+        frame.setVisible(false);
     }
 
     /**
@@ -146,6 +147,7 @@ public class VerificaProposta {
         controller.setPropostaRifiutataDataBase(propostaDaValutare);
         JOptionPane.showMessageDialog(null, "Proposta aggiornata con Successo");
 
-        indietro(frameChiamante, frame);
+        new Home(controller,frame,utente);
+        frame.setVisible(false);
     }
 }

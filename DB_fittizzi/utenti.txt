@@ -5,3 +5,4 @@ hans_berlin;;;;BerlinPass2d4;;;;GERMANIA;;;;Utente
 luca_ita;;;;P@ssword88Aer;;;;ITALIA;;;;Utente
 carlos_esp;;;;Madridss22mln;;;;PALESTINA;;;;Utente
 john_doe;;;;JDoe!2026lol;;;;USA;;;;Utente
+PinoPallino;;;;ciaoCaro!!!;;;;TAIWAN;;;;Utente

@@ -15,3 +15,4 @@ Heavy Metal;;;;Sottogenere estremizzato del rock, caratterizzato da ritmi aggres
 Thrash Metal;;;;Evoluzione del metal più veloce e aggressiva, nota per riff complessi, ritmiche martellanti e tematiche cupe.;;;;Heavy Metal;;;;
 Grunge;;;;Nato a Seattle negli anni '80, fonde l'attitudine punk ai riff lenti e pesanti dell'alternative rock, con testi introspettivi e disillusi.;;;;Alternative Rock;;;;
 Fusion;;;;Genere caratterizzato per una componente musicale dotata di elementi classici del jazz misti a sonorità e velocità rock. ;;;;Rock,,,,Jazz;;;;Bepop
+

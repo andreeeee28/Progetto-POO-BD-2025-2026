@@ -1308,5 +1308,32 @@ public class Controller {
         }
         return listaRighe;
     }
+    /**
+     * Imposta le relazioni gerarchiche bidirezionali tra un nuovo genere e i suoi generi padre e sottogeneri, verificando l'assenza di conflitti.
+     *
+     * @param generiPadreSelezionati La lista dei generi selezionati dall'admin come padri.
+     * @param generiFigliSelezionati La lista dei generi selezionati dall'admin come figli (sottogeneri).
+     * @param nuovoGenere Il nuovo oggetto Genere a cui assegnare le relazioni appena stabilite.
+     * @throws CampoNonValido Se uno stesso genere è presente inavvertitamente sia nella lista dei padri che in quella dei figli.
+     */
+    public void impostaGerarchiaGeneri(ArrayList<Genere> generiPadreSelezionati, ArrayList<Genere> generiFigliSelezionati, Genere nuovoGenere) throws CampoNonValido{
+        for(Genere genere : generiPadreSelezionati){
+            if(generiFigliSelezionati.contains(genere)){
+                throw new CampoNonValido("Un genere non può avere come genere padre e sottogenere lo stesso genere");
+            }
+        }
+        if (!generiFigliSelezionati.isEmpty()) {
+            for (Genere genere : generiFigliSelezionati) {
+                genere.addGeneriPadre(nuovoGenere);
+                nuovoGenere.addSottogeneri(genere);
+            }
+        }
+        if (!generiPadreSelezionati.isEmpty()) {
+            for (Genere genere : generiPadreSelezionati) {
+                genere.addSottogeneri(nuovoGenere);
+                nuovoGenere.addGeneriPadre(genere);
+            }
+        }
+    }
 
 }
