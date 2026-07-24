@@ -22,4 +22,3 @@ Robert Trujillo;;;;1989;;;;MUS-MET04;;;;Robert;;;;Trujillo;;;;1964-10-23
 Kurt Cobain;;;;1982;;;;MUS-NIR01;;;;Kurt;;;;Cobain;;;;1967-02-20
 Krist Novoselic;;;;1986;;;;MUS-NIR02;;;;Krist;;;;Novoselic;;;;1965-05-16
 Dave Grohl;;;;1986;;;;MUS-NIR03;;;;Dave;;;;Grohl;;;;1969-01-14
-NAtin;;;;1907;;;;ciao;;;;THomas;;;;Trenino;;;;1903-02-25

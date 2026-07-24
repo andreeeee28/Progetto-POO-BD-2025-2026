@@ -21,7 +21,7 @@ public class AssegnaRuoliBandAdmin {
     private JComboBox strumentoComboBox;
     private JComboBox annoIngressoComboBox;
     private JComboBox annoUscitaComboBox;
-    private JButton CreaMembroBandbutton;
+    private JButton creaMembroBandbutton;
     private JLabel labelStrumento;
     private JLabel labelIdentificazioneMusicista;
     private JFrame frame;
@@ -31,28 +31,29 @@ public class AssegnaRuoliBandAdmin {
     /**
      * Istanzia e inizializza la finestra per l'assegnazione dei ruoli, ricevendo in input i dati base della band e la lista dei musicisti.
      *
-     * @param controller L'istanza del Controller per gestire la logica e il salvataggio finale su file.
-     * @param frameChiamante La finestra precedente da cui si proviene (AggiungiBandAdmin).
-     * @param nomeBand Il nome d'arte della band in fase di creazione.
-     * @param annoInizioAttivita L'anno di fondazione della band.
-     * @param idArtista L'identificativo alfanumerico univoco della band.
-     * @param numeroMembri Il numero totale dei componenti del gruppo.
-     * @param annoScioglimento L'eventuale anno di scioglimento della band (null se ancora attiva).
+     * @param controller           L'istanza del Controller per gestire la logica e il salvataggio finale su file.
+     * @param frameChiamante       La finestra precedente da cui si proviene (AggiungiBandAdmin).
+     * @param nomeBand             Il nome d'arte della band in fase di creazione.
+     * @param annoInizioAttivita   L'anno di fondazione della band.
+     * @param idArtista            L'identificativo alfanumerico univoco della band.
+     * @param numeroMembri         Il numero totale dei componenti del gruppo.
+     * @param annoScioglimento     L'eventuale anno di scioglimento della band (null se ancora attiva).
      * @param musicistiSelezionati La lista dei musicisti scelti a cui bisogna assegnare strumento e date.
-     * @param utente L'utente admin attualmente loggato nel sistema.
+     * @param utente               L'utente admin attualmente loggato nel sistema.
      */
     public AssegnaRuoliBandAdmin(Controller controller, JFrame frameChiamante, String nomeBand, int annoInizioAttivita, String idArtista, int numeroMembri, Integer annoScioglimento, ArrayList<Musicista> musicistiSelezionati, Utente utente) {
 
         frame = new JFrame("Assegna Ruolo - " + musicistiSelezionati.get(contatoreMusicisti).getNomeArte()); // Mostra il nome del primo musicista
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null); // Centra la finestra
-        frame.setVisible(true);
+        frame.getRootPane().setDefaultButton(creaMembroBandbutton);
 
         configuraElementi(musicistiSelezionati, annoInizioAttivita, annoScioglimento);
 
-        CreaMembroBandbutton.addActionListener(new ActionListener() {
+        frame.setVisible(true);
+
+
+        creaMembroBandbutton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -71,8 +72,8 @@ public class AssegnaRuoliBandAdmin {
      * Configura i componenti grafici iniziali e i range degli anni nei menu a tendina in base alle date della band.
      *
      * @param musicistiSelezionati La lista dei musicisti per impostare l'etichetta col nome di quello attuale.
-     * @param annoInizioAttivita L'anno in cui la band ha iniziato l'attività, per impostare il limite inferiore dell'ingresso.
-     * @param annoScioglimento L'anno di scioglimento (o null), per impostare il limite superiore dell'uscita.
+     * @param annoInizioAttivita   L'anno in cui la band ha iniziato l'attività, per impostare il limite inferiore dell'ingresso.
+     * @param annoScioglimento     L'anno di scioglimento (o null), per impostare il limite superiore dell'uscita.
      */
     private void configuraElementi(ArrayList<Musicista> musicistiSelezionati, int annoInizioAttivita, Integer annoScioglimento) {
         labelIdentificazioneMusicista.setText("Inserire informazioni su: " + musicistiSelezionati.get(contatoreMusicisti));
@@ -90,13 +91,16 @@ public class AssegnaRuoliBandAdmin {
                 annoUscitaComboBox.addItem(i);
             }
         }
+
+        frame.pack();
+        frame.setLocationRelativeTo(null);
     }
 
     /**
      * Gestisce la chiusura della finestra attuale e il ripristino della visibilità della finestra chiamante.
      *
      * @param frameChiamante La finestra precedente da mostrare nuovamente.
-     * @param frame La finestra corrente da chiudere (dispose).
+     * @param frame          La finestra corrente da chiudere (dispose).
      */
     private void indietro(JFrame frameChiamante, JFrame frame) {
         frameChiamante.setLocationRelativeTo(null);
@@ -107,15 +111,15 @@ public class AssegnaRuoliBandAdmin {
     /**
      * Elabora i dati inseriti per il musicista corrente, crea il ruolo temporaneo e, se tutti i musicisti sono stati processati, finalizza la creazione della band collegando i membri e salvando tutto nel database.
      *
-     * @param controller L'istanza del Controller per avviare la scrittura dei dati finali nel DB.
-     * @param frameChiamante La finestra originaria passata nel costruttore.
-     * @param nomeBand Il nome della band da creare alla fine del ciclo.
-     * @param annoInizioAttivita L'anno di inizio attività della band.
-     * @param idArtista L'ID univoco della band.
-     * @param numeroMembri Il numero di membri totali.
-     * @param annoScioglimento L'anno di scioglimento della band (o null).
+     * @param controller           L'istanza del Controller per avviare la scrittura dei dati finali nel DB.
+     * @param frameChiamante       La finestra originaria passata nel costruttore.
+     * @param nomeBand             Il nome della band da creare alla fine del ciclo.
+     * @param annoInizioAttivita   L'anno di inizio attività della band.
+     * @param idArtista            L'ID univoco della band.
+     * @param numeroMembri         Il numero di membri totali.
+     * @param annoScioglimento     L'anno di scioglimento della band (o null).
      * @param musicistiSelezionati La lista dei musicisti per estrarre quello corrispondente al contatore attuale.
-     * @param utente L'admin loggato per il ritorno alla schermata Home.
+     * @param utente               L'admin loggato per il ritorno alla schermata Home.
      * @throws CampoNonValido Se l'anno di ingresso o di uscita non sono validi o violano i controlli temporali.
      */
     private void cliccatoCreaMembroBandButtonController(Controller controller, JFrame frameChiamante, String nomeBand, int annoInizioAttivita, String idArtista, int numeroMembri, Integer annoScioglimento, ArrayList<Musicista> musicistiSelezionati, Utente utente) throws CampoNonValido {
@@ -159,7 +163,7 @@ public class AssegnaRuoliBandAdmin {
 
             JOptionPane.showMessageDialog(null, "Band e ruoli creati con successo!");
 
-            new Home(controller,frame,utente);
+            new Home(controller, frame, utente);
             frame.dispose();
         }
     }

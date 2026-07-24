@@ -37,6 +37,7 @@ public class ValutaProposteAdmin {
         frame = new JFrame("Proposte");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getRootPane().setDefaultButton(visualizzaButton);
 
         riempiTabellaValutate(controller);
         riempiListaDaValutare(controller);

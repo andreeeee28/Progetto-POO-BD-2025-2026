@@ -48,7 +48,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="314c5" class="javax.swing.JButton" binding="CreaMembroBandbutton">
+      <component id="314c5" class="javax.swing.JButton" binding="creaMembroBandbutton">
         <constraints>
           <grid row="7" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>

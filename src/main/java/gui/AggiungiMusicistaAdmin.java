@@ -56,15 +56,15 @@ public class AggiungiMusicistaAdmin {
     /**
      * Istanzia e inizializza la finestra per la creazione del musicista, popolando i menu a tendina e le liste.
      *
-     * @param controller L'istanza del Controller per gestire la comunicazione con il database e la logica.
+     * @param controller     L'istanza del Controller per gestire la comunicazione con il database e la logica.
      * @param frameChiamante La finestra originaria che ha invocato l'apertura di questa schermata.
-     * @param utente L'admin attualmente loggato che sta eseguendo l'operazione.
+     * @param utente         L'admin attualmente loggato che sta eseguendo l'operazione.
      */
     public AggiungiMusicistaAdmin(Controller controller, JFrame frameChiamante, Utente utente) {
         frame = new JFrame("Aggiungi Musicista");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        frame.getRootPane().setDefaultButton(creaMusicistaButton);
 
         configuraElementi();
         riempiLista(controller);
@@ -101,7 +101,9 @@ public class AggiungiMusicistaAdmin {
 
         indietroButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {indietro(frameChiamante,frame);}
+            public void actionPerformed(ActionEvent e) {
+                indietro(frameChiamante, frame);
+            }
         });
     }
 
@@ -223,7 +225,7 @@ public class AggiungiMusicistaAdmin {
      * Gestisce la chiusura della finestra attuale e il ripristino della visibilità della finestra chiamante.
      *
      * @param frameChiamante La finestra chiamante da mostrare nuovamente.
-     * @param frame La finestra corrente da chiudere (dispose).
+     * @param frame          La finestra corrente da chiudere (dispose).
      */
     private void indietro(JFrame frameChiamante, JFrame frame) {
         frameChiamante.setLocationRelativeTo(null);
@@ -236,9 +238,9 @@ public class AggiungiMusicistaAdmin {
      * Valida i dati anagrafici e artistici del musicista inseriti dall'utente. Se corretti, salva il musicista
      * e prepara l'interfaccia per l'eventuale assegnazione alle band selezionate; altrimenti conclude l'operazione.
      *
-     * @param controller L'istanza del Controller per effettuare le validazioni e il salvataggio sul database.
+     * @param controller     L'istanza del Controller per effettuare le validazioni e il salvataggio sul database.
      * @param frameChiamante La finestra padre da cui si è originata l'azione.
-     * @param utente L'admin che sta compiendo l'operazione per gestire i ritorni alle schermate precedenti.
+     * @param utente         L'admin che sta compiendo l'operazione per gestire i ritorni alle schermate precedenti.
      * @throws CampoNonValido Se la validazione del musicista fallisce o se c'è incongruenza tra età e inizio attività.
      */
     private void cliccatoCreaButton(Controller controller, JFrame frameChiamante, Utente utente) throws CampoNonValido {
@@ -271,6 +273,7 @@ public class AggiungiMusicistaAdmin {
         javax.swing.JOptionPane.showMessageDialog(null, "Musicista creato con successo");
 
         if (!bandSelezionate.isEmpty()) {
+            frame.getRootPane().setDefaultButton(creaMembroBandButton);
             configuraElementiMembroBand(bandSelezionate.get(indiceBandAttuale));
             frame.setTitle("Aggiungi ruolo per: " + bandSelezionate.get(indiceBandAttuale).getNomeArte());
         } else {
@@ -283,9 +286,9 @@ public class AggiungiMusicistaAdmin {
      * Raccoglie i dati del ruolo (strumento, date) per la band corrente processata, salva l'associazione nel database
      * e aggiorna l'interfaccia per la band successiva, ripristinando la schermata precedente al termine dell'operazione.
      *
-     * @param controller L'istanza del Controller per avviare la scrittura del ruolo sul file corrispondente e gestire la logica.
+     * @param controller     L'istanza del Controller per avviare la scrittura del ruolo sul file corrispondente e gestire la logica.
      * @param frameChiamante La finestra precedente da riattivare in caso di conclusione.
-     * @param utente L'admin che sta compiendo l'operazione.
+     * @param utente         L'admin che sta compiendo l'operazione.
      * @throws CampoNonValido Se gli anni inseriti non sono coerenti o se il form temporale è errato.
      */
     private void cliccatoCreaMembroBandMusicistaButton(Controller controller, JFrame frameChiamante, Utente utente) throws CampoNonValido {

@@ -160,7 +160,7 @@ public class AggiungiAlbumAdmin {
         LocalDate dataPubblicazione = LocalDate.of((Integer) comboBoxAnno.getSelectedItem(), (Integer) comboBoxMese.getSelectedItem(), (Integer) comboBoxGiorno.getSelectedItem());
         ArrayList<Genere> generiSelezionati = new ArrayList<>(listaGeneri.getSelectedValuesList());
         if(generiSelezionati == null|| generiSelezionati.isEmpty()){
-            throw new CampoNonValido("la lista dei generi non può essere null e non può essere vuota ");
+            throw new CampoNonValido("la lista dei generi non può essere vuota ");
         }
         //Inserimento canzoni
         Artista artista = controller.trovaArtistaDaNomeArte(nomeArtista);

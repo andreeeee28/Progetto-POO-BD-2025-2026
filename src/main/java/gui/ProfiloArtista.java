@@ -49,12 +49,12 @@ public class ProfiloArtista {
     private JButton visualizzaButton;
 
     /**
-     * Instantiates a new Profilo artista.
+     * Istanzia e inizializza la finestra grafica per il Profilo Artista.
      *
-     * @param controller     the controller
-     * @param frameChiamante the frame chiamante
-     * @param artista        the artista
-     * @param utenteAttuale  the utente attuale
+     * @param controller     L'istanza del Controller per gestire l'interazione con il database.
+     * @param frameChiamante La finestra precedente da cui si è effettuato l'accesso.
+     * @param artista        L'artista di cui mostrare le informazioni.
+     * @param utenteAttuale  L'utente attualmente connesso al sistema.
      */
     public ProfiloArtista(Controller controller, JFrame frameChiamante, Artista artista, Utente utenteAttuale) {
         frame = new JFrame("Profilo Artista - " + artista.getNomeArte());
@@ -103,6 +103,12 @@ public class ProfiloArtista {
     }
 
     //Configurazione
+
+    /**
+     * Adatta la visibilità dei componenti grafici della form in base alle informazioni della Band.
+     *
+     * @param artista La Band di cui mostrare le informazioni.
+     */
     private void configuraElementiBand(Artista artista) {
         //Nasconde elementi non inerenti
         nomeLabel.setVisible(false);
@@ -141,6 +147,11 @@ public class ProfiloArtista {
         frame.setLocationRelativeTo(null);
     }
 
+    /**
+     * Adatta la visibilità dei componenti grafici della form in base alle informazioni del Musicista.
+     *
+     * @param artista Il Musicista di cui mostrare le informazioni.
+     */
     private void configuraElementiMusicista(Artista artista) {
         //Nasconde elementi non inerenti
         membriLabel.setVisible(false);
@@ -170,8 +181,14 @@ public class ProfiloArtista {
         frame.setLocationRelativeTo(null);
     }
 
-    //Riempimento lista Membri/Partecipazioni
-    //Band
+    //Riempimento liste
+
+    /**
+     * Riempe la JList di Membri appartenenti alla Band.
+     *
+     * @param artista La Band di cui mostrare le informazioni.
+     * @return ArrayList di MembroBand appartenenti alla Band.
+     */
     private ArrayList<MembroBand> riempiListaMembriBand(Artista artista) {
         DefaultListModel<String> modelloLista = new DefaultListModel<>();
         ArrayList<MembroBand> partecipazioniMembri = ((Band) artista).getMembriBand();
@@ -184,7 +201,12 @@ public class ProfiloArtista {
         return partecipazioniMembri;
     }
 
-    //Musicista
+    /**
+     * Riempe la JList di Band a cui appartiene il Musicista.
+     *
+     * @param artista Il Musicista di cui mostrare le informazioni.
+     * @return ArrayList di Band a cui appartiene alla Band.
+     */
     private ArrayList<MembroBand> riempiListaMembriMusicista(Artista artista) {
         DefaultListModel<String> modelloLista = new DefaultListModel<>();
         ArrayList<MembroBand> partecipazioniMembri = ((Musicista) artista).getPartecipazioniBand();
@@ -197,7 +219,12 @@ public class ProfiloArtista {
         return partecipazioniMembri;
     }
 
-    //Riempimento lista Discografia
+    /**
+     * Riempe la JList di Album pubblicati dall'Artista.
+     *
+     * @param artista L'artista di cui mostrare le informazioni.
+     * @return ArrayList di Album appartenenti alla Band.
+     */
     private ArrayList<Album> riempiListaDiscografia(Artista artista) {
         DefaultListModel<String> modelloLista = new DefaultListModel<>();
         ArrayList<Album> discografia = artista.getAlbumPubblicati();
@@ -212,20 +239,34 @@ public class ProfiloArtista {
 
 
     //Funzioni Listeners
-    //Indietro
+
+    /**
+     * Gestisce la chiusura della finestra attuale e il ripristino della visibilità della finestra chiamante.
+     *
+     * @param frameChiamante La finestra chiamante da mostrare nuovamente.
+     * @param frame          La finestra corrente da chiudere (dispose).
+     */
     private void indietro(JFrame frameChiamante, JFrame frame) {
         frameChiamante.setLocationRelativeTo(null);
         frameChiamante.setVisible(true);
         frame.dispose();
     }
 
-    //Visualizza
+    /**
+     * Gestisce le operazioni legate al tasto visualizza, scegliendole in base alla tab selezionata.
+     *
+     * @param controller           L'istanza del Controller per gestire l'interazione con il database.
+     * @param partecipazioniMembri ArrayList di MembroBand dal quale prelevare l'Artista da visualizzare
+     * @param discografia          ArrayList di Album dal quale prelevare l'Album da visualizzare
+     * @param artista              L'artista di cui mostrare le informazioni.
+     * @param utenteAttuale        L'utente attualmente connesso al sistema.
+     */
     private void visualizza(Controller controller, ArrayList<MembroBand> partecipazioniMembri, ArrayList<Album> discografia, Artista artista, Utente utenteAttuale) {
         switch (tabbedPane.getSelectedIndex()) {
             case 0:                                 //Discografia
                 try {
                     new ProfiloAlbum(controller, frame, discografia.get(discografiaList.getSelectedIndex()), utenteAttuale);
-                frame.setVisible(false);
+                    frame.setVisible(false);
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Errore nella selezione dell'album");
                 }
