@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 /**
- * The type Profilo genere.
+ * Rappresenta l'interfaccia grafica che permette di visualizzare tutte le informazioni di un relativo Album.
  */
 public class ProfiloGenere {
     private JFrame frame;

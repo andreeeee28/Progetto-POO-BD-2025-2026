@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
- * The type Profilo artista.
+ * Rappresenta l'interfaccia grafica che permette di visualizzare tutte le informazioni di un relativo Artista.
  */
 public class ProfiloArtista {
     private JFrame frame;

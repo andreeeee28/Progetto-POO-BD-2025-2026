@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 /**
- * The type Catalogo generi.
+ * Rappresenta l'interfaccia grafica con la quale poter sfoglia l'intero catalogo di Generi all'interno del DataBase.
  */
 public class CatalogoGeneri {
     private JPanel mainPanel;

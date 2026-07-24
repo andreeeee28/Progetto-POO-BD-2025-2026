@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 /**
- * The type Catalogo artisti.
+ * Rappresenta l'interfaccia grafica con la quale poter sfoglia l'intero catalogo di Artisti all'interno del DataBase.
  */
 public class CatalogoArtisti {
     private JPanel mainPanel;

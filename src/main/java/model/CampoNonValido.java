@@ -1,7 +1,7 @@
 package model;
 
 /**
- * The type Campo non valido.
+ * Gestisce gli errori nell'inserimento di dati errati.
  */
 public class CampoNonValido extends Exception {
     /**

@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
- * The type Profilo album.
+ * Rappresenta l'interfaccia grafica che permette di visualizzare tutte le informazioni di un relativo Album.
  */
 public class ProfiloAlbum {
     private JFrame frame;
