@@ -112,7 +112,7 @@ public class ProfiloGenere {
         DefaultListModel<String> modelloLista = new DefaultListModel<>();
 
         for (Album a : albums) {
-            modelloLista.addElement(a.getTitolo() + " - Voto medio: " + a.getRating());
+            modelloLista.addElement(a.getTitolo() + " - Voto medio: " + String.format("%.2f", a.getRating()));
         }
 
         albumList.setModel(modelloLista);
