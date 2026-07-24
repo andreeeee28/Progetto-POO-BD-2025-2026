@@ -1165,7 +1165,7 @@ public class Controller {
 
             if (passwordUtente.equals(campoPassword) && nomeUtente.equals(campoNomeUtente)) {
                 if (utente instanceof Admin) {
-                    throw new CampoNonValido("ERRORE! Crendenziale non valide");
+                    throw new CampoNonValido("ERRORE! Crendenziali non valide");
                 }
                 return utente;
             }

@@ -131,8 +131,11 @@ public class AssegnaRuoliBandAdmin {
         int annoIngresso = (int) annoIngressoComboBox.getSelectedItem();
         Integer annoUscita = null;
 
-        if (annoUscitaComboBox.getSelectedItem() != "N/A") {
+        if (annoUscitaComboBox.getSelectedIndex() != 0){
             annoUscita = (Integer) annoUscitaComboBox.getSelectedItem();
+            if (annoUscita < annoIngresso) {
+                throw new CampoNonValido("L'anno di uscita non può essere precedente all'anno di ingresso!");
+            }
         }
 
 

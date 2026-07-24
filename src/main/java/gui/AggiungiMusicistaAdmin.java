@@ -192,6 +192,9 @@ public class AggiungiMusicistaAdmin {
 
         annoIngressoComboBox.setModel(new DefaultComboBoxModel());
         annoUscitaComboBox.setModel(new DefaultComboBoxModel());
+
+        annoUscitaComboBox.addItem("In corso");
+
         if (band.getAnnoScioglimento() == null) {
             for (int i = band.getAnnoInizioAttivita(); i < Year.now().getValue() + 1; i++) {
                 annoIngressoComboBox.addItem(i);
@@ -256,8 +259,7 @@ public class AggiungiMusicistaAdmin {
         int anno = (int) comboBoxAnno.getSelectedItem();
 
         if (anno > annoInizioAttivita) {
-            JOptionPane.showMessageDialog(null, "Errore! dissonanza tra l' anno di nascita del musicista e quello di inizio attività");
-            return;
+            throw new CampoNonValido("Errore! Dissonanza tra l'anno di nascita del musicista e quello di inizio attività.");
         }
 
         LocalDate dataNascita = LocalDate.of(anno, mese, giorno);
@@ -296,7 +298,15 @@ public class AggiungiMusicistaAdmin {
 
         Strumento strumentoMusicista = (Strumento) strumentoComboBox.getSelectedItem();
         int annoIngresso = (int) annoIngressoComboBox.getSelectedItem();
-        Integer annoUscita = (Integer) annoUscitaComboBox.getSelectedItem();
+        Integer annoUscita = null;
+        if (annoUscitaComboBox.getSelectedIndex() != 0) {
+            annoUscita = (Integer) annoUscitaComboBox.getSelectedItem();
+
+            if (annoUscita < annoIngresso) {
+                throw new CampoNonValido("L'anno di uscita non può essere precedente all'anno di ingresso!");
+            }
+        }
+
 
         MembroBand nuovoMembroBand = new MembroBand(strumentoMusicista, annoIngresso, annoUscita, nuovoMusicista);
         nuovoMembroBand.setBand(bandAttuale);

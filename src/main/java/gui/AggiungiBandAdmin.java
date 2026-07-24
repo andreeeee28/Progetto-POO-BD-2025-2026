@@ -127,8 +127,7 @@ public class AggiungiBandAdmin {
     private void cliccatoCreaButton(Controller controller, JFrame frameChiamante, Utente utente) throws CampoNonValido {
         ArrayList<Musicista> musicistiSelezionati = new ArrayList<>(listaMusicisti.getSelectedValuesList());
         if (musicistiSelezionati.size() < 2) {
-            JOptionPane.showMessageDialog(null, "Errore: Una band deve essere composta da almeno 2 musicisti!");
-            return;
+            throw new CampoNonValido("Errore: Una band deve essere composta da almeno 2 musicisti!");
         }
 
         // Leggiamo i dati della Band
@@ -142,8 +141,7 @@ public class AggiungiBandAdmin {
             annoScioglimento = (int) annoScioglimentoComboBox.getSelectedItem();
         }
         if (numMembri != musicistiSelezionati.size()) {
-            JOptionPane.showMessageDialog(null, "I membri selezionati devono essere dello stesso numero del parametro numero membri");
-            return;
+            throw new CampoNonValido("I membri selezionati (" + musicistiSelezionati.size() + ") devono essere pari al numero di membri indicato (" + numMembri + ")!");
         }
         controller.verificaBand(nomeBand, musicistiSelezionati, idArtista);
         new AssegnaRuoliBandAdmin(controller, frameChiamante, nomeBand, annoInizio, idArtista, numMembri, annoScioglimento, musicistiSelezionati, utente);

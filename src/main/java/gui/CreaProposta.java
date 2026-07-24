@@ -91,7 +91,6 @@ public class CreaProposta {
      * @throws CampoNonValido Se la descrizione o il titolo non rispettano i vincoli di lunghezza o se la proposta non è valida.
      */
     private void cliccatoInviaPropostaButton(Controller controller, JFrame frameChiamante, Utente utenteAttuale) throws CampoNonValido {
-        try {
             //Prelievo Dati
             TipoProposta tipoSelezionato = (TipoProposta) tipoPropostaComboBox.getSelectedItem();
             String titoloInserito = titoloTextField.getText();
@@ -104,12 +103,6 @@ public class CreaProposta {
             controller.scriviPropostaNelDataBase(propostaDaCreare);
 
             JOptionPane.showMessageDialog(null, "Proposta inviata con successo!");
-        } catch (CampoNonValido ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Errore nell'inserimento dei dati");
-        }
-
 
         indietro(frameChiamante, frame);
     }
