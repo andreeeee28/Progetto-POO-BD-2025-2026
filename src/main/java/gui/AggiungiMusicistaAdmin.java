@@ -101,6 +101,9 @@ public class AggiungiMusicistaAdmin {
 
     }
 
+    /**
+     * Configura lo stato iniziale dei componenti grafici della finestra definendo i range degli anni e la visibilità dei pannelli.
+     */
     private void configuraElementi() {
         for (int i = 1900; i < Year.now().getValue() + 1; i++) {
             annoInizioAttivitaComboBox.addItem(i);
@@ -131,6 +134,11 @@ public class AggiungiMusicistaAdmin {
         frame.setLocationRelativeTo(null);
     }
 
+    /**
+     * Popola la lista visiva con le band già presenti nel sistema per l'eventuale selezione dell'utente.
+     *
+     * @param controller L'istanza del Controller per recuperare le band dal database.
+     */
     private void riempiLista(Controller controller) {
         ArrayList<Band> bandPresenti = controller.getBandPresenti();
         DefaultListModel<Band> modelBand = new DefaultListModel<>();
@@ -269,7 +277,7 @@ public class AggiungiMusicistaAdmin {
 
     /**
      * Raccoglie i dati del ruolo (strumento, date) per la band corrente processata, salva l'associazione nel database
-     * e aggiorna l'interfaccia per la band successiva, chiudendo la finestra al termine della lista.
+     * e aggiorna l'interfaccia per la band successiva, ripristinando la schermata precedente al termine dell'operazione.
      *
      * @param controller L'istanza del Controller per avviare la scrittura del ruolo sul file corrispondente e gestire la logica.
      * @param frameChiamante La finestra precedente da riattivare in caso di conclusione.

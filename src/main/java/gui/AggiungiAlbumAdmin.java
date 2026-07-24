@@ -37,20 +37,18 @@ public class AggiungiAlbumAdmin {
     /**
      * Istanzia e inizializza la finestra grafica per la creazione di un nuovo album.
      *
-     * @param controller     L'istanza del Controller per gestire la logica di business e l'interazione con il database.
+     * @param controller L'istanza del Controller per gestire la logica di business e l'interazione con il database.
      * @param frameChiamante La finestra precedente da cui è stata aperta questa schermata (per permettere di tornare indietro).
-     * @param utente         L'oggetto Utente (Admin) attualmente loggato nel sistema.
+     * @param utente L'oggetto Utente (admin) attualmente loggato nel sistema.
      */
     public AggiungiAlbumAdmin(Controller controller, JFrame frameChiamante, Utente utente) {
         frame = new JFrame("Aggiungi Album");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getRootPane().setDefaultButton(creaButton);
-
-
+        frame.setVisible(true);
         configuraElementi(controller);
 
-        frame.setVisible(true);
 
         //Tasto indietro
         indietroButton.addActionListener(new ActionListener() {
@@ -78,6 +76,11 @@ public class AggiungiAlbumAdmin {
 
             }
         });
+
+        comboBoxArtista.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {setComboBoxAnno(controller);}
+        });
     }
 
     /**
@@ -94,11 +97,11 @@ public class AggiungiAlbumAdmin {
         for (Artista artistaNelDataBase : artistiNelDataBase) {
             comboBoxArtista.addItem(artistaNelDataBase.getNomeArte());
         }
-
-        //Data
-        for (int i = 1900; i < Year.now().getValue() + 1; i++) {
-            comboBoxAnno.addItem(i);
+        if (comboBoxArtista.getItemCount() > 0) {
+            comboBoxArtista.setSelectedIndex(0);
+            setComboBoxAnno(controller);
         }
+
         for (int i = 1; i < 13; i++) {
             comboBoxMese.addItem(i);
         }
@@ -122,11 +125,12 @@ public class AggiungiAlbumAdmin {
 
 
     //Funzioni Listeners
+
     /**
      * Gestisce la chiusura della finestra attuale e il ripristino della visibilità della finestra chiamante.
      *
      * @param frameChiamante La finestra chiamante da mostrare nuovamente.
-     * @param frame          La finestra corrente da chiudere (dispose).
+     * @param frame La finestra corrente da chiudere (dispose).
      */
     private void indietro(JFrame frameChiamante, JFrame frame) {
         frameChiamante.setLocationRelativeTo(null);
@@ -138,9 +142,9 @@ public class AggiungiAlbumAdmin {
      * Raccoglie i dati inseriti nel form, ne verifica la validità e procede con la creazione e il salvataggio del nuovo album.
      * Avvia inoltre i popup per l'inserimento delle singole canzoni della tracklist.
      *
-     * @param controller     L'istanza del Controller per l'esecuzione dei controlli e l'aggiunta al DB fittizio.
+     * @param controller L'istanza del Controller per l'esecuzione dei controlli e l'aggiunta al DB fittizio.
      * @param frameChiamante La finestra precedente a cui tornare in caso di operazione conclusa con successo.
-     * @param frame          La finestra corrente utilizzata come genitore per i popup di input.
+     * @param frame La finestra corrente utilizzata come genitore per i popup di input.
      * @throws CampoNonValido Se la validazione dei campi fallisce (es. album duplicato).
      */
     private void crea(Controller controller, JFrame frameChiamante, JFrame frame) throws CampoNonValido {
@@ -148,9 +152,14 @@ public class AggiungiAlbumAdmin {
         String nomeArtista = (String) comboBoxArtista.getSelectedItem();
         int numeroCanzoni = (int) canzoniSpinner.getValue();
         String titolo = fieldTitolo.getText();
+        if(titolo == null ||  titolo.trim().length()<1 || titolo.trim().length()>30){
+            throw new CampoNonValido("Il titolo deve avere minimo 1 carattere e massimo 30!");
+        }
         LocalDate dataPubblicazione = LocalDate.of((Integer) comboBoxAnno.getSelectedItem(), (Integer) comboBoxMese.getSelectedItem(), (Integer) comboBoxGiorno.getSelectedItem());
         ArrayList<Genere> generiSelezionati = new ArrayList<>(listaGeneri.getSelectedValuesList());
-
+        if(generiSelezionati == null|| generiSelezionati.isEmpty()){
+            throw new CampoNonValido("la lista dei generi non può essere null e non può essere vuota ");
+        }
         //Inserimento canzoni
         Artista artista = controller.trovaArtistaDaNomeArte(nomeArtista);
         controller.verificaAlbum(titolo, artista);
@@ -161,5 +170,33 @@ public class AggiungiAlbumAdmin {
         JOptionPane.showMessageDialog(null, "Album creato con successo!");
         indietro(frameChiamante, frame);
     }
-}
 
+    /**
+     * Aggiorna dinamicamente gli anni selezionabili nel menu a tendina in base al periodo di attività dell'artista o della band selezionata.
+     *
+     * @param controller L'istanza del Controller per recuperare l'oggetto artista e i suoi anni di attività.
+     */
+    private void setComboBoxAnno(Controller controller){
+
+        Artista artistaSelezionato = controller.trovaArtistaDaNomeArte(((String) comboBoxArtista.getSelectedItem()));
+
+        comboBoxAnno.removeAllItems();
+
+        if (artistaSelezionato != null) {
+
+            if(artistaSelezionato instanceof Musicista || (artistaSelezionato instanceof Band && ((Band) artistaSelezionato).getAnnoScioglimento() == null)) {
+
+                for (int i = artistaSelezionato.getAnnoInizioAttivita(); i <= Year.now().getValue() ; i++) {
+                    comboBoxAnno.addItem(i);
+                }
+
+            } else {
+
+                for (int i = artistaSelezionato.getAnnoInizioAttivita(); i <= ((Band)artistaSelezionato).getAnnoScioglimento() ; i++) {
+                    comboBoxAnno.addItem(i);
+                }
+            }
+        }
+
+    }
+}
