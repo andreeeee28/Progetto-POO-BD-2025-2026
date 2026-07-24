@@ -1,4 +1,7 @@
 mario99;;;;PassMario123;;;;ITALIA;;;;Utente
 admin_root;;;;SuperSegreta!!;;;;USA;;;;Admin;;;;AD-001
-giulia_fr;;;;Paris2024!!!;;;;FRANCIA;;;;Utente
-hans_berlin;;;;BerlinPass24;;;;GERMANIA;;;;Utente
+giulia_fr;;;;Paris2024!ad!!;;;;FRANCIA;;;;Utente
+hans_berlin;;;;BerlinPass2d4;;;;GERMANIA;;;;Utente
+luca_ita;;;;P@ssword88Aer;;;;ITALIA;;;;Utente
+carlos_esp;;;;Madridss22mln;;;;PALESTINA;;;;Utente
+john_doe;;;;JDoe!2026lol;;;;USA;;;;Utente

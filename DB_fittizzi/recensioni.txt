@@ -1,10 +1,38 @@
 Thriller;;;;mario99;;;;5.0;;;;2024-01-10
-Pure Heroine;;;;admin_root;;;;4.5;;;;2024-02-15
+Thriller;;;;luca_ita;;;;8.5;;;;2025-03-12
+Pure Heroine;;;;carlos_esp;;;;4.5;;;;2024-02-15
+Pure Heroine;;;;john_doe;;;;9.0;;;;2025-06-20
 Bird and Diz;;;;hans_berlin;;;;4.0;;;;2024-03-20
+Bird and Diz;;;;carlos_esp;;;;7.5;;;;2025-01-14
 Live at the Regal;;;;mario99;;;;4.8;;;;2024-04-05
-All Eyez on Me;;;;admin_root;;;;5.0;;;;2024-05-12
-Abbey Road;;;;hans_berlin;;;;5.0;;;;2024-06-18
-Ramones;;;;mario99;;;;4.2;;;;2024-07-22
-Abbey Road;;;;mario99;;;;10.0;;;;2026-07-22
-Abbey Road;;;;mario99;;;;7.8;;;;2026-07-22
+Live at the Regal;;;;giulia_fr;;;;8.0;;;;2025-08-30
+All Eyez on Me;;;;john_doe;;;;5.0;;;;2024-05-12
 All Eyez on Me;;;;mario99;;;;7.2;;;;2026-07-22
+Abbey Road;;;;hans_berlin;;;;5.0;;;;2024-06-18
+Abbey Road;;;;mario99;;;;10.0;;;;2026-07-22
+Ramones;;;;mario99;;;;4.2;;;;2024-07-22
+Ramones;;;;luca_ita;;;;8.0;;;;2025-09-11
+Verità supposte;;;;luca_ita;;;;9.5;;;;2024-10-05
+Verità supposte;;;;giulia_fr;;;;8.5;;;;2025-11-20
+Bad;;;;carlos_esp;;;;9.0;;;;2024-11-15
+Bad;;;;john_doe;;;;8.0;;;;2025-02-28
+Melodrama;;;;giulia_fr;;;;9.5;;;;2024-12-01
+Melodrama;;;;john_doe;;;;8.8;;;;2025-04-16
+Sgt. Pepper's;;;;john_doe;;;;10.0;;;;2024-12-10
+Sgt. Pepper's;;;;hans_berlin;;;;9.2;;;;2025-05-05
+Me Against the World;;;;luca_ita;;;;8.5;;;;2025-01-08
+Me Against the World;;;;mario99;;;;9.0;;;;2026-02-14
+Habemus Capa;;;;luca_ita;;;;10.0;;;;2025-02-18
+Habemus Capa;;;;giulia_fr;;;;8.5;;;;2026-03-22
+Acido Acida;;;;carlos_esp;;;;7.5;;;;2025-07-09
+Acido Acida;;;;hans_berlin;;;;8.0;;;;2026-01-11
+Master of Puppets;;;;john_doe;;;;10.0;;;;2025-10-31
+Master of Puppets;;;;hans_berlin;;;;9.5;;;;2026-04-18
+Nevermind;;;;mario99;;;;10.0;;;;2025-12-05
+Nevermind;;;;luca_ita;;;;9.5;;;;2026-05-20
+Acido Acida;;;;mario99;;;;8.2;;;;2026-07-24
+Sgt. Pepper's;;;;mario99;;;;5.5;;;;2026-07-24
+Abbey Road;;;;admin_root;;;;7.3;;;;2026-07-24
+Thriller;;;;admin_root;;;;8.1;;;;2026-07-24
+Me Against the World;;;;admin_root;;;;5.5;;;;2026-07-24
+

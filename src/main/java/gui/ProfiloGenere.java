@@ -105,13 +105,13 @@ public class ProfiloGenere {
     }
 
     private void riempiListaAlbum(ArrayList<Album> albums) {
-        ArrayList<Album> albumOrdinati = new ArrayList<>(albums);
 
-        albumOrdinati.sort(Comparator.comparing(Album::getRating).reversed());
+
+        albums.sort(Comparator.comparing(Album::getRating).reversed());
 
         DefaultListModel<String> modelloLista = new DefaultListModel<>();
 
-        for (Album a : albumOrdinati) {
+        for (Album a : albums) {
             modelloLista.addElement(a.getTitolo() + " - Voto medio: " + a.getRating());
         }
 

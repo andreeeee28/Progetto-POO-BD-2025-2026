@@ -885,6 +885,9 @@ public class Controller {
             String linea;
 
             while ((linea = br.readLine()) != null) {
+                if (linea.trim().isEmpty() || !linea.contains(";;;;")) {
+                    continue;
+                }
                 String[] dati = linea.split(";;;;");
 
                 String nomeAlbum = dati[0];

@@ -9,6 +9,9 @@ Bepop;;;;Stile jazz anni '40, caratterizzato da tempi velocissimi, fraseggio asi
 Blues;;;;Nato a fine '800 nel Sud USA, si basa sulla progressione a 12 battute e sulle note tristi (blue notes) per esprimere malinconia e dolore.;;;;;;;;
 R&B;;;;Rhythm and Blues, unisce influenze gospel, jazz e blues, caratterizzato da ritmi marcati e performance vocali cariche di emozione (soul).;;;;;;;;
 Funk;;;;Nato a metà anni '60, enfatizza il ritmo (groove) rispetto alla melodia, con linee di basso sincopate, chitarre ritmiche e sezioni fiati.;;;;;;;;
-Conscious Hip Hop;;;;Il Conscious Hip Hop è un termine applicato agli artisti Hip Hop i cui testi trattano questioni sociali.
-;;;;Hip Hop;;;;
+Conscious Hip Hop;;;;Il Conscious Hip Hop è un termine applicato agli artisti Hip Hop i cui testi trattano questioni sociali.;;;;Hip Hop;;;;
 Pop Punk;;;;Fonde il suono forte e frenetico di Punk Rock con i ganci melodici del Pop.;;;;Pop,,,,Rock,,,,Punk;;;;
+Heavy Metal;;;;Sottogenere estremizzato del rock, caratterizzato da ritmi aggressivi, massiccia distorsione delle chitarre e assoli virtuosi.;;;;Rock;;;;Thrash Metal
+Thrash Metal;;;;Evoluzione del metal più veloce e aggressiva, nota per riff complessi, ritmiche martellanti e tematiche cupe.;;;;Heavy Metal;;;;
+Grunge;;;;Nato a Seattle negli anni '80, fonde l'attitudine punk ai riff lenti e pesanti dell'alternative rock, con testi introspettivi e disillusi.;;;;Alternative Rock;;;;
+Fusion;;;;Genere caratterizzaro per una componente musicale dotata di elementi classici del jazz misti a sonorità e velocità rock. ;;;;Rock,,,,Jazz;;;;Bepop
