@@ -14,4 +14,4 @@ Pop Punk;;;;Fonde il suono forte e frenetico di Punk Rock con i ganci melodici d
 Heavy Metal;;;;Sottogenere estremizzato del rock, caratterizzato da ritmi aggressivi, massiccia distorsione delle chitarre e assoli virtuosi.;;;;Rock;;;;Thrash Metal
 Thrash Metal;;;;Evoluzione del metal più veloce e aggressiva, nota per riff complessi, ritmiche martellanti e tematiche cupe.;;;;Heavy Metal;;;;
 Grunge;;;;Nato a Seattle negli anni '80, fonde l'attitudine punk ai riff lenti e pesanti dell'alternative rock, con testi introspettivi e disillusi.;;;;Alternative Rock;;;;
-Fusion;;;;Genere caratterizzaro per una componente musicale dotata di elementi classici del jazz misti a sonorità e velocità rock. ;;;;Rock,,,,Jazz;;;;Bepop
+Fusion;;;;Genere caratterizzato per una componente musicale dotata di elementi classici del jazz misti a sonorità e velocità rock. ;;;;Rock,,,,Jazz;;;;Bepop

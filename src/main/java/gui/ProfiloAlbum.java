@@ -52,7 +52,7 @@ public class ProfiloAlbum {
     private JLabel recensioneVoto;
 
     /**
-     * Instantiates a new Profilo album.
+     * Istanzia e inizializza la finestra grafica per il Catalogo Generi.
      *
      * @param controller     the controller
      * @param frameChiamante the frame chiamante
@@ -121,7 +121,7 @@ public class ProfiloAlbum {
         numeroTracceLabel.setText(String.valueOf(album.getTracklist().size()));
         dataPubblicazioneLabel.setText(String.valueOf(album.getDataPubblicazione()));
         numeroRecensioniLabel.setText(String.valueOf(album.getRecensioni().size()));
-        mediaVotiLabel.setText(String.valueOf(album.getRating()));
+        mediaVotiLabel.setText(String.format("%.2f",album.getRating()));
         numeroGeneriLabel.setText(String.valueOf(album.getGeneri().size()));
         visualizzaButton.setVisible(false);
         recensioneVoto.setText(String.valueOf((float) recensioneSlider.getValue() / 10));

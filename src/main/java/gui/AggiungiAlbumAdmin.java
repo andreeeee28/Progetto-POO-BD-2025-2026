@@ -37,18 +37,20 @@ public class AggiungiAlbumAdmin {
     /**
      * Istanzia e inizializza la finestra grafica per la creazione di un nuovo album.
      *
-     * @param controller L'istanza del Controller per gestire la logica di business e l'interazione con il database.
+     * @param controller     L'istanza del Controller per gestire la logica di business e l'interazione con il database.
      * @param frameChiamante La finestra precedente da cui è stata aperta questa schermata (per permettere di tornare indietro).
-     * @param utente L'oggetto Utente (admin) attualmente loggato nel sistema.
+     * @param utente         L'oggetto Utente (Admin) attualmente loggato nel sistema.
      */
     public AggiungiAlbumAdmin(Controller controller, JFrame frameChiamante, Utente utente) {
         frame = new JFrame("Aggiungi Album");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getRootPane().setDefaultButton(creaButton);
-        frame.setVisible(true);
+
+
         configuraElementi(controller);
 
+        frame.setVisible(true);
 
         //Tasto indietro
         indietroButton.addActionListener(new ActionListener() {
@@ -97,11 +99,12 @@ public class AggiungiAlbumAdmin {
         for (Artista artistaNelDataBase : artistiNelDataBase) {
             comboBoxArtista.addItem(artistaNelDataBase.getNomeArte());
         }
+
+        //Data
         if (comboBoxArtista.getItemCount() > 0) {
             comboBoxArtista.setSelectedIndex(0);
             setComboBoxAnno(controller);
         }
-
         for (int i = 1; i < 13; i++) {
             comboBoxMese.addItem(i);
         }
@@ -125,12 +128,11 @@ public class AggiungiAlbumAdmin {
 
 
     //Funzioni Listeners
-
     /**
      * Gestisce la chiusura della finestra attuale e il ripristino della visibilità della finestra chiamante.
      *
      * @param frameChiamante La finestra chiamante da mostrare nuovamente.
-     * @param frame La finestra corrente da chiudere (dispose).
+     * @param frame          La finestra corrente da chiudere (dispose).
      */
     private void indietro(JFrame frameChiamante, JFrame frame) {
         frameChiamante.setLocationRelativeTo(null);
@@ -142,9 +144,9 @@ public class AggiungiAlbumAdmin {
      * Raccoglie i dati inseriti nel form, ne verifica la validità e procede con la creazione e il salvataggio del nuovo album.
      * Avvia inoltre i popup per l'inserimento delle singole canzoni della tracklist.
      *
-     * @param controller L'istanza del Controller per l'esecuzione dei controlli e l'aggiunta al DB fittizio.
+     * @param controller     L'istanza del Controller per l'esecuzione dei controlli e l'aggiunta al DB fittizio.
      * @param frameChiamante La finestra precedente a cui tornare in caso di operazione conclusa con successo.
-     * @param frame La finestra corrente utilizzata come genitore per i popup di input.
+     * @param frame          La finestra corrente utilizzata come genitore per i popup di input.
      * @throws CampoNonValido Se la validazione dei campi fallisce (es. album duplicato).
      */
     private void crea(Controller controller, JFrame frameChiamante, JFrame frame) throws CampoNonValido {

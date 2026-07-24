@@ -132,18 +132,35 @@ public class Login {
      * Preleva le credenziali inserite e tenta l'accesso tramite il controller, aprendo la Home in caso di successo.
      */
     public void cliccatoAccedi() {
-        String StringaCampoUtente = campoNomeUtente.getText();
-        String StringaCampoPassword = new String(campoPassword.getPassword());
-        try {
+        if (standardRadioButton.isSelected() && !adminRadioButton.isSelected()){
+            String StringaCampoUtente = campoNomeUtente.getText();
+            String StringaCampoPassword = new String(campoPassword.getPassword());
+            try {
 
-            Utente utenteAttuale = controller.cliccatoAccedi(StringaCampoUtente, StringaCampoPassword);
-            new Home(controller, frame, utenteAttuale);
-            frame.setVisible(false);
+                Utente utenteAttuale = controller.cliccatoAccedi(StringaCampoUtente, StringaCampoPassword);
+                new Home(controller, frame, utenteAttuale);
+                frame.setVisible(false);
 
-        } catch (CampoNonValido ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Errore imprevisto provare a rinserire i dati");
+            } catch (CampoNonValido ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Errore imprevisto provare a rinserire i dati");
+            }
+        } else if (adminRadioButton.isSelected() && !standardRadioButton.isSelected()){
+            String StringaCampoUtente = campoNomeUtente.getText();
+            String StringaCampoPassword = new String(campoPassword.getPassword());
+            String StringaCampoIdAdmin = campoID.getText();
+            try {
+
+                Utente utenteAttuale = controller.cliccatoAccedi(StringaCampoUtente, StringaCampoPassword, StringaCampoIdAdmin);
+                new Home(controller, frame, utenteAttuale);
+                frame.setVisible(false);
+
+            } catch (CampoNonValido ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Errore imprevisto provare a rinserire i dati");
+            }
         }
     }
 

@@ -31,11 +31,11 @@ public class Home {
     private JButton aggiungiAlbumButton;
 
     /**
-     * Istanzia e inizializza la schermata principale, configurando le azioni dei pulsanti di navigazione.
+     * Istanzia e inizializza la schermata principale, configurando le azioni dei pulsanti di navigazione in base all'utente attualmente loggato.
      *
-     * @param controller Il Controller per la gestione della logica di business.
+     * @param controller     L'istanza del Controller per gestire l'interazione con il database.
      * @param frameChiamante La finestra precedente (solitamente il Login) da cui si è effettuato l'accesso.
-     * @param utenteAttuale L'utente (standard o admin) attualmente connesso al sistema.
+     * @param utenteAttuale  L'utente (standard o admin) attualmente connesso al sistema.
      */
     public Home(Controller controller, JFrame frameChiamante, Utente utenteAttuale) {
         frame = new JFrame("Home");
@@ -152,8 +152,8 @@ public class Home {
     /**
      * Apre la schermata del catalogo dei generi musicali e nasconde la dashboard corrente.
      *
-     * @param controller Il Controller per gestire la comunicazione con i dati.
-     * @param frame La finestra Home da nascondere.
+     * @param controller    Il Controller per gestire la comunicazione con i dati.
+     * @param frame         La finestra Home da nascondere.
      * @param utenteAttuale L'utente attualmente connesso.
      */
     private void newCatalogoGeneri(Controller controller, JFrame frame, Utente utenteAttuale) {
@@ -164,8 +164,8 @@ public class Home {
     /**
      * Apre la schermata del catalogo degli artisti e nasconde la dashboard corrente.
      *
-     * @param controller Il Controller per gestire la comunicazione con i dati.
-     * @param frame La finestra Home da nascondere.
+     * @param controller    Il Controller per gestire la comunicazione con i dati.
+     * @param frame         La finestra Home da nascondere.
      * @param utenteAttuale L'utente attualmente connesso.
      */
     private void newCatalogoArtisti(Controller controller, JFrame frame, Utente utenteAttuale) {
@@ -176,8 +176,8 @@ public class Home {
     /**
      * Apre la schermata per la creazione di una nuova proposta (riservata agli utenti standard) e nasconde la dashboard corrente.
      *
-     * @param controller Il Controller per gestire la comunicazione con i dati.
-     * @param frame La finestra Home da nascondere.
+     * @param controller    Il Controller per gestire la comunicazione con i dati.
+     * @param frame         La finestra Home da nascondere.
      * @param utenteAttuale L'utente attualmente connesso.
      */
     private void newCreaProposta(Controller controller, JFrame frame, Utente utenteAttuale) {
@@ -188,8 +188,8 @@ public class Home {
     /**
      * Apre la schermata per l'inserimento di un nuovo musicista (riservata agli admin) e nasconde la dashboard corrente.
      *
-     * @param controller Il Controller per gestire la comunicazione con i dati.
-     * @param frame La finestra Home da nascondere.
+     * @param controller    Il Controller per gestire la comunicazione con i dati.
+     * @param frame         La finestra Home da nascondere.
      * @param utenteAttuale L'admin attualmente connesso.
      */
     private void newAggiungiMusicistaAdmin(Controller controller, JFrame frame, Utente utenteAttuale) {
@@ -200,8 +200,8 @@ public class Home {
     /**
      * Apre la schermata per l'inserimento di una nuova band (riservata agli admin) e nasconde la dashboard corrente.
      *
-     * @param controller Il Controller per gestire la comunicazione con i dati.
-     * @param frame La finestra Home da nascondere.
+     * @param controller    Il Controller per gestire la comunicazione con i dati.
+     * @param frame         La finestra Home da nascondere.
      * @param utenteAttuale L'admin attualmente connesso.
      */
     private void newAggiungiBandAdmin(Controller controller, JFrame frame, Utente utenteAttuale) {
@@ -212,8 +212,8 @@ public class Home {
     /**
      * Apre la schermata per l'inserimento di un nuovo album (riservata agli admin) e nasconde la dashboard corrente.
      *
-     * @param controller Il Controller per gestire la comunicazione con i dati.
-     * @param frame La finestra Home da nascondere.
+     * @param controller    Il Controller per gestire la comunicazione con i dati.
+     * @param frame         La finestra Home da nascondere.
      * @param utenteAttuale L'admin attualmente connesso.
      */
     private void newAggiungiAlbumAdmin(Controller controller, JFrame frame, Utente utenteAttuale) {
@@ -224,8 +224,8 @@ public class Home {
     /**
      * Apre la schermata per l'inserimento di un nuovo genere (riservata agli admin) e nasconde la dashboard corrente.
      *
-     * @param controller Il Controller per gestire la comunicazione con i dati.
-     * @param frame La finestra Home da nascondere.
+     * @param controller    Il Controller per gestire la comunicazione con i dati.
+     * @param frame         La finestra Home da nascondere.
      * @param utenteAttuale L'admin attualmente connesso.
      */
     private void newAggiungiGeneriAdmin(Controller controller, JFrame frame, Utente utenteAttuale) {
@@ -236,8 +236,8 @@ public class Home {
     /**
      * Apre la schermata per la valutazione delle proposte in sospeso (riservata agli admin) e nasconde la dashboard corrente.
      *
-     * @param controller Il Controller per gestire la comunicazione con i dati.
-     * @param frame La finestra Home da nascondere.
+     * @param controller    Il Controller per gestire la comunicazione con i dati.
+     * @param frame         La finestra Home da nascondere.
      * @param utenteAttuale L'admin attualmente connesso.
      */
     private void newValutaProposteAdmin(Controller controller, JFrame frame, Utente utenteAttuale) {

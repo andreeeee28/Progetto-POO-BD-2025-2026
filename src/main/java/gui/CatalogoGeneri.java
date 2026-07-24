@@ -26,14 +26,14 @@ public class CatalogoGeneri {
 
 
     /**
-     * Instantiates a new Catalogo generi.
+     * Istanzia e inizializza la finestra grafica per il Catalogo Generi.
      *
-     * @param controller     the controller
-     * @param frameChiamante the frame chiamante
-     * @param utenteAttuale  the utente attuale
+     * @param controller     L'istanza del Controller per gestire l'interazione con il database.
+     * @param frameChiamante La finestra precedente da cui è stata aperta questa schermata (per permettere di tornare indietro).
+     * @param utenteAttuale  L'oggetto Utente (Admin) attualmente loggato nel sistema.
      */
     public CatalogoGeneri(Controller controller, JFrame frameChiamante, Utente utenteAttuale) {
-        frame = new JFrame("Catalogo Artisti");
+        frame = new JFrame("Catalogo Generi");
         frame.setContentPane(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getRootPane().setDefaultButton(visualizzaButton);
@@ -72,7 +72,13 @@ public class CatalogoGeneri {
     }
 
     //Riempimento liste
-    //Generi
+
+    /**
+     * Riempe la JList di Generi, permettendo all'utente di selezionarli per la navigazione del catalogo.
+     *
+     * @param controller L'istanza del Controller per gestire l'interazione con il database.
+     * @return L'ArrayList di Generi presenti nel DataBase
+     */
     private ArrayList<Genere> riempiListaGeneri(Controller controller) {
         DefaultListModel<String> modelloLista = new DefaultListModel<>();
 
@@ -90,14 +96,25 @@ public class CatalogoGeneri {
     }
 
     //Funzioni Listeners
-    //Indietro
+
+    /**
+     * Gestisce la chiusura della finestra attuale e il ripristino della visibilità della finestra chiamante.
+     *
+     * @param frameChiamante La finestra chiamante da mostrare nuovamente.
+     * @param frame          La finestra corrente da chiudere (dispose).
+     */
     private void indietro(JFrame frameChiamante, JFrame frame) {
         frameChiamante.setLocationRelativeTo(null);
         frameChiamante.setVisible(true);
         frame.dispose();
     }
 
-    //Filtra Lista
+    /**
+     * Filtra la Lista di Generi a partire da una stringa di testo.
+     *
+     * @param controller   L'istanza del Controller per gestire l'interazione con il database.
+     * @param testoCercato La stringa di testo necessaria a filtrare i Generi
+     */
     private ArrayList<Genere> filtraLista(Controller controller, String testoCercato) {
         DefaultListModel<String> modelloLista = new DefaultListModel<>();
 
@@ -117,7 +134,13 @@ public class CatalogoGeneri {
         return generiFiltrati;
     }
 
-    //Profilo Genere
+    /**
+     * Istanzia e inizializza una nuova finestra grafica per il Profilo del genere selezionato.
+     *
+     * @param controller    L'istanza del Controller per gestire l'interazione con il database.
+     * @param frame         La finestra corrente da nascondere
+     * @param utenteAttuale L'utente attualmente loggato nel sistema
+     */
     private void newProfiloGenere(Controller controller, JFrame frame, Utente utenteAttuale) {
         try {
             new ProfiloGenere(controller, frame, generi.get(listaGeneri.getSelectedIndex()), utenteAttuale);

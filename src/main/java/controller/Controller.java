@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * The type Controller.
@@ -102,15 +103,15 @@ public class Controller {
      *
      * @return L'ArrayList con gli oggetti istanza della classe Proposta trovato
      */
-    public ArrayList<Proposta> getProposteDaValutare (){
+    public ArrayList<Proposta> getProposteDaValutare() {
         ArrayList<Proposta> proposteDaValutare = new ArrayList<>();
-        for(Proposta proposta : propostePresenti){
-            if(proposta.getStatoProposta() == StatoProposta.VALUTAZIONE_IN_CORSO){
+        for (Proposta proposta : propostePresenti) {
+            if (proposta.getStatoProposta() == StatoProposta.VALUTAZIONE_IN_CORSO) {
                 proposteDaValutare.add(proposta);
             }
         }
 
-        return  proposteDaValutare;
+        return proposteDaValutare;
     }
 
     /**
@@ -118,14 +119,16 @@ public class Controller {
      *
      * @return the array list
      */
-    public ArrayList<Proposta> getPropostePresenti(){return propostePresenti;}
+    public ArrayList<Proposta> getPropostePresenti() {
+        return propostePresenti;
+    }
 
     // SETTER
 
     /**
      * Modifica l'attirbuto statoProposta dell'oggetto Proposta selezionato dall'Admin da "VALUTAZIONE_IN_CORSO" ad "ACCETTATA" nel .
      * database fittizio. Per farlo a causa dell'utilizzo di un file text viene cancellato l'intero contenuto del file
-     *  e poi riscritto con la modifica
+     * e poi riscritto con la modifica
      *
      * @param propostaDaAccettare L'oggetto istanza della classe Proposta selezionato dall'admin per essere modificato
      */
@@ -239,10 +242,10 @@ public class Controller {
      * Il metodo scorre tutte le recensioni in memoria e le raggruppa per album.
      */
     public void setRecensioniAlbum() {
-        for(Album album : albumPresenti){
+        for (Album album : albumPresenti) {
             ArrayList<Recensione> recensioniAlbumSingolo = new ArrayList<>();
-            for(Recensione recensione : recensioniPresenti){
-                if(recensione.getAlbum().equals(album)){
+            for (Recensione recensione : recensioniPresenti) {
+                if (recensione.getAlbum().equals(album)) {
                     recensioniAlbumSingolo.add(recensione);
                 }
             }
@@ -264,9 +267,9 @@ public class Controller {
      * @param titoloAlbum Il titolo esatto dell'oggetto istanza della classe Album da cercare.
      * @return L'oggetto Album trovato, oppure null se non esiste un oggetto istanza della classe Album con quel titolo
      */
-    public Album trovaAlbumDaTitolo(String titoloAlbum){
-        for(Album album : albumPresenti){
-            if(album.getTitolo().equals(titoloAlbum)){
+    public Album trovaAlbumDaTitolo(String titoloAlbum) {
+        for (Album album : albumPresenti) {
+            if (album.getTitolo().equals(titoloAlbum)) {
                 return album;
             }
         }
@@ -312,9 +315,9 @@ public class Controller {
      * @param username l'username esatto dell'oggetto istanza della classe Utente da cercare
      * @return l'oggetto Utente trovato, oppure null se non esiste un oggetto istanza della classe Utente con quell'username
      */
-    public Utente trovaUtenteDaUsername (String username){
-        for(Utente utente : utentiRegistrati){
-            if(utente.getUsername().equals(username)){
+    public Utente trovaUtenteDaUsername(String username) {
+        for (Utente utente : utentiRegistrati) {
+            if (utente.getUsername().equals(username)) {
                 return utente;
             }
         }
@@ -328,9 +331,9 @@ public class Controller {
      * @param idArtista L'idArtista esatto dell'oggetto istanza della classe Artista da cercare
      * @return l'oggetto Artista trovato, oppure null se non esiste un oggetto istanza della classe Artista con quell'idArtista
      */
-    public Artista trovaArtistaDaId(String idArtista){
-        for (Artista artista : artistiPresenti){
-            if (artista.getIdArtista().equals(idArtista)){
+    public Artista trovaArtistaDaId(String idArtista) {
+        for (Artista artista : artistiPresenti) {
+            if (artista.getIdArtista().equals(idArtista)) {
                 return artista;
             }
         }
@@ -344,7 +347,7 @@ public class Controller {
      *
      * @param proposta L'oggetto Proposta da validare.
      * @throws CampoNonValido Se il titolo contiene la sequenza vietata ';;;;', oppure se
-     * lo stesso utente ha già inviato una proposta per lo stesso elemento (stesso titolo e tipo).
+     *                        lo stesso utente ha già inviato una proposta per lo stesso elemento (stesso titolo e tipo).
      */
     public void verificaProposta(Proposta proposta) throws CampoNonValido {
         if (proposta.getTitoloElemento().contains(";;;;")) {
@@ -387,11 +390,11 @@ public class Controller {
      * Controlla la validità dei dati inseriti per la creazione di una nuova band, evitando
      * caratteri illegali e conflitti con band già esistenti.
      *
-     * @param nomeBand Il nome d'arte della band da verificare.
+     * @param nomeBand      Il nome d'arte della band da verificare.
      * @param musicistiBand La lista dei membri che comporranno la band.
-     * @param id L'identificativo univoco assegnato alla band.
+     * @param id            L'identificativo univoco assegnato alla band.
      * @throws CampoNonValido Se i campi contengono ';;;;', se l'ID è già utilizzato a sistema,
-     * o se esiste già una band con lo stesso nome e gli stessi identici membri.
+     *                        o se esiste già una band con lo stesso nome e gli stessi identici membri.
      */
     public void verificaBand(String nomeBand, ArrayList<Musicista> musicistiBand, String id) throws CampoNonValido {
 
@@ -443,11 +446,11 @@ public class Controller {
      *
      * @param genereDaVerificare L'oggetto Genere da validare.
      * @throws CampoNonValido Se il nome o la descrizione contengono ';;;;', oppure se un genere
-     * con lo stesso nome (ignorando maiuscole/minuscole) è già presente.
+     *                        con lo stesso nome (ignorando maiuscole/minuscole) è già presente.
      */
     public void verificaGeneri(Genere genereDaVerificare) throws CampoNonValido {
 
-        if(genereDaVerificare.getNome().contains(";;;;") || genereDaVerificare.getDescrizione().contains(";;;;")){
+        if (genereDaVerificare.getNome().contains(";;;;") || genereDaVerificare.getDescrizione().contains(";;;;")) {
             throw new CampoNonValido("Errore: Il nome o la descrizione non possono contenere i caratteri ';;;;'");
         }
 
@@ -464,10 +467,10 @@ public class Controller {
      *
      * @param musicista L'oggetto Musicista da controllare.
      * @throws CampoNonValido Se i campi di testo contengono ';;;;', se l'ID specificato è già in uso
-     *  da un altro artista, o se esiste già un artista con lo stesso nome d'arte.
+     *                        da un altro artista, o se esiste già un artista con lo stesso nome d'arte.
      */
     public void verificaMusicista(Musicista musicista) throws CampoNonValido {
-        if(musicista.getNomeArte().contains(";;;;") || musicista.getNomeVero().contains(";;;;") ||
+        if (musicista.getNomeArte().contains(";;;;") || musicista.getNomeVero().contains(";;;;") ||
                 musicista.getCognonomeVero().contains(";;;;") || musicista.getIdArtista().contains(";;;;")) {
             throw new CampoNonValido("Errore: I campi non possono contenere ';;;;'");
         }
@@ -489,9 +492,9 @@ public class Controller {
      * Crea oggetti di tipo Utente o Admin in base al ruolo letto nel file.
      *
      * @throws CampoNonValido Se la sintassi del file non è valida o i dati sono corrotti
-     * (gestito internamente con un blocco catch generale).
+     *                        (gestito internamente con un blocco catch generale).
      */
-    public void caricaUtentiDaFile() throws CampoNonValido{
+    public void caricaUtentiDaFile() throws CampoNonValido {
 
         String percorsoFile = "DB_fittizzi/utenti.txt";
         java.io.BufferedReader br = null;
@@ -519,6 +522,7 @@ public class Controller {
 
             }
             System.out.println("Utenti caricati con successo dal file txt!");
+            utentiRegistrati.sort(Comparator.comparing(Utente::getUsername));
 
         } catch (Exception e) {
             System.out.println("Errore durante la lettura del file utenti: " + e.getMessage());
@@ -538,9 +542,9 @@ public class Controller {
      * Ricrea anche i collegamenti bidirezionali tra generi padri e sottogeneri.
      *
      * @throws CampoNonValido Se la struttura delle stringhe lette non rispetta il formato standard
-     * (gestito internamente con blocco catch).
+     *                        (gestito internamente con blocco catch).
      */
-    public void caricaGeneriDaFile() throws CampoNonValido{
+    public void caricaGeneriDaFile() throws CampoNonValido {
 
         String percorsoFile = "DB_fittizzi/generi.txt";
         java.io.BufferedReader br = null;
@@ -563,7 +567,7 @@ public class Controller {
 
                 if (dati.length >= 3 && !dati[2].isEmpty()) {
                     String[] generiPadriString = dati[2].split(",,,,");
-                    for(String generePadre : generiPadriString ) {
+                    for (String generePadre : generiPadriString) {
                         Genere padre = trovaGenereDaNomeGenere(generePadre.trim());
                         if (padre != null) {
                             nuovoGenere.addGeneriPadre(padre);
@@ -573,7 +577,7 @@ public class Controller {
                 }
                 if (dati.length >= 4 && !dati[3].isEmpty()) {
                     String[] generiFigliString = dati[3].split(",,,,");
-                    for(String genereFiglio : generiFigliString ) {
+                    for (String genereFiglio : generiFigliString) {
                         Genere figlio = trovaGenereDaNomeGenere(genereFiglio.trim());
                         if (figlio != null) {
                             nuovoGenere.addSottogeneri(figlio);
@@ -583,6 +587,7 @@ public class Controller {
                 }
             }
             System.out.println("Generi caricati con successo dal file txt!");
+            generiPresenti.sort(Comparator.comparing(Genere::getNome));
 
         } catch (Exception e) {
             System.out.println("Errore durante la lettura del file genere " + e.getMessage());
@@ -602,9 +607,9 @@ public class Controller {
      * di tutti gli artisti.
      *
      * @throws CampoNonValido Se c'è un errore nella conversione dei tipi di dato
-     * (es. testo invece di numeri) durante la lettura delle righe.
+     *                        (es. testo invece di numeri) durante la lettura delle righe.
      */
-    public void caricaMusicistiDaFile() throws CampoNonValido{
+    public void caricaMusicistiDaFile() throws CampoNonValido {
 
         String percorsoFile = "DB_fittizzi/musicisti.txt";
         java.io.BufferedReader br = null;
@@ -620,13 +625,14 @@ public class Controller {
                 int annoInizioAttivita = Integer.parseInt(dati[1]);
                 String idArtistia = dati[2];
                 String nomeVero = dati[3];
-                String cognomeVero = dati [4];
+                String cognomeVero = dati[4];
                 LocalDate dataDiNascita = LocalDate.parse(dati[5]);
-                Musicista NuovoMusicista = new Musicista(nomeArte,annoInizioAttivita,idArtistia,nomeVero,cognomeVero,dataDiNascita);
+                Musicista NuovoMusicista = new Musicista(nomeArte, annoInizioAttivita, idArtistia, nomeVero, cognomeVero, dataDiNascita);
                 this.artistiPresenti.add(NuovoMusicista);
 
             }
             System.out.println("Musicisti caricati con successo dal file txt!");
+            artistiPresenti.sort(Comparator.comparing(Artista::getNomeArte));
 
         } catch (Exception e) {
             System.out.println("Errore durante la lettura del file Musicista: " + e.getMessage());
@@ -646,7 +652,7 @@ public class Controller {
      * e agganciandoli correttamente ai rispettivi musicisti tramite la classe MembroBand.
      *
      * @throws CampoNonValido Se una band salvata risulta avere meno membri del consentito
-     * o se il collegamento con i musicisti fallisce.
+     *                        o se il collegamento con i musicisti fallisce.
      */
     public void caricaBandDaFile() throws CampoNonValido {
         String percorsoBand = "DB_fittizzi/band.txt";
@@ -728,6 +734,7 @@ public class Controller {
             }
 
             System.out.println("Band e Membri caricati con successo (tramite ArrayList)!");
+            artistiPresenti.sort(Comparator.comparing(Artista::getNomeArte));
 
         } catch (Exception e) {
             System.out.println("Errore durante la lettura del file band: " + e.getMessage());
@@ -743,7 +750,7 @@ public class Controller {
      * autore e i generi musicali a cui appartiene.
      *
      * @throws CampoNonValido Se un artista o un genere a cui fa riferimento un album
-     * non viene trovato tra quelli attualmente caricati in memoria.
+     *                        non viene trovato tra quelli attualmente caricati in memoria.
      */
     public void caricaAlbumDaFile() throws CampoNonValido {
         String percorsoFile = "DB_fittizzi/album.txt";
@@ -805,6 +812,7 @@ public class Controller {
                 }
             }
             System.out.println("Album caricati con successo dal file txt!");
+            albumPresenti.sort(Comparator.comparing(Album::getTitolo));
 
         } catch (Exception e) {
             System.out.println("Errore durante la lettura del file album: " + e.getMessage());
@@ -853,6 +861,7 @@ public class Controller {
                 this.propostePresenti.add(p);
             }
             System.out.println("Proposte caricate con successo dal file txt!");
+            propostePresenti.sort(Comparator.comparing(Proposta::getDataRichiesta));
 
         } catch (CampoNonValido e) {
             System.out.println("Errore di validazione durante il caricamento: " + e.getMessage());
@@ -875,7 +884,7 @@ public class Controller {
      *
      * @throws CampoNonValido Se si verifica un errore durante il parsing dei dati letti.
      */
-    public void caricaRecensioniDaFile() throws CampoNonValido{
+    public void caricaRecensioniDaFile() throws CampoNonValido {
 
         String percorsoFile = "DB_fittizzi/recensioni.txt";
         java.io.BufferedReader br = null;
@@ -892,10 +901,10 @@ public class Controller {
 
                 String nomeAlbum = dati[0];
                 Album albumRecensione = trovaAlbumDaTitolo(nomeAlbum);
-                String nomeUtente= dati[1];
+                String nomeUtente = dati[1];
                 Utente utenteRecensione = trovaUtenteDaUsername(nomeUtente);
                 if (albumRecensione != null && utenteRecensione != null) {
-                    float voto  = Float.parseFloat(dati[2]);
+                    float voto = Float.parseFloat(dati[2]);
                     LocalDate dataRecensione = LocalDate.parse(dati[3]);
                     Recensione nuovaRecensione = new Recensione(albumRecensione, utenteRecensione, voto, dataRecensione);
                     recensioniPresenti.add(nuovaRecensione);
@@ -903,7 +912,8 @@ public class Controller {
                     System.out.println("Attenzione: recensione saltata, utente o album non trovati.");
                 }
             }
-            System.out.println("recensioni caricate con successo dal file txt!");
+            System.out.println("Recensioni caricate con successo dal file txt!");
+            recensioniPresenti.sort(Comparator.comparing(Recensione::getData));
 
         } catch (Exception e) {
             System.out.println("Errore durante la lettura del file Musicista: " + e.getMessage());
@@ -923,13 +933,14 @@ public class Controller {
     /**
      * Aggiunge un nuovo utente alla fine del file di testo del database fittizio scrivendo al suo interno in modo
      * ordinato tutte le informazione necessarie per salvarlo e successivamente leggerlo correttamente
+     *
      * @param utenteDaScrivere L'oggetto Utente da aggiungere al database
      *
      */
-    public void scriviUtenteDataBase(Utente utenteDaScrivere){
+    public void scriviUtenteDataBase(Utente utenteDaScrivere) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("DB_fittizzi/utenti.txt", true))) {
-            writer.write( utenteDaScrivere.getUsername() + ";;;;" + utenteDaScrivere.getPassword() + ";;;;" +
-                    utenteDaScrivere.getNazione().name() + ";;;;" +"Utente");
+            writer.write(utenteDaScrivere.getUsername() + ";;;;" + utenteDaScrivere.getPassword() + ";;;;" +
+                    utenteDaScrivere.getNazione().name() + ";;;;" + "Utente");
             writer.newLine();
 
         } catch (IOException e) {
@@ -941,14 +952,15 @@ public class Controller {
     /**
      * Aggiunge una nuova proposta alla fine del file di testo del database fittizio scrivendo al suo interno in modo
      * ordinato tutte le informazioni necessarie per salvarla e successivamente leggerla correttamente
+     *
      * @param propostaDaAggiungere l'oggetto Proposta da aggiungere al database
      */
-    public void scriviPropostaNelDataBase(Proposta propostaDaAggiungere)  {
+    public void scriviPropostaNelDataBase(Proposta propostaDaAggiungere) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("DB_fittizzi/proposte.txt", true))) {
             String descrizioneSicura = propostaDaAggiungere.getDescrizione().replace("\n", "[ACCAPO]");
             writer.write(propostaDaAggiungere.getTipoElemento() + ";;;;" + propostaDaAggiungere.getTitoloElemento() + ";;;;" +
                     propostaDaAggiungere.getDescrizione() + ";;;;" + propostaDaAggiungere.getDataRichiesta() + ";;;;" +
-                    propostaDaAggiungere.getStatoProposta() + ";;;;" + propostaDaAggiungere.getAutoreProposta().getUsername() );
+                    propostaDaAggiungere.getStatoProposta() + ";;;;" + propostaDaAggiungere.getAutoreProposta().getUsername());
             writer.newLine();
 
         } catch (IOException e) {
@@ -959,13 +971,14 @@ public class Controller {
     /**
      * Aggiunge una nuova recensione alla fine del file di testo del database fittizio scrivendo al suo interno
      * in modo ordinato tutte le informazione necessarie per salvarla e successivamente leggerla correttamente
+     *
      * @param recensioneDaAggiungere l'oggetto Recensione da aggiungere al database
      */
-    public void scriviRecensioniDataBase(Recensione recensioneDaAggiungere){
+    public void scriviRecensioniDataBase(Recensione recensioneDaAggiungere) {
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("DB_fittizzi/recensioni.txt", true))) {
             writer.write(recensioneDaAggiungere.getAlbum().getTitolo() + ";;;;" + recensioneDaAggiungere.getUtente().getUsername()
-                    + ";;;;" + recensioneDaAggiungere.getVoto() + ";;;;" + recensioneDaAggiungere.getData()) ;
+                    + ";;;;" + recensioneDaAggiungere.getVoto() + ";;;;" + recensioneDaAggiungere.getData());
             writer.newLine();
         } catch (IOException e) {
             System.out.println("Errore: " + e.getMessage());
@@ -976,6 +989,7 @@ public class Controller {
     /**
      * Aggiunge un nuovo musicista alla fine del file di testo del database fittizio scrivendo al suo interno
      * in modo ordinato tutte le informazioni necessarie per salvarlo e successivamente leggerlo correttamente
+     *
      * @param musicistaAggiunto L'oggetto Musicista da aggiungere al database
      */
     public void scriviMusicistaDataBase(Musicista musicistaAggiunto) {
@@ -993,6 +1007,7 @@ public class Controller {
     /**
      * Aggiunge un nuovo membro band alla fine del file di testo del database fittizio scrivendo al suo interno
      * in modo ordinato tutte le informazioni necessarie per salvarlo e successivamente leggerlo correttamente
+     *
      * @param membroBandDaAggiungere L'oggetto MembroBand da aggiungere al database
      */
     public void scriviMembroBandDataBase(MembroBand membroBandDaAggiungere) {
@@ -1010,6 +1025,7 @@ public class Controller {
     /**
      * Aggiunge un nuovo genere alla fine del file di testo del database fittizio scrivendo al suo interno
      * in modo ordinato tutte le informazioni necessarie per salvarlo e successivamente leggerlo correttamente
+     *
      * @param genereDaAggiungere L'oggetto Genere da aggiungere al database
      */
     public void scriviGenereDataBase(Genere genereDaAggiungere) {
@@ -1054,6 +1070,7 @@ public class Controller {
     /**
      * Aggiunge un nuovo album alla fine del file di testo del database fittizio scrivendo al suo interno
      * in modo ordinato tutte le informazioni necessarie per salvarlo e successivamente leggerlo correttamente
+     *
      * @param albumDaAggiungere L'oggetto Album da aggiungere al database
      */
     public void scriviAlbumDataBase(Album albumDaAggiungere) {
@@ -1099,11 +1116,12 @@ public class Controller {
     /**
      * Aggiunge una nuova band alla fine del file di testo del database fittizio scrivendo al suo interno
      * in modo ordinato tutte le informazioni necessarie per salvarla e successivamente leggerla correttamente
+     *
      * @param nuovaBand L'oggetto Band da aggiungere al database
      */
     public void scriviBandDataBase(Band nuovaBand) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("DB_fittizzi/band.txt", true))) {
-            writer.write(nuovaBand.getNomeArte() + ";;;;" + nuovaBand.getAnnoInizioAttivita() + ";;;;" + nuovaBand.getIdArtista() + ";;;;" +nuovaBand.getAnnoScioglimento());
+            writer.write(nuovaBand.getNomeArte() + ";;;;" + nuovaBand.getAnnoInizioAttivita() + ";;;;" + nuovaBand.getIdArtista() + ";;;;" + nuovaBand.getAnnoScioglimento());
             writer.newLine();
 
         } catch (IOException e) {
@@ -1118,23 +1136,52 @@ public class Controller {
      * con la lista di tutti gli utenti caricati in memoria.
      *
      * @param campoNomeUtente Il nome utente digitato nel form di login
-     * @param campoPassword La password digitata nel form di login
+     * @param campoPassword   La password digitata nel form di login
      * @return L'oggetto Utente autenticato con successo
      * @throws CampoNonValido Se le credenziali inserite non corrispondono a nessun
-     * utente registrato nel sistema
+     *                        utente registrato nel sistema
      */
     public Utente cliccatoAccedi(String campoNomeUtente, String campoPassword) throws CampoNonValido {
         for (Utente utente : utentiRegistrati) {
             String passwordUtente = utente.getPassword();
             String nomeUtente = utente.getUsername();
-            if (passwordUtente.equals(campoPassword) && nomeUtente.equals(campoNomeUtente)) {
 
+            if (passwordUtente.equals(campoPassword) && nomeUtente.equals(campoNomeUtente)) {
+                if (utente instanceof Admin) {
+                    throw new CampoNonValido("ERRORE! Tipologia di Utente errata");
+                }
                 return utente;
             }
 
         }
         throw new CampoNonValido("ERRORE! Credenziali non valide");
+    }
 
+    /**
+     * Verifica le credenziali inserite dall'utente durante il login, confrontandole
+     * con la lista di tutti gli utenti caricati in memoria.
+     *
+     * @param campoNomeUtente Il nome utente digitato nel form di login
+     * @param campoPassword   La password digitata nel form di login
+     * @param campoID         L'ID Admin digitato nel form di login
+     * @return L'oggetto Utente autenticato con successo
+     * @throws CampoNonValido Se le credenziali inserite non corrispondono a nessun
+     *                        utente registrato nel sistema
+     */
+    public Utente cliccatoAccedi(String campoNomeUtente, String campoPassword, String campoID) throws CampoNonValido {
+        for (Utente utente : utentiRegistrati) {
+            String passwordUtente = utente.getPassword();
+            String nomeUtente = utente.getUsername();
+            String idAdmin = ((Admin) utente).getIdAdmin();
+
+            if (passwordUtente.equals(campoPassword) && nomeUtente.equals(campoNomeUtente) && idAdmin.equals(campoID)) {
+
+                return utente;
+
+            }
+
+        }
+        throw new CampoNonValido("ERRORE! Credenziali non valide");
     }
 
     /**
@@ -1142,20 +1189,20 @@ public class Controller {
      * e che i campi non contengano caratteri vietati.
      *
      * @param campoNomeUtente L'username scelto per il nuovo account
-     * @param campoPassword La password scelta per il nuovo account
-     * @param nazione La nazione selezionata dall'utente in fase di registrazione
+     * @param campoPassword   La password scelta per il nuovo account
+     * @param nazione         La nazione selezionata dall'utente in fase di registrazione
      * @return L'oggetto Utente appena creato e salvato
      * @throws CampoNonValido Se il nome utente è già in uso da un altro utente oppure se
-     * l'username o la password contengono il separatore vietato ';;;;'
+     *                        l'username o la password contengono il separatore vietato ';;;;'
      */
     public Utente cliccatoRegistrati(String campoNomeUtente, String campoPassword, Nazione nazione) throws CampoNonValido {
 
-        if(campoNomeUtente.contains(";;;;") || campoPassword.contains(";;;;")) {
+        if (campoNomeUtente.contains(";;;;") || campoPassword.contains(";;;;")) {
             throw new CampoNonValido("Errore: Il nome utente o la password non possono contenere ';;;;'");
         }
 
-        for(Utente utente : utentiRegistrati) {
-            if(campoNomeUtente.equals(utente.getUsername())) {
+        for (Utente utente : utentiRegistrati) {
+            if (campoNomeUtente.equals(utente.getUsername())) {
                 throw new CampoNonValido("Errore: Il nome utente '" + campoNomeUtente + "' è già in uso. Scegline un altro!");
             }
         }
@@ -1172,11 +1219,11 @@ public class Controller {
      * Avvia un processo interattivo tramite finestre di dialogo (JOptionPane) per inserire
      * singolarmente i titoli e le durate delle tracce di un nuovo album.
      *
-     * @param numeroCanzoni Il numero totale di canzoni da inserire richiesto precedentemente
+     * @param numeroCanzoni  Il numero totale di canzoni da inserire richiesto precedentemente
      * @param frameChiamante La finestra della GUI che fa da genitore ai popup di input
      * @return Un ArrayList contenente gli oggetti Canzone appena generati dall'utente
      * @throws CampoNonValido Se l'utente preme "Annulla" su un popup, se inserisce lettere
-     * al posto dei secondi, oppure se i titoli contengono sequenze di caratteri vietate
+     *                        al posto dei secondi, oppure se i titoli contengono sequenze di caratteri vietate
      */
     public ArrayList<Canzone> inserisciCanzoni(int numeroCanzoni, JFrame frameChiamante) throws CampoNonValido {
         ArrayList<Canzone> canzoniAlbum = new ArrayList<>();
@@ -1203,11 +1250,11 @@ public class Controller {
      * Istanzia un nuovo album in memoria e stabilisce le relazioni bidirezionali con
      * l'artista autore e con i generi a cui appartiene, aggiornando le rispettive liste.
      *
-     * @param titolo Il nome dell'album
+     * @param titolo            Il nome dell'album
      * @param dataPubblicazione La data ufficiale di uscita dell'album
-     * @param artista L'oggetto Artista che ha prodotto l'album
-     * @param generi La lista dei generi musicali selezionati per l'album
-     * @param tracklist La lista ordinata delle canzoni contenute
+     * @param artista           L'oggetto Artista che ha prodotto l'album
+     * @param generi            La lista dei generi musicali selezionati per l'album
+     * @param tracklist         La lista ordinata delle canzoni contenute
      * @return Il nuovo oggetto Album creato e collegato a sistema
      * @throws CampoNonValido Se un controllo sulle regole di business fallisce (se implementato)
      */
@@ -1218,7 +1265,7 @@ public class Controller {
         this.albumPresenti.add(nuovoAlbum);
 
         artista.addAlbum(nuovoAlbum);
-        for(Genere genere : generi){
+        for (Genere genere : generi) {
             genere.addListaAlbum(nuovoAlbum);
         }
 
@@ -1232,15 +1279,15 @@ public class Controller {
      * @return Una lista di array di Object, dove ogni array rappresenta fedelmente
      * le colonne di una singola riga della tabella
      */
-    public ArrayList<Object[]> creaRigheTabella(){
+    public ArrayList<Object[]> creaRigheTabella() {
         ArrayList<Object[]> listaRighe = new ArrayList<>();
-        for (Proposta proposta : propostePresenti){
-            if(proposta.getStatoProposta()!= StatoProposta.VALUTAZIONE_IN_CORSO){
+        for (Proposta proposta : propostePresenti) {
+            if (proposta.getStatoProposta() != StatoProposta.VALUTAZIONE_IN_CORSO) {
                 String tipoElemento = proposta.getTipoElemento().name();
                 String titoloElemento = proposta.getTitoloElemento();
                 String utente = proposta.getAutoreProposta().getUsername();
                 String statoProposta = proposta.getStatoProposta().name();
-                listaRighe.add(new Object[]{tipoElemento,titoloElemento,statoProposta,utente});
+                listaRighe.add(new Object[]{tipoElemento, titoloElemento, statoProposta, utente});
             }
         }
         return listaRighe;

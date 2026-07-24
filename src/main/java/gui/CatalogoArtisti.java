@@ -26,11 +26,11 @@ public class CatalogoArtisti {
 
 
     /**
-     * Instantiates a new Catalogo artisti.
+     * Istanzia e inizializza la finestra grafica per il Catalogo Artisti.
      *
-     * @param controller     the controller
-     * @param frameChiamante the frame chiamante
-     * @param utenteAttuale  the utente attuale
+     * @param controller     L'istanza del Controller per gestire l'interazione con il database.
+     * @param frameChiamante La finestra precedente da cui è stata aperta questa schermata (per permettere di tornare indietro).
+     * @param utenteAttuale  L'oggetto Utente (Admin) attualmente loggato nel sistema.
      */
     public CatalogoArtisti(Controller controller, JFrame frameChiamante, Utente utenteAttuale) {
         frame = new JFrame("Catalogo Artisti");
@@ -73,6 +73,13 @@ public class CatalogoArtisti {
 
     //Riempimento liste
     //Artisti
+
+    /**
+     * Riempe la JList di Artisti, permettendo all'utente di selezionarli per la navigazione del catalogo.
+     *
+     * @param controller L'istanza del Controller per gestire l'interazione con il database.
+     * @return L'ArrayList di Artisti presenti nel DataBase
+     */
     private ArrayList<Artista> riempiListaArtisti(Controller controller) {
         DefaultListModel<String> modelloLista = new DefaultListModel<>();
 
@@ -91,7 +98,13 @@ public class CatalogoArtisti {
 
 
     //Funzioni Listeners
-    //Indietro
+
+    /**
+     * Gestisce la chiusura della finestra attuale e il ripristino della visibilità della finestra chiamante.
+     *
+     * @param frameChiamante La finestra chiamante da mostrare nuovamente.
+     * @param frame          La finestra corrente da chiudere (dispose).
+     */
     private void indietro(JFrame frameChiamante, JFrame frame) {
         frameChiamante.setLocationRelativeTo(null);
         frameChiamante.setVisible(true);
@@ -99,9 +112,10 @@ public class CatalogoArtisti {
     }
 
     /**
+     * Filtra la Lista di Artisti a partire da una stringa di testo.
      *
-     * @param controller
-     * @param testoCercato
+     * @param controller   L'istanza del Controller per gestire l'interazione con il database.
+     * @param testoCercato La stringa di testo necessaria a filtrare gli Artisti
      */
     private ArrayList<Artista> filtraLista(Controller controller, String testoCercato) {
         DefaultListModel<String> modelloLista = new DefaultListModel<>();
@@ -122,7 +136,13 @@ public class CatalogoArtisti {
         return artistiFiltrati;
     }
 
-    //Profilo Artista
+    /**
+     * Istanzia e inizializza una nuova finestra grafica per il ProfiloArtista dell'artita selezionato.
+     *
+     * @param controller    L'istanza del Controller per gestire l'interazione con il database.
+     * @param frame         La finestra corrente da nascondere
+     * @param utenteAttuale L'utente attualmente loggato nel sistema
+     */
     private void newProfiloArtista(Controller controller, JFrame frame, Utente utenteAttuale) {
         try {
             new ProfiloArtista(controller, frame, artisti.get(listaArtisti.getSelectedIndex()), utenteAttuale);

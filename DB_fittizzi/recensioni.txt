@@ -35,4 +35,3 @@ Sgt. Pepper's;;;;mario99;;;;5.5;;;;2026-07-24
 Abbey Road;;;;admin_root;;;;7.3;;;;2026-07-24
 Thriller;;;;admin_root;;;;8.1;;;;2026-07-24
 Me Against the World;;;;admin_root;;;;5.5;;;;2026-07-24
-
